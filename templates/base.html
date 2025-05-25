@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}This or That{% endblock %}</title>
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #ff4458;
+            --secondary-color: #42a5f5;
+            --accent-color: #ffa726;
+            --background-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --card-gradient: linear-gradient(145deg, #ffffff, #f0f0f0);
+            --shadow-light: 0 8px 32px rgba(0,0,0,0.1);
+            --shadow-heavy: 0 16px 48px rgba(0,0,0,0.15);
+            --text-dark: #2c3e50;
+            --text-light: #7f8c8d;
+            --border-radius: 20px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--background-gradient);
+            min-height: 100vh;
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .card {
+            background: var(--card-gradient);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-light);
+            padding: 2rem;
+            margin: 1rem 0;
+            transition: var(--transition);
+            border: 1px solid rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-heavy);
+        }
+
+        .btn {
+            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 15px rgba(255, 68, 88, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 68, 88, 0.4);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(45deg, var(--secondary-color), #5c6bc0);
+            box-shadow: 0 4px 15px rgba(66, 165, 245, 0.3);
+        }
+
+        .btn-secondary:hover {
+            box-shadow: 0 8px 25px rgba(66, 165, 245, 0.4);
+        }
+
+        .input-group {
+            margin: 1rem 0;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        .input-group input,
+        .input-group textarea,
+        .input-group select {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 15px;
+            font-size: 1rem;
+            transition: var(--transition);
+            background: rgba(255,255,255,0.9);
+        }
+
+        .input-group input:focus,
+        .input-group textarea:focus,
+        .input-group select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(255, 68, 88, 0.1);
+        }
+
+        .game-card {
+            position: relative;
+            width: 350px;
+            height: 500px;
+            margin: 0 auto;
+            border-radius: var(--border-radius);
+            background: white;
+            box-shadow: var(--shadow-heavy);
+            cursor: grab;
+            user-select: none;
+            transform-origin: center;
+            transition: var(--transition);
+            overflow: hidden;
+        }
+
+        .game-card:active {
+            cursor: grabbing;
+        }
+
+        .game-card.swiping-left {
+            transform: rotate(-10deg) translateX(-100px);
+            opacity: 0.7;
+        }
+
+        .game-card.swiping-right {
+            transform: rotate(10deg) translateX(100px);
+            opacity: 0.7;
+        }
+
+        .card-content {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            position: relative;
+        }
+
+        .vs-indicator {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--primary-color);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1rem;
+            z-index: 10;
+            box-shadow: 0 4px 15px rgba(255, 68, 88, 0.3);
+        }
+
+        .option {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem 1rem;
+            text-align: center;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .option-left {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .option-right {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            color: white;
+        }
+
+        .option-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.9;
+        }
+
+        .option-text {
+            font-size: 1.5rem;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        .swipe-indicators {
+            position: absolute;
+            top: 20px;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+            z-index: 5;
+        }
+
+        .swipe-indicator {
+            background: rgba(255,255,255,0.9);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: bold;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .swipe-indicator.left {
+            color: var(--primary-color);
+        }
+
+        .swipe-indicator.right {
+            color: var(--secondary-color);
+        }
+
+        .progress-bar {
+            background: rgba(255,255,255,0.3);
+            height: 6px;
+            border-radius: 3px;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+            height: 100%;
+            border-radius: 3px;
+            transition: width 0.5s ease;
+        }
+
+        .question-counter {
+            text-align: center;
+            color: white;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 200px;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(255,255,255,0.3);
+            border-top: 4px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .quiz-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .quiz-item {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow-light);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .quiz-item:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-heavy);
+        }
+
+        .quiz-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+        }
+
+        .quiz-description {
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+
+        .quiz-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .game-card {
+                width: 300px;
+                height: 450px;
+            }
+            
+            .option-text {
+                font-size: 1.2rem;
+            }
+            
+            .option-icon {
+                font-size: 3rem;
+            }
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            color: white;
+            font-weight: 500;
+            z-index: 1000;
+            opacity: 0;
+            transform: translateX(100px);
+            transition: var(--transition);
+        }
+
+        .notification.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .notification.success {
+            background: linear-gradient(45deg, #4caf50, #8bc34a);
+        }
+
+        .notification.error {
+            background: linear-gradient(45deg, #f44336, #ff5722);
+        }
+    </style>
+    
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            {% block header %}
+            <h1><i class="fas fa-balance-scale"></i> This or That</h1>
+            <p>Swipe your way through amazing choices!</p>
+            {% endblock %}
+        </header>
+        
+        <main>
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+    
+    <div id="notification" class="notification"></div>
+    
+    <script>
+        // Utility functions
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.className = `notification ${type}`;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+        
+        function fadeIn(element, duration = 300) {
+            element.style.opacity = 0;
+            element.style.display = 'block';
+            
+            let start = performance.now();
+            
+            function animate(timestamp) {
+                const elapsed = timestamp - start;
+                const progress = elapsed / duration;
+                
+                if (progress < 1) {
+                    element.style.opacity = progress;
+                    requestAnimationFrame(animate);
+                } else {
+                    element.style.opacity = 1;
+                }
+            }
+            
+            requestAnimationFrame(animate);
+        }
+        
+        // Copy to clipboard function
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                showNotification('Copied to clipboard!');
+            }).catch(() => {
+                showNotification('Failed to copy', 'error');
+            });
+        }
+    </script>
+    
+    {% block extra_js %}{% endblock %}
+</body>
+</html> 

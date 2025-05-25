@@ -1,0 +1,737 @@
+{% extends "base.html" %}
+
+{% block title %}Playing Quiz - {{ session.quiz_title }}{% endblock %}
+
+{% block header %}
+<h1><i class="fas fa-play-circle"></i> {{ session.quiz_title }}</h1>
+<div class="question-counter">
+    Question <span id="current-question">{{ session.current_question + 1 }}</span> of <span id="total-questions">{{ session.questions|length }}</span>
+</div>
+<div class="progress-bar">
+    <div class="progress-fill" id="progress-fill" style="width: {{ (session.current_question / session.questions|length * 100)|round(1) }}%;"></div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .card-stack {
+        position: relative;
+        width: 350px;
+        height: 500px;
+        margin: 0 auto;
+        perspective: 1000px;
+    }
+    
+    .tinder-card {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border-radius: var(--border-radius);
+        background: white;
+        box-shadow: 0 8px 40px rgba(0,0,0,0.12);
+        cursor: grab;
+        user-select: none;
+        transform-origin: center;
+        transition: none;
+        overflow: hidden;
+        will-change: transform, opacity;
+        display: flex;
+        flex-direction: row;
+    }
+    
+    .tinder-card:active {
+        cursor: grabbing;
+    }
+    
+    .tinder-card.next-card {
+        transform: scale(0.95) translateY(10px);
+        opacity: 0.8;
+        z-index: 1;
+    }
+    
+    .tinder-card.current-card {
+        z-index: 10;
+        transform: scale(1);
+        opacity: 1;
+    }
+    
+    .choice-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 4rem;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 0.2rem;
+        opacity: 0;
+        transition: opacity 0.2s ease;
+        pointer-events: none;
+        text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+    
+    .choice-overlay.left {
+        background: linear-gradient(45deg, rgba(255,68,88,0.1), rgba(255,68,88,0.3));
+        color: #ff4458;
+        border: 4px solid #ff4458;
+        border-radius: var(--border-radius);
+    }
+    
+    .choice-overlay.right {
+        background: linear-gradient(45deg, rgba(66,165,245,0.1), rgba(66,165,245,0.3));
+        color: #42a5f5;
+        border: 4px solid #42a5f5;
+        border-radius: var(--border-radius);
+    }
+    
+    .action-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 3rem;
+        margin-top: 2rem;
+    }
+    
+    .action-btn {
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.8rem;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .action-btn:hover {
+        transform: scale(1.1);
+        box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+    }
+    
+    .action-btn:active {
+        transform: scale(0.95);
+    }
+    
+    .action-btn.reject {
+        background: linear-gradient(45deg, #ff4458, #ff6b7a);
+        color: white;
+    }
+    
+    .action-btn.like {
+        background: linear-gradient(45deg, #42a5f5, #66bb6a);
+        color: white;
+    }
+    
+    @media (max-width: 768px) {
+        .card-stack {
+            width: 90vw;
+            max-width: 350px;
+            height: 70vh;
+            max-height: 500px;
+        }
+        
+        .action-btn {
+            width: 60px;
+            height: 60px;
+            font-size: 1.5rem;
+        }
+        
+        .action-buttons {
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+        
+        .vs-indicator {
+            width: 40px;
+            height: 40px;
+            font-size: 0.9rem;
+        }
+        
+        .option {
+            padding: 1rem 0.5rem;
+        }
+        
+        .option-icon {
+            font-size: 2.5rem !important;
+        }
+        
+        .option-text {
+            font-size: 0.9rem;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .card-stack {
+            width: 95vw;
+            height: 65vh;
+        }
+        
+        .action-btn {
+            width: 55px;
+            height: 55px;
+            font-size: 1.3rem;
+        }
+        
+        .option-icon {
+            font-size: 2rem !important;
+        }
+        
+        .vs-indicator {
+            width: 35px;
+            height: 35px;
+            font-size: 0.8rem;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div id="game-container" style="display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 60vh;">
+    
+    {% if session.current_question < session.questions|length %}
+    
+    <div class="card-stack" id="card-stack">
+        <!-- Current Card -->
+        <div id="current-card" class="tinder-card current-card">
+            <div class="choice-overlay left" id="left-overlay">NOPE</div>
+            <div class="choice-overlay right" id="right-overlay">LIKE</div>
+            
+            <div class="card-content">
+                {% set question = session.questions[session.current_question] %}
+                
+                <div class="option option-left" id="left-option">
+                    <i class="option-icon" id="left-icon"></i>
+                    <div class="option-text" id="left-text">{{ question.option1 }}</div>
+                </div>
+                
+                <div class="vs-indicator">VS</div>
+                
+                <div class="option option-right" id="right-option">
+                    <i class="option-icon" id="right-icon"></i>
+                    <div class="option-text" id="right-text">{{ question.option2 }}</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Next Card (if exists) -->
+        {% if session.current_question + 1 < session.questions|length %}
+        <div id="next-card" class="tinder-card next-card">
+            <div class="card-content">
+                {% set next_question = session.questions[session.current_question + 1] %}
+                
+                <div class="option option-left">
+                    <i class="option-icon next-left-icon"></i>
+                    <div class="option-text">{{ next_question.option1 }}</div>
+                </div>
+                
+                <div class="vs-indicator">VS</div>
+                
+                <div class="option option-right">
+                    <i class="option-icon next-right-icon"></i>
+                    <div class="option-text">{{ next_question.option2 }}</div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    
+    <div class="action-buttons">
+        <button id="reject-btn" class="action-btn reject">
+            <i id="left-action-icon" class="fas fa-star"></i>
+        </button>
+        <button id="like-btn" class="action-btn like">
+            <i id="right-action-icon" class="fas fa-star"></i>
+        </button>
+    </div>
+    
+    {% else %}
+    <!-- Quiz Complete -->
+    <div class="card" style="text-align: center; max-width: 500px;">
+        <div style="background: linear-gradient(45deg, #4caf50, #8bc34a); padding: 3rem 2rem; border-radius: 20px; margin-bottom: 2rem;">
+            <i class="fas fa-trophy" style="font-size: 4rem; color: white; margin-bottom: 1rem;"></i>
+            <h2 style="color: white; margin-bottom: 1rem;">Quiz Complete!</h2>
+            <p style="color: rgba(255,255,255,0.9);">Thanks for playing {{ session.quiz_title }}!</p>
+        </div>
+        
+        <div style="margin-bottom: 2rem;">
+            <h4 style="margin-bottom: 1rem;">Your Results</h4>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 1rem; margin: 1rem 0;">
+                <div style="text-align: center;">
+                    <div style="font-size: 2rem; color: var(--primary-color);">{{ session.answers|length }}</div>
+                    <div style="color: var(--text-light);">Answered</div>
+                </div>
+                <div style="text-align: center;">
+                    <div style="font-size: 2rem; color: var(--secondary-color);">{{ session.questions|length }}</div>
+                    <div style="color: var(--text-light);">Total</div>
+                </div>
+            </div>
+        </div>
+        
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+            <a href="/" class="btn">
+                <i class="fas fa-home"></i> Home
+            </a>
+            <button onclick="shareResults()" class="btn btn-secondary">
+                <i class="fas fa-share-alt"></i> Share Quiz
+            </button>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Session and quiz data
+    const sessionId = '{{ session.session_id }}';
+    const quizId = '{{ session.quiz_id }}';
+    const quizTitle = '{{ session.quiz_title }}';
+    const allQuestions = [
+        {% for q in session.questions %}
+        {
+            option1: {{ q.option1 | tojson }},
+            option2: {{ q.option2 | tojson }}
+        }{% if not loop.last %},{% endif %}
+        {% endfor %}
+    ];
+    
+    let currentQuestionIndex = {{ session.current_question }};
+    let isAnimating = false;
+    
+    // Icon mapping for smart icon assignment
+    const iconMap = {
+        'pizza': 'fas fa-pizza-slice', 'burger': 'fas fa-hamburger', 'coffee': 'fas fa-coffee',
+        'tea': 'fas fa-mug-hot', 'wine': 'fas fa-wine-glass', 'beer': 'fas fa-beer',
+        'ice cream': 'fas fa-ice-cream', 'cake': 'fas fa-birthday-cake', 'cookie': 'fas fa-cookie',
+        'apple': 'fas fa-apple-alt', 'cat': 'fas fa-cat', 'dog': 'fas fa-dog',
+        'fish': 'fas fa-fish', 'bird': 'fas fa-dove', 'horse': 'fas fa-horse',
+        'phone': 'fas fa-mobile-alt', 'laptop': 'fas fa-laptop', 'computer': 'fas fa-desktop',
+        'tablet': 'fas fa-tablet-alt', 'game': 'fas fa-gamepad', 'car': 'fas fa-car',
+        'bike': 'fas fa-bicycle', 'plane': 'fas fa-plane', 'train': 'fas fa-train',
+        'bus': 'fas fa-bus', 'movie': 'fas fa-film', 'music': 'fas fa-music',
+        'book': 'fas fa-book', 'tv': 'fas fa-tv', 'netflix': 'fab fa-netflix',
+        'youtube': 'fab fa-youtube', 'football': 'fas fa-football-ball',
+        'basketball': 'fas fa-basketball-ball', 'tennis': 'fas fa-table-tennis',
+        'swimming': 'fas fa-swimmer', 'running': 'fas fa-running', 'gym': 'fas fa-dumbbell',
+        'summer': 'fas fa-sun', 'winter': 'fas fa-snowflake', 'rain': 'fas fa-cloud-rain',
+        'snow': 'fas fa-snowman', 'beach': 'fas fa-umbrella-beach', 'mountain': 'fas fa-mountain',
+        'city': 'fas fa-city', 'nature': 'fas fa-tree', 'morning': 'fas fa-sun',
+        'night': 'fas fa-moon', 'hotel': 'fas fa-hotel', 'camping': 'fas fa-campground'
+    };
+    
+    function getIconForText(text) {
+        const lowerText = text.toLowerCase();
+        for (const [keyword, icon] of Object.entries(iconMap)) {
+            if (lowerText.includes(keyword)) return icon;
+        }
+        return 'fas fa-star';
+    }
+    
+    // Enhanced Tinder-like dragging mechanics
+    class TinderCard {
+        constructor(element) {
+            this.element = element;
+            this.isDragging = false;
+            this.startX = 0;
+            this.startY = 0;
+            this.currentX = 0;
+            this.currentY = 0;
+            this.initialTransform = { x: 0, y: 0, rotation: 0 };
+            this.setupEventListeners();
+        }
+        
+        setupEventListeners() {
+            // Mouse events
+            this.element.addEventListener('mousedown', this.handleStart.bind(this));
+            document.addEventListener('mousemove', this.handleMove.bind(this));
+            document.addEventListener('mouseup', this.handleEnd.bind(this));
+            
+            // Touch events
+            this.element.addEventListener('touchstart', this.handleStart.bind(this), { passive: true });
+            document.addEventListener('touchmove', this.handleMove.bind(this), { passive: false });
+            document.addEventListener('touchend', this.handleEnd.bind(this));
+            
+            // Prevent context menu
+            this.element.addEventListener('contextmenu', e => e.preventDefault());
+        }
+        
+        handleStart(e) {
+            if (isAnimating) return;
+            
+            const clientX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+            const clientY = e.type.includes('mouse') ? e.clientY : e.touches[0].clientY;
+            
+            this.isDragging = true;
+            this.startX = clientX;
+            this.startY = clientY;
+            this.currentX = clientX;
+            this.currentY = clientY;
+            
+            this.element.style.transition = 'none';
+            this.element.style.cursor = 'grabbing';
+        }
+        
+        handleMove(e) {
+            if (!this.isDragging || isAnimating) return;
+            
+            if (e.type === 'touchmove') {
+                e.preventDefault();
+            }
+            
+            const clientX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+            const clientY = e.type.includes('mouse') ? e.clientY : e.touches[0].clientY;
+            
+            this.currentX = clientX;
+            this.currentY = clientY;
+            
+            const deltaX = this.currentX - this.startX;
+            const deltaY = this.currentY - this.startY;
+            
+            // Calculate rotation based on horizontal movement
+            const rotation = deltaX * 0.1;
+            const rotationClamp = Math.max(-15, Math.min(15, rotation));
+            
+            // Apply transform
+            this.element.style.transform = `translate(${deltaX}px, ${deltaY}px) rotate(${rotationClamp}deg)`;
+            
+            // Show choice overlays based on movement
+            const leftOverlay = document.getElementById('left-overlay');
+            const rightOverlay = document.getElementById('right-overlay');
+            
+            if (Math.abs(deltaX) > 50) {
+                if (deltaX > 0) {
+                    rightOverlay.style.opacity = Math.min(0.8, Math.abs(deltaX) / 150);
+                    leftOverlay.style.opacity = 0;
+                } else {
+                    leftOverlay.style.opacity = Math.min(0.8, Math.abs(deltaX) / 150);
+                    rightOverlay.style.opacity = 0;
+                }
+            } else {
+                leftOverlay.style.opacity = 0;
+                rightOverlay.style.opacity = 0;
+            }
+            
+            // Scale the next card slightly based on drag distance
+            const nextCard = document.getElementById('next-card');
+            if (nextCard) {
+                const scale = 0.95 + (Math.abs(deltaX) / 1000) * 0.05;
+                nextCard.style.transform = `scale(${Math.min(1, scale)}) translateY(${Math.max(0, 10 - Math.abs(deltaX) / 20)}px)`;
+            }
+        }
+        
+        handleEnd(e) {
+            if (!this.isDragging || isAnimating) return;
+            
+            this.isDragging = false;
+            this.element.style.cursor = 'grab';
+            
+            const deltaX = this.currentX - this.startX;
+            const deltaY = this.currentY - this.startY;
+            const threshold = 100;
+            const velocity = Math.abs(deltaX);
+            
+            // Reset overlays
+            document.getElementById('left-overlay').style.opacity = 0;
+            document.getElementById('right-overlay').style.opacity = 0;
+            
+            if (Math.abs(deltaX) > threshold || velocity > 300) {
+                // Trigger swipe animation
+                if (deltaX > 0) {
+                    this.animateSwipe('right');
+                } else {
+                    this.animateSwipe('left');
+                }
+            } else {
+                // Snap back
+                this.snapBack();
+            }
+        }
+        
+        snapBack() {
+            this.element.style.transition = 'transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+            this.element.style.transform = 'translate(0px, 0px) rotate(0deg)';
+            
+            // Reset next card
+            const nextCard = document.getElementById('next-card');
+            if (nextCard) {
+                nextCard.style.transition = 'transform 0.3s ease';
+                nextCard.style.transform = 'scale(0.95) translateY(10px)';
+            }
+            
+            setTimeout(() => {
+                this.element.style.transition = 'none';
+                if (nextCard) nextCard.style.transition = 'none';
+            }, 300);
+        }
+        
+        animateSwipe(direction) {
+            isAnimating = true;
+            
+            const translateX = direction === 'right' ? window.innerWidth : -window.innerWidth;
+            const rotation = direction === 'right' ? 30 : -30;
+            
+            this.element.style.transition = 'transform 0.4s cubic-bezier(0.55, 0.085, 0.68, 0.53), opacity 0.4s ease';
+            this.element.style.transform = `translate(${translateX}px, -100px) rotate(${rotation}deg)`;
+            this.element.style.opacity = '0';
+            
+            // Animate next card to current position
+            const nextCard = document.getElementById('next-card');
+            if (nextCard) {
+                nextCard.style.transition = 'transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+                nextCard.style.transform = 'scale(1) translateY(0px)';
+            }
+            
+            // Submit the choice
+            setTimeout(() => {
+                makeChoice(direction);
+            }, 200);
+        }
+        
+        programmaticSwipe(direction) {
+            if (isAnimating) return;
+            this.animateSwipe(direction);
+        }
+    }
+    
+    // Initialize card mechanics
+    let tinderCard = null;
+    
+    function initializeCard() {
+        const cardElement = document.getElementById('current-card');
+        if (cardElement) {
+            tinderCard = new TinderCard(cardElement);
+            updateCardIcons();
+        }
+    }
+    
+    function updateCardIcons() {
+        if (currentQuestionIndex >= allQuestions.length) return;
+        
+        const question = allQuestions[currentQuestionIndex];
+        const leftIcon = document.getElementById('left-icon');
+        const rightIcon = document.getElementById('right-icon');
+        
+        if (leftIcon && rightIcon) {
+            leftIcon.className = `option-icon ${getIconForText(question.option1)}`;
+            rightIcon.className = `option-icon ${getIconForText(question.option2)}`;
+        }
+        
+        // Update action button icons to match current options
+        const leftActionIcon = document.getElementById('left-action-icon');
+        const rightActionIcon = document.getElementById('right-action-icon');
+        
+        if (leftActionIcon && rightActionIcon) {
+            leftActionIcon.className = getIconForText(question.option1);
+            rightActionIcon.className = getIconForText(question.option2);
+        }
+        
+        // Update next card icons if exists
+        if (currentQuestionIndex + 1 < allQuestions.length) {
+            const nextQuestion = allQuestions[currentQuestionIndex + 1];
+            const nextLeftIcon = document.querySelector('.next-left-icon');
+            const nextRightIcon = document.querySelector('.next-right-icon');
+            
+            if (nextLeftIcon && nextRightIcon) {
+                nextLeftIcon.className = `option-icon next-left-icon ${getIconForText(nextQuestion.option1)}`;
+                nextRightIcon.className = `option-icon next-right-icon ${getIconForText(nextQuestion.option2)}`;
+            }
+        }
+    }
+    
+    // Button event listeners
+    document.getElementById('reject-btn')?.addEventListener('click', () => {
+        if (tinderCard) tinderCard.programmaticSwipe('left');
+    });
+    
+    document.getElementById('like-btn')?.addEventListener('click', () => {
+        if (tinderCard) tinderCard.programmaticSwipe('right');
+    });
+    
+    // Keyboard controls
+    document.addEventListener('keydown', (e) => {
+        if (isAnimating || !tinderCard) return;
+        
+        if (e.key === 'ArrowLeft') {
+            tinderCard.programmaticSwipe('left');
+        } else if (e.key === 'ArrowRight') {
+            tinderCard.programmaticSwipe('right');
+        }
+    });
+    
+    // Make choice and update game state
+    async function makeChoice(direction) {
+        const choice = direction; // 'left' or 'right'
+        
+        try {
+            const response = await fetch(`/api/session/${sessionId}/answer`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ answer: choice })
+            });
+            
+            const result = await response.json();
+            
+            if (result.success) {
+                currentQuestionIndex++;
+                updateProgress();
+                
+                setTimeout(() => {
+                    if (result.is_complete) {
+                        window.location.reload();
+                    } else {
+                        loadNextQuestion();
+                    }
+                }, 400);
+            } else {
+                showNotification('Error submitting answer', 'error');
+                resetAnimation();
+            }
+        } catch (error) {
+            console.error('Error submitting answer:', error);
+            showNotification('Connection error', 'error');
+            resetAnimation();
+        }
+    }
+    
+    function resetAnimation() {
+        isAnimating = false;
+        const currentCard = document.getElementById('current-card');
+        if (currentCard) {
+            currentCard.style.transform = '';
+            currentCard.style.opacity = '1';
+        }
+    }
+    
+    function loadNextQuestion() {
+        const cardStack = document.getElementById('card-stack');
+        if (!cardStack) return;
+        
+        // Create new cards for the next question
+        const currentQuestion = allQuestions[currentQuestionIndex];
+        const nextQuestion = allQuestions[currentQuestionIndex + 1];
+        
+        // Update question counter
+        document.getElementById('current-question').textContent = currentQuestionIndex + 1;
+        
+        // Remove old current card
+        const oldCard = document.getElementById('current-card');
+        if (oldCard) oldCard.remove();
+        
+        // Promote next card to current
+        const nextCard = document.getElementById('next-card');
+        if (nextCard) {
+            nextCard.id = 'current-card';
+            nextCard.className = 'tinder-card current-card';
+            
+            // Add overlays to the new current card
+            const leftOverlay = document.createElement('div');
+            leftOverlay.className = 'choice-overlay left';
+            leftOverlay.id = 'left-overlay';
+            leftOverlay.textContent = 'NOPE';
+            
+            const rightOverlay = document.createElement('div');
+            rightOverlay.className = 'choice-overlay right';
+            rightOverlay.id = 'right-overlay';
+            rightOverlay.textContent = 'LIKE';
+            
+            nextCard.insertBefore(leftOverlay, nextCard.firstChild);
+            nextCard.insertBefore(rightOverlay, nextCard.firstChild);
+            
+            // Update the text content
+            const leftText = nextCard.querySelector('#left-text') || nextCard.querySelector('.option-text');
+            const rightText = nextCard.querySelectorAll('.option-text')[1];
+            if (leftText) leftText.textContent = currentQuestion.option1;
+            if (rightText) rightText.textContent = currentQuestion.option2;
+            
+            // Update icons
+            const leftIcon = nextCard.querySelector('#left-icon') || nextCard.querySelector('.option-icon');
+            const rightIcon = nextCard.querySelectorAll('.option-icon')[1];
+            if (leftIcon) leftIcon.className = `option-icon ${getIconForText(currentQuestion.option1)}`;
+            if (rightIcon) rightIcon.className = `option-icon ${getIconForText(currentQuestion.option2)}`;
+            
+            // Update action button icons
+            const leftActionIcon = document.getElementById('left-action-icon');
+            const rightActionIcon = document.getElementById('right-action-icon');
+            if (leftActionIcon) leftActionIcon.className = getIconForText(currentQuestion.option1);
+            if (rightActionIcon) rightActionIcon.className = getIconForText(currentQuestion.option2);
+        }
+        
+        // Create new next card if there's another question
+        if (nextQuestion) {
+            const newNextCard = document.createElement('div');
+            newNextCard.id = 'next-card';
+            newNextCard.className = 'tinder-card next-card';
+            newNextCard.innerHTML = `
+                <div class="card-content">
+                    <div class="option option-left">
+                        <i class="option-icon next-left-icon ${getIconForText(nextQuestion.option1)}"></i>
+                        <div class="option-text">${nextQuestion.option1}</div>
+                    </div>
+                    <div class="vs-indicator">VS</div>
+                    <div class="option option-right">
+                        <i class="option-icon next-right-icon ${getIconForText(nextQuestion.option2)}"></i>
+                        <div class="option-text">${nextQuestion.option2}</div>
+                    </div>
+                </div>
+            `;
+            cardStack.appendChild(newNextCard);
+        }
+        
+        // Re-initialize card mechanics
+        setTimeout(() => {
+            initializeCard();
+            isAnimating = false;
+        }, 100);
+    }
+    
+    function updateProgress() {
+        const progressFill = document.getElementById('progress-fill');
+        const percentage = (currentQuestionIndex / allQuestions.length) * 100;
+        progressFill.style.width = percentage + '%';
+    }
+    
+    function shareResults() {
+        const shareUrl = `${window.location.origin}/play/${quizId}`;
+        const shareText = `I just completed "${quizTitle}" quiz! 🎮 Try it yourself:`;
+        
+        if (navigator.share) {
+            navigator.share({
+                title: `This or That: ${quizTitle}`,
+                text: shareText,
+                url: shareUrl
+            }).catch(err => {
+                console.log('Share failed:', err);
+                copyToClipboard(`${shareText} ${shareUrl}`);
+            });
+        } else {
+            copyToClipboard(`${shareText} ${shareUrl}`);
+        }
+    }
+    
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', () => {
+        initializeCard();
+        
+        // Add some entrance animation
+        const cardStack = document.getElementById('card-stack');
+        if (cardStack) {
+            cardStack.style.opacity = '0';
+            cardStack.style.transform = 'translateY(30px)';
+            
+            setTimeout(() => {
+                cardStack.style.transition = 'all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+                cardStack.style.opacity = '1';
+                cardStack.style.transform = 'translateY(0px)';
+            }, 100);
+        }
+    });
+</script>
+{% endblock %} 

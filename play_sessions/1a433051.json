@@ -1,0 +1,56 @@
+{
+  "session_id": "1a433051",
+  "quiz_id": "bc15df9d",
+  "quiz_title": "Food Preferences",
+  "questions": [
+    {
+      "option1": "Pizza",
+      "option2": "Burger"
+    },
+    {
+      "option1": "Coffee",
+      "option2": "Tea"
+    },
+    {
+      "option1": "Ice Cream",
+      "option2": "Cake"
+    },
+    {
+      "option1": "Apple",
+      "option2": "Burger"
+    },
+    {
+      "option1": "Wine",
+      "option2": "Beer"
+    }
+  ],
+  "current_question": 5,
+  "answers": [
+    {
+      "question_index": 0,
+      "answer": "left",
+      "timestamp": "2025-05-25T13:48:40.319534"
+    },
+    {
+      "question_index": 1,
+      "answer": "right",
+      "timestamp": "2025-05-25T13:48:42.850347"
+    },
+    {
+      "question_index": 2,
+      "answer": "right",
+      "timestamp": "2025-05-25T13:48:46.247332"
+    },
+    {
+      "question_index": 3,
+      "answer": "left",
+      "timestamp": "2025-05-25T13:48:47.917085"
+    },
+    {
+      "question_index": 4,
+      "answer": "right",
+      "timestamp": "2025-05-25T13:48:49.822758"
+    }
+  ],
+  "started_at": "2025-05-25T13:48:34.810158"
+}

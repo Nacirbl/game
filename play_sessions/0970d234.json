@@ -1,0 +1,56 @@
+{
+  "session_id": "0970d234",
+  "quiz_id": "ac33db3b",
+  "quiz_title": "Tech Preferences",
+  "questions": [
+    {
+      "option1": "Phone",
+      "option2": "Laptop"
+    },
+    {
+      "option1": "iPhone",
+      "option2": "Android"
+    },
+    {
+      "option1": "Tablet",
+      "option2": "Computer"
+    },
+    {
+      "option1": "Mac",
+      "option2": "PC"
+    },
+    {
+      "option1": "Gaming",
+      "option2": "Productivity"
+    }
+  ],
+  "current_question": 5,
+  "answers": [
+    {
+      "question_index": 0,
+      "answer": "right",
+      "timestamp": "2025-05-25T13:42:00.250236"
+    },
+    {
+      "question_index": 1,
+      "answer": "left",
+      "timestamp": "2025-05-25T13:42:02.543922"
+    },
+    {
+      "question_index": 2,
+      "answer": "right",
+      "timestamp": "2025-05-25T13:42:03.493901"
+    },
+    {
+      "question_index": 3,
+      "answer": "left",
+      "timestamp": "2025-05-25T13:42:04.632841"
+    },
+    {
+      "question_index": 4,
+      "answer": "right",
+      "timestamp": "2025-05-25T13:42:06.674577"
+    }
+  ],
+  "started_at": "2025-05-25T13:41:46.924665"
+}

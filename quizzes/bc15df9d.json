@@ -1,0 +1,28 @@
+{
+  "id": "bc15df9d",
+  "title": "Food Preferences",
+  "description": "Discover your favorite foods in this delicious quiz!",
+  "questions": [
+    {
+      "option1": "Pizza",
+      "option2": "Burger"
+    },
+    {
+      "option1": "Coffee",
+      "option2": "Tea"
+    },
+    {
+      "option1": "Ice Cream",
+      "option2": "Cake"
+    },
+    {
+      "option1": "Apple",
+      "option2": "Burger"
+    },
+    {
+      "option1": "Wine",
+      "option2": "Beer"
+    }
+  ],
+  "created_at": "2025-05-25T13:34:03.912032"
+}
