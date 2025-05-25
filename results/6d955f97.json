@@ -1,0 +1,79 @@
+{
+  "session_id": "6d955f97",
+  "quiz_id": "55d8d18e",
+  "quiz_title": "Tech Preferences",
+  "completed_at": "2025-05-25T20:40:58.911436",
+  "started_at": "2025-05-25T20:40:43.663448",
+  "total_questions": 5,
+  "answers": [
+    {
+      "question_index": 0,
+      "answer": "right",
+      "timestamp": "2025-05-25T20:40:51.366839"
+    },
+    {
+      "question_index": 1,
+      "answer": "left",
+      "timestamp": "2025-05-25T20:40:53.537989"
+    },
+    {
+      "question_index": 2,
+      "answer": "left",
+      "timestamp": "2025-05-25T20:40:55.021464"
+    },
+    {
+      "question_index": 3,
+      "answer": "right",
+      "timestamp": "2025-05-25T20:40:56.769700"
+    },
+    {
+      "question_index": 4,
+      "answer": "right",
+      "timestamp": "2025-05-25T20:40:58.907602"
+    }
+  ],
+  "choices_summary": {
+    "question_0": {
+      "options": [
+        "Phone",
+        "Laptop"
+      ],
+      "choice": "Laptop",
+      "choice_side": "right"
+    },
+    "question_1": {
+      "options": [
+        "iPhone",
+        "Android"
+      ],
+      "choice": "iPhone",
+      "choice_side": "left"
+    },
+    "question_2": {
+      "options": [
+        "Tablet",
+        "Laptop"
+      ],
+      "choice": "Tablet",
+      "choice_side": "left"
+    },
+    "question_3": {
+      "options": [
+        "Mac",
+        "PC"
+      ],
+      "choice": "PC",
+      "choice_side": "right"
+    },
+    "question_4": {
+      "options": [
+        "Gaming",
+        "Work"
+      ],
+      "choice": "Work",
+      "choice_side": "right"
+    }
+  },
+  "shared_session_group": "947bfc91",
+  "player_name": "Malena"
+}

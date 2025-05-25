@@ -1,0 +1,63 @@
+{
+  "session_id": "61458af1",
+  "quiz_id": "c86ca844",
+  "quiz_title": "Food Preferences",
+  "questions": [
+    {
+      "prompt": "What's your go-to comfort food?",
+      "option1": "Pizza",
+      "option2": "Burger"
+    },
+    {
+      "prompt": "What's your morning drink of choice?",
+      "option1": "Coffee",
+      "option2": "Tea"
+    },
+    {
+      "prompt": "Which dessert makes you happiest?",
+      "option1": "Ice Cream",
+      "option2": "Cake"
+    },
+    {
+      "prompt": "Which is your healthy snack choice?",
+      "option1": "Apple",
+      "option2": "Nuts"
+    },
+    {
+      "prompt": "What's your weekend drink?",
+      "option1": "Wine",
+      "option2": "Beer"
+    }
+  ],
+  "current_question": 5,
+  "answers": [
+    {
+      "question_index": 0,
+      "answer": "right",
+      "timestamp": "2025-05-25T20:22:49.455356"
+    },
+    {
+      "question_index": 1,
+      "answer": "right",
+      "timestamp": "2025-05-25T20:22:50.656065"
+    },
+    {
+      "question_index": 2,
+      "answer": "left",
+      "timestamp": "2025-05-25T20:22:52.196728"
+    },
+    {
+      "question_index": 3,
+      "answer": "left",
+      "timestamp": "2025-05-25T20:22:53.714375"
+    },
+    {
+      "question_index": 4,
+      "answer": "right",
+      "timestamp": "2025-05-25T20:22:55.001738"
+    }
+  ],
+  "started_at": "2025-05-25T20:22:37.121223",
+  "shared_session_group": "4d84b275",
+  "player_name": "Nacir"
+}

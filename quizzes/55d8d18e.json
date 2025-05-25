@@ -1,0 +1,33 @@
+{
+  "id": "55d8d18e",
+  "title": "Tech Preferences",
+  "description": "Which technology do you prefer?",
+  "questions": [
+    {
+      "prompt": "What's your essential daily device?",
+      "option1": "Phone",
+      "option2": "Laptop"
+    },
+    {
+      "prompt": "Which smartphone ecosystem?",
+      "option1": "iPhone",
+      "option2": "Android"
+    },
+    {
+      "prompt": "What's your portable work device?",
+      "option1": "Tablet",
+      "option2": "Laptop"
+    },
+    {
+      "prompt": "Which operating system?",
+      "option1": "Mac",
+      "option2": "PC"
+    },
+    {
+      "prompt": "What's your computer mainly for?",
+      "option1": "Gaming",
+      "option2": "Work"
+    }
+  ],
+  "created_at": "2025-05-25T20:34:33.700758"
+}

@@ -265,15 +265,60 @@
             transform: translateY(-100px);
         }
     }
+    
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
 </style>
 {% endblock %}
 
 {% block content %}
 <div id="game-container" style="display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 60vh;">
     
+    <!-- Waiting for Player State -->
+    <div id="waiting-container" style="display: none; text-align: center; max-width: 500px;">
+        <div class="card" style="padding: 3rem; background: linear-gradient(45deg, #667eea, #764ba2); color: white; margin-bottom: 2rem;">
+            <div style="font-size: 4rem; margin-bottom: 1rem;">⏳</div>
+            <h2 style="margin-bottom: 1rem;">Waiting for Friend</h2>
+            <p id="waiting-message" style="font-size: 1.1rem; opacity: 0.9; margin-bottom: 1.5rem;">
+                Share your game link and wait for your friend to join before starting!
+            </p>
+            <div id="waiting-session-details" style="background: rgba(255,255,255,0.2); padding: 1rem; border-radius: 10px; margin-bottom: 1rem;">
+                <div style="font-family: monospace; font-size: 1.1rem; font-weight: bold; letter-spacing: 1px; margin-bottom: 0.5rem;">
+                    {{ session.session_id }}
+                </div>
+                <button onclick="shareSession()" class="btn" style="background: rgba(255,255,255,0.2); border: 2px solid white; color: white;">
+                    <i class="fas fa-share-alt"></i> Share Game Link
+                </button>
+            </div>
+            <div style="opacity: 0.8;">
+                <i class="fas fa-info-circle"></i> Both players must be ready before the quiz can begin
+            </div>
+        </div>
+    </div>
+    
+    <!-- Ready to Start State -->
+    <div id="ready-container" style="display: none; text-align: center; max-width: 500px;">
+        <div class="card" style="padding: 3rem; background: linear-gradient(45deg, #4caf50, #8bc34a); color: white; margin-bottom: 2rem;">
+            <div style="font-size: 4rem; margin-bottom: 1rem;">🎮</div>
+            <h2 style="margin-bottom: 1rem;">Ready to Start!</h2>
+            <p id="ready-message" style="font-size: 1.1rem; opacity: 0.9; margin-bottom: 1.5rem;">
+                Both players are connected. Click start when you're ready!
+            </p>
+            <button id="start-quiz-btn" onclick="startQuizForBoth()" class="btn" style="background: rgba(255,255,255,0.2); border: 2px solid white; color: white; font-size: 1.2rem; padding: 1rem 2rem;">
+                <i class="fas fa-play"></i> Start Quiz
+            </button>
+        </div>
+    </div>
+    
     {% if session.current_question < session.questions|length %}
     
-    <div class="card-stack" id="card-stack">
+    <div class="card-stack" id="card-stack" style="display: none;">
         <!-- Current Card -->
         <div id="current-card" class="tinder-card current-card">
             <div class="choice-overlay left" id="left-overlay">NOPE</div>
@@ -369,6 +414,26 @@
         </div>
     </div>
     {% endif %}
+</div>
+
+<!-- Permission Modal for New Quiz -->
+<div id="permission-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 2000; animation: fadeIn 0.3s ease;">
+    <div class="card" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); max-width: 500px; width: 90%; text-align: center;">
+        <div style="background: linear-gradient(45deg, #ff9800, #f57c00); color: white; padding: 2rem; border-radius: 15px; margin-bottom: 1rem;">
+            <div style="font-size: 3rem; margin-bottom: 1rem;">🤝</div>
+            <h3 id="permission-title" style="margin-bottom: 1rem;">New Quiz Request</h3>
+            <p id="permission-message" style="font-size: 1.1rem; opacity: 0.9;">Your friend wants to play another quiz. Do you want to join?</p>
+        </div>
+        
+        <div style="display: flex; gap: 1rem; justify-content: center;">
+            <button onclick="respondToQuizRequest(true)" class="btn" style="background: #4caf50; color: white; padding: 1rem 2rem; font-size: 1.1rem;">
+                <i class="fas fa-check"></i> Yes, Let's Play!
+            </button>
+            <button onclick="respondToQuizRequest(false)" class="btn" style="background: #f44336; color: white; padding: 1rem 2rem; font-size: 1.1rem;">
+                <i class="fas fa-times"></i> Not Now
+            </button>
+        </div>
+    </div>
 </div>
 {% endblock %}
 
@@ -1012,9 +1077,12 @@
                 return;
             }
             
-            // Calculate compatibility
+            // Calculate compatibility or scoring based on quiz type
             const totalQuestions = data.questions.length;
+            const isCompetition = data.quiz_type === 'competition';
             let matches = 0;
+            let myScore = 0;
+            let otherScore = 0;
             
             // Build comparison
             let comparisonHTML = '';
@@ -1026,6 +1094,16 @@
                     let myChoice = myAnswer.answer === 'left' ? question.option1 : question.option2;
                     let otherChoice = otherAnswer.answer === 'left' ? question.option1 : question.option2;
                     const isMatch = myAnswer.answer === otherAnswer.answer;
+                    
+                    // For competition mode, check if answers are correct
+                    let myCorrect = false;
+                    let otherCorrect = false;
+                    if (isCompetition && question.correct_answer) {
+                        myCorrect = myAnswer.answer === (question.correct_answer === 'option1' ? 'left' : 'right');
+                        otherCorrect = otherAnswer.answer === (question.correct_answer === 'option1' ? 'left' : 'right');
+                        if (myCorrect) myScore++;
+                        if (otherCorrect) otherScore++;
+                    }
                     
                     // Use player mapping if available for better name replacement
                     const myPlayerName = mySession.player_name || 'You';
@@ -1044,63 +1122,148 @@
                     }
                     
                     if (isMatch) matches++;
+                    
+                    let statusMessage = '';
+                    let backgroundColor = '';
+                    let borderColor = '';
+                    let statusIcon = '';
+                    
+                    if (isCompetition) {
+                        // Competition mode - show correct/incorrect
+                        if (myCorrect && otherCorrect) {
+                            statusMessage = `✅ You both got it right! (${myChoice})`;
+                            backgroundColor = '#e8f5e8';
+                            borderColor = '#4caf50';
+                            statusIcon = '🏆';
+                        } else if (myCorrect && !otherCorrect) {
+                            statusMessage = `🎯 You got it right (${myChoice}), ${otherPlayerName} was wrong (${otherChoice})`;
+                            backgroundColor = '#e3f2fd';
+                            borderColor = '#2196f3';
+                            statusIcon = '👍';
+                        } else if (!myCorrect && otherCorrect) {
+                            statusMessage = `❌ You were wrong (${myChoice}), ${otherPlayerName} got it right (${otherChoice})`;
+                            backgroundColor = '#ffebee';
+                            borderColor = '#f44336';
+                            statusIcon = '👎';
+                        } else {
+                            statusMessage = `💥 You both got it wrong! You chose ${myChoice}, ${otherPlayerName} chose ${otherChoice}`;
+                            backgroundColor = '#fff3e0';
+                            borderColor = '#ff9800';
+                            statusIcon = '😅';
+                        }
+                    } else {
+                        // This or That mode - show compatibility
+                        if (isMatch) {
+                            statusMessage = `🤝 You both chose ${myChoice}`;
+                            backgroundColor = '#e8f5e8';
+                            borderColor = '#4caf50';
+                            statusIcon = '✅';
+                        } else {
+                            statusMessage = `🤔 You chose ${myChoice}, ${otherPlayerName} chose ${otherChoice}`;
+                            backgroundColor = '#fff3e0';
+                            borderColor = '#ff9800';
+                            statusIcon = '❌';
+                        }
+                    }
                         
                         comparisonHTML += `
-                            <div style="display: flex; align-items: center; padding: 1rem; margin: 0.5rem 0; background: ${isMatch ? '#e8f5e8' : '#fff3e0'}; border-radius: 10px; border-left: 4px solid ${isMatch ? '#4caf50' : '#ff9800'};">
+                            <div style="display: flex; align-items: center; padding: 1rem; margin: 0.5rem 0; background: ${backgroundColor}; border-radius: 10px; border-left: 4px solid ${borderColor};">
                                 <div style="flex: 1;">
                                     <div style="font-weight: 600; margin-bottom: 0.3rem;">
                                         ${question.prompt || question.option1 + " or " + question.option2 + "?"}
                                     </div>
-                                    <div style="color: ${isMatch ? '#2e7d32' : '#e65100'};">
-                                        ${isMatch ? `🤝 You both chose ${myChoice}` : `🤔 You chose ${myChoice}, ${otherPlayerName} chose ${otherChoice}`}
+                                    <div style="color: #333;">
+                                        ${statusMessage}
                                     </div>
                                 </div>
                                 <div style="font-size: 1.5rem;">
-                                    ${isMatch ? '✅' : '❌'}
+                                    ${statusIcon}
                                 </div>
                             </div>
                         `;
                 }
             });
             
-            // Compatibility score and message
-            const compatibility = Math.round((matches / totalQuestions) * 100);
-            let compatibilityMessage = '';
-            let compatibilityColor = '';
+            // Calculate header section based on mode
+            let headerHTML = '';
             
-            if (compatibility >= 80) {
-                compatibilityMessage = "Wow! You're basically twins! 👯";
-                compatibilityColor = '#4caf50';
-            } else if (compatibility >= 60) {
-                compatibilityMessage = "Great compatibility! Similar taste 😊";
-                compatibilityColor = '#8bc34a';
-            } else if (compatibility >= 40) {
-                compatibilityMessage = "Some similarities, some differences 🤷";
-                compatibilityColor = '#ff9800';
+            if (isCompetition) {
+                // Competition mode - show scores and winner
+                let winnerMessage = '';
+                let headerColor = '';
+                
+                if (myScore > otherScore) {
+                    winnerMessage = "🏆 You Won!";
+                    headerColor = '#4caf50';
+                } else if (otherScore > myScore) {
+                    winnerMessage = `🏆 ${otherPlayers[0].player_name} Won!`;
+                    headerColor = '#f44336';
+                } else {
+                    winnerMessage = "🤝 It's a Tie!";
+                    headerColor = '#ff9800';
+                }
+                
+                headerHTML = `
+                    <div style="background: linear-gradient(45deg, ${headerColor}, ${headerColor}dd); color: white; padding: 2rem; border-radius: 15px; margin-bottom: 1.5rem; text-align: center;">
+                        <div style="font-size: 2.5rem; margin-bottom: 1rem;">${winnerMessage}</div>
+                        <div style="display: flex; justify-content: space-around; margin-bottom: 1rem;">
+                            <div>
+                                <div style="font-size: 2rem; font-weight: bold;">${myScore}</div>
+                                <div style="opacity: 0.9;">You</div>
+                            </div>
+                            <div style="font-size: 2rem; opacity: 0.7;">VS</div>
+                            <div>
+                                <div style="font-size: 2rem; font-weight: bold;">${otherScore}</div>
+                                <div style="opacity: 0.9;">${otherPlayers[0].player_name}</div>
+                            </div>
+                        </div>
+                        <div style="opacity: 0.8; font-size: 0.9rem;">out of ${totalQuestions} questions</div>
+                    </div>
+                `;
             } else {
-                compatibilityMessage = "Opposites attract! Very different choices 🙃";
-                compatibilityColor = '#f44336';
+                // This or That mode - show compatibility
+                const compatibility = Math.round((matches / totalQuestions) * 100);
+                let compatibilityMessage = '';
+                let compatibilityColor = '';
+                
+                if (compatibility >= 80) {
+                    compatibilityMessage = "Wow! You're basically twins! 👯";
+                    compatibilityColor = '#4caf50';
+                } else if (compatibility >= 60) {
+                    compatibilityMessage = "Great compatibility! Similar taste 😊";
+                    compatibilityColor = '#8bc34a';
+                } else if (compatibility >= 40) {
+                    compatibilityMessage = "Some similarities, some differences 🤷";
+                    compatibilityColor = '#ff9800';
+                } else {
+                    compatibilityMessage = "Opposites attract! Very different choices 🙃";
+                    compatibilityColor = '#f44336';
+                }
+                
+                headerHTML = `
+                    <div style="background: linear-gradient(45deg, ${compatibilityColor}, ${compatibilityColor}dd); color: white; padding: 2rem; border-radius: 15px; margin-bottom: 1.5rem; text-align: center;">
+                        <div style="font-size: 3rem; margin-bottom: 0.5rem;">${matches}/${totalQuestions}</div>
+                        <div style="font-size: 1.2rem; margin-bottom: 0.5rem;">Compatibility</div>
+                        <div style="opacity: 0.9;">${compatibilityMessage}</div>
+                    </div>
+                `;
             }
             
                          resultsContainer.innerHTML = `
                  <div style="margin: 1rem 0;">
-                     <div style="background: linear-gradient(45deg, ${compatibilityColor}, ${compatibilityColor}dd); color: white; padding: 2rem; border-radius: 15px; margin-bottom: 1.5rem; text-align: center;">
-                         <div style="font-size: 3rem; margin-bottom: 0.5rem;">${matches}/${totalQuestions}</div>
-                         <div style="font-size: 1.2rem; margin-bottom: 0.5rem;">Compatibility</div>
-                         <div style="opacity: 0.9;">${compatibilityMessage}</div>
-                     </div>
+                     ${headerHTML}
                      
                      <div style="text-align: left;">
-                         <h4 style="margin-bottom: 1rem; text-align: center;">📊 Choice Comparison</h4>
+                         <h4 style="margin-bottom: 1rem; text-align: center;">${isCompetition ? '🎯 Answer Breakdown' : '📊 Choice Comparison'}</h4>
                          ${comparisonHTML}
                      </div>
                      
                      <div style="background: #e3f2fd; padding: 1rem; border-radius: 10px; margin-top: 1.5rem; text-align: center; border-left: 4px solid #2196f3;">
                          <div style="color: #1976d2; font-weight: 600; margin-bottom: 0.5rem;">
-                             <i class="fas fa-users"></i> Playing Together
+                             <i class="fas fa-users"></i> ${isCompetition ? 'Competing Together' : 'Playing Together'}
                          </div>
                          <div style="color: #1565c0; font-size: 0.9rem;">
-                             When you click "Play Another Quiz", you'll both get a new random quiz to play together!
+                             ${isCompetition ? 'Try another competition quiz to see who\'s the real champion!' : 'When you click "Play Another Quiz", you\'ll both get a new random quiz to play together!'}
                          </div>
                      </div>
                  </div>
@@ -1119,7 +1282,165 @@
     
     async function playAnotherQuiz() {
         try {
-            // Use coordinated quiz selection for the shared group
+            // Send a permission request to the other player
+            showNotification('Sending request to your friend...');
+            
+            const response = await fetch('/api/request-new-quiz', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ 
+                    session_id: sessionId,
+                    requester_name: localStorage.getItem('playerName') || 'Anonymous'
+                })
+            });
+            
+            const data = await response.json();
+            if (data.success) {
+                showNotification('Request sent! Waiting for your friend\'s response...');
+                // Start polling for response
+                pollForQuizResponse();
+            } else {
+                showNotification(data.error || 'Error sending request', 'error');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            showNotification('Connection error', 'error');
+        }
+    }
+    
+    async function startQuizForBoth() {
+        try {
+            // Signal that this player is ready to start
+            const response = await fetch('/api/player-ready', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ 
+                    session_id: sessionId
+                })
+            });
+            
+            const data = await response.json();
+            if (data.success) {
+                if (data.both_ready) {
+                    // Both players are ready, start the quiz
+                    showQuizInterface();
+                } else {
+                    // This player is ready, wait for the other
+                    document.getElementById('start-quiz-btn').textContent = 'Waiting for friend...';
+                    document.getElementById('start-quiz-btn').disabled = true;
+                    
+                    // Poll to check when both players are ready
+                    pollForBothReady();
+                }
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            showNotification('Connection error', 'error');
+        }
+    }
+    
+    async function pollForBothReady() {
+        const pollInterval = setInterval(async () => {
+            try {
+                const response = await fetch(`/api/game-state/${sessionId}`);
+                const data = await response.json();
+                
+                if (data.success && data.both_ready) {
+                    clearInterval(pollInterval);
+                    showQuizInterface();
+                }
+            } catch (error) {
+                console.error('Error polling for readiness:', error);
+            }
+        }, 1000); // Check every second
+        
+        // Stop polling after 30 seconds
+        setTimeout(() => {
+            clearInterval(pollInterval);
+        }, 30000);
+    }
+    
+    function showQuizInterface() {
+        document.getElementById('waiting-container').style.display = 'none';
+        document.getElementById('ready-container').style.display = 'none';
+        document.getElementById('card-stack').style.display = 'block';
+        document.querySelector('.action-buttons').style.display = 'flex';
+        
+        // Initialize the card mechanics for swiping
+        initializeCard();
+        
+        // Add entrance animation
+        const cardStack = document.getElementById('card-stack');
+        if (cardStack) {
+            cardStack.style.opacity = '0';
+            cardStack.style.transform = 'translateY(30px)';
+            
+            setTimeout(() => {
+                cardStack.style.transition = 'all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+                cardStack.style.opacity = '1';
+                cardStack.style.transform = 'translateY(0px)';
+            }, 100);
+        }
+        
+        showNotification('Quiz started! Good luck! 🎮');
+    }
+    
+    async function pollForQuizResponse() {
+        const pollInterval = setInterval(async () => {
+            try {
+                const response = await fetch(`/api/quiz-request-status/${sessionId}`);
+                const data = await response.json();
+                
+                if (data.response !== null) {
+                    clearInterval(pollInterval);
+                    if (data.response) {
+                        // Friend accepted, start new quiz
+                        showNotification('Friend accepted! Starting new quiz...');
+                        startNewQuizForBoth();
+                    } else {
+                        // Friend declined
+                        showNotification('Friend declined. Maybe next time!', 'error');
+                    }
+                }
+            } catch (error) {
+                console.error('Error polling for response:', error);
+            }
+        }, 2000);
+        
+        // Stop polling after 30 seconds
+        setTimeout(() => {
+            clearInterval(pollInterval);
+        }, 30000);
+    }
+    
+    async function respondToQuizRequest(accepted) {
+        try {
+            const response = await fetch('/api/respond-quiz-request', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ 
+                    session_id: sessionId,
+                    accepted: accepted
+                })
+            });
+            
+            const data = await response.json();
+            if (data.success) {
+                document.getElementById('permission-modal').style.display = 'none';
+                if (accepted) {
+                    showNotification('Starting new quiz...');
+                    startNewQuizForBoth();
+                } else {
+                    showNotification('Request declined');
+                }
+            }
+        } catch (error) {
+            console.error('Error responding to request:', error);
+        }
+    }
+    
+    async function startNewQuizForBoth() {
+        try {
             const response = await fetch('/api/next-group-quiz', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -1132,7 +1453,6 @@
             
             const data = await response.json();
             if (data.success) {
-                showNotification(`Starting "${data.quiz_title}"...`);
                 window.location.href = `/session/${data.session_id}`;
             } else {
                 showNotification(data.error || 'Error creating new session', 'error');
@@ -1145,9 +1465,36 @@
     
     // Initialize on page load
     document.addEventListener('DOMContentLoaded', async () => {
-        // Update localStorage with session name if available
+        // Update localStorage with session name if available (with expiration)
         if (sessionPlayerName) {
-            localStorage.setItem('playerName', sessionPlayerName);
+            const playerData = {
+                name: sessionPlayerName,
+                timestamp: Date.now(),
+                expires: Date.now() + (24 * 60 * 60 * 1000) // 24 hours
+            };
+            localStorage.setItem('playerData', JSON.stringify(playerData));
+            localStorage.setItem('playerName', sessionPlayerName); // Keep for backwards compatibility
+        }
+        
+        // Check if stored player data is still valid
+        try {
+            const storedData = localStorage.getItem('playerData');
+            if (storedData) {
+                const playerData = JSON.parse(storedData);
+                if (playerData.expires > Date.now()) {
+                    // Data is still valid, use it
+                    if (!sessionPlayerName && playerData.name) {
+                        // Use stored name if no session name provided
+                        window.persistentPlayerName = playerData.name;
+                    }
+                } else {
+                    // Data expired, clean up
+                    localStorage.removeItem('playerData');
+                }
+            }
+        } catch (e) {
+            // Invalid data, clean up
+            localStorage.removeItem('playerData');
         }
         
         // Always fetch proper player mapping from backend for consistency
@@ -1162,31 +1509,67 @@
             };
         }
         
-        initializeCard();
-        
-        // Check session status for multiplayer coordination
-        checkSessionStatus();
-        
         // Check if quiz is completed and load results
         if (currentQuestionIndex >= allQuestions.length) {
             setTimeout(() => {
                 loadCompletionResults();
             }, 1000);
+        } else {
+            // Check if we should show waiting or ready state
+            await checkGameState();
         }
         
-        // Add some entrance animation
-        const cardStack = document.getElementById('card-stack');
-        if (cardStack) {
-            cardStack.style.opacity = '0';
-            cardStack.style.transform = 'translateY(30px)';
-            
-            setTimeout(() => {
-                cardStack.style.transition = 'all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
-                cardStack.style.opacity = '1';
-                cardStack.style.transform = 'translateY(0px)';
-            }, 100);
-        }
+        // Check session status for multiplayer coordination
+        checkSessionStatus();
+        
+        // Poll for permission requests
+        pollForPermissionRequests();
     });
+    
+    async function checkGameState() {
+        try {
+            const response = await fetch(`/api/game-state/${sessionId}`);
+            const data = await response.json();
+            
+            if (data.has_friend) {
+                if (data.both_ready) {
+                    // Both players ready, show quiz
+                    showQuizInterface();
+                } else {
+                    // Show ready screen
+                    document.getElementById('ready-container').style.display = 'block';
+                    document.getElementById('ready-message').textContent = 
+                        `Both players connected: ${data.player_names.join(' & ')}. Ready to start?`;
+                }
+            } else {
+                // Show waiting screen
+                document.getElementById('waiting-container').style.display = 'block';
+            }
+        } catch (error) {
+            console.error('Error checking game state:', error);
+            // Fallback to normal behavior
+            initializeCard();
+            showQuizInterface();
+        }
+    }
+    
+    async function pollForPermissionRequests() {
+        setInterval(async () => {
+            try {
+                const response = await fetch(`/api/pending-quiz-request/${sessionId}`);
+                const data = await response.json();
+                
+                if (data.has_request && !window.permissionModalShown) {
+                    window.permissionModalShown = true;
+                    document.getElementById('permission-message').textContent = 
+                        `${data.requester_name} wants to play another quiz. Do you want to join?`;
+                    document.getElementById('permission-modal').style.display = 'block';
+                }
+            } catch (error) {
+                console.error('Error checking for permission requests:', error);
+            }
+        }, 3000);
+    }
     
     // Session status checking for multiplayer coordination
     let statusCheckInterval = null;
@@ -1219,17 +1602,37 @@
                     await fetchPlayerMapping();
                     updateSessionInfoWithFriend(friend);
                     
-                    // Show appropriate notification based on friend's status
-                    const notificationKey = `${friend.session_id}_${friend.is_complete ? 'finished' : 'started'}`;
-                    if (!window.friendNotifications) window.friendNotifications = new Set();
+                    // Check if we're in waiting/ready state and need to update
+                    if (document.getElementById('waiting-container').style.display === 'block') {
+                        // Friend joined while we were waiting, switch to ready state
+                        document.getElementById('waiting-container').style.display = 'none';
+                        document.getElementById('ready-container').style.display = 'block';
+                        document.getElementById('ready-message').textContent = 
+                            `Both players connected: You & ${friend.player_name}. Ready to start?`;
+                    }
                     
-                    if (!window.friendNotifications.has(notificationKey)) {
-                        if (friend.is_complete) {
-                            showFriendFinishedNotification(friend.player_name);
-                        } else {
+                    // Only show join notifications if quiz hasn't started yet
+                    if (currentQuestionIndex >= 0 && document.getElementById('card-stack').style.display === 'none') {
+                        const notificationKey = `${friend.session_id}_joined`;
+                        if (!window.friendNotifications) window.friendNotifications = new Set();
+                        
+                        if (!window.friendNotifications.has(notificationKey)) {
                             showFriendStartedNotification(friend.player_name);
+                            window.friendNotifications.add(notificationKey);
                         }
-                        window.friendNotifications.add(notificationKey);
+                    }
+                    
+                    // Show completion notifications during gameplay
+                    if (currentQuestionIndex >= 0 && document.getElementById('card-stack').style.display !== 'none') {
+                        const completionKey = `${friend.session_id}_${friend.is_complete ? 'finished' : 'started'}`;
+                        if (!window.friendNotifications) window.friendNotifications = new Set();
+                        
+                        if (!window.friendNotifications.has(completionKey)) {
+                            if (friend.is_complete) {
+                                showFriendFinishedNotification(friend.player_name);
+                            }
+                            window.friendNotifications.add(completionKey);
+                        }
                     }
                     
                     // Stop frequent checking once friends are found
@@ -1237,8 +1640,8 @@
                         clearInterval(statusCheckInterval);
                         statusCheckInterval = null;
                     }
-                } else if (currentQuestionIndex === 0) {
-                    // No friends yet, check more frequently
+                } else if (currentQuestionIndex === 0 || document.getElementById('waiting-container').style.display === 'block') {
+                    // No friends yet and we're still waiting, check more frequently
                     if (!statusCheckInterval) {
                         statusCheckInterval = setInterval(checkSessionStatus, 3000);
                     }

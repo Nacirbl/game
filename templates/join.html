@@ -60,8 +60,14 @@
             return;
         }
         
-        // Store name in localStorage
-        localStorage.setItem('playerName', playerName);
+        // Store name in localStorage with expiration
+        const playerData = {
+            name: playerName,
+            timestamp: Date.now(),
+            expires: Date.now() + (24 * 60 * 60 * 1000) // 24 hours
+        };
+        localStorage.setItem('playerData', JSON.stringify(playerData));
+        localStorage.setItem('playerName', playerName); // Keep for backwards compatibility
         
         // Show loading status
         document.getElementById('join-status').style.display = 'flex';
@@ -103,7 +109,31 @@
         }
     });
     
+    // Check for persistent player name and pre-fill
+    try {
+        const storedData = localStorage.getItem('playerData');
+        if (storedData) {
+            const playerData = JSON.parse(storedData);
+            if (playerData.expires > Date.now() && playerData.name) {
+                document.getElementById('player-name').value = playerData.name;
+            }
+        } else {
+            // Fallback to old storage method
+            const oldName = localStorage.getItem('playerName');
+            if (oldName) {
+                document.getElementById('player-name').value = oldName;
+            }
+        }
+    } catch (e) {
+        console.log('Could not restore player name');
+    }
+    
     // Auto-focus name input
     document.getElementById('player-name').focus();
+    
+    // If name is pre-filled, select it for easy editing
+    if (document.getElementById('player-name').value) {
+        document.getElementById('player-name').select();
+    }
 </script>
 {% endblock %} 

@@ -7,12 +7,30 @@
         This or That
     </h1>
     
-    <div style="display: flex; flex-direction: column; gap: 2rem; margin: 2rem 0;">
+    <!-- Game Mode Selection -->
+    <div style="display: flex; flex-direction: column; gap: 1.5rem; margin: 2rem 0;">
+        <h2 style="text-align: center; color: var(--text-dark); margin-bottom: 1rem;">Choose Game Mode</h2>
         
-        <!-- Start New Game -->
-        <div style="background: linear-gradient(45deg, #667eea, #764ba2); padding: 3rem 2rem; border-radius: 20px; color: white;">
-            <i class="fas fa-rocket" style="font-size: 4rem; margin-bottom: 1rem;"></i>
-            <h2 style="margin-bottom: 1rem;">Start New Game</h2>
+        <!-- This or That Mode -->
+        <div style="background: linear-gradient(45deg, #667eea, #764ba2); padding: 2.5rem 2rem; border-radius: 20px; color: white; cursor: pointer; transition: transform 0.3s ease;" onclick="selectGameMode('thisorthat')" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+            <i class="fas fa-balance-scale" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+            <h3 style="margin-bottom: 1rem;">This or That</h3>
+            <p style="opacity: 0.9; margin: 0;">Personal preferences and opinions. No right or wrong answers!</p>
+        </div>
+        
+        <!-- Competition Mode -->
+        <div style="background: linear-gradient(45deg, #f093fb, #f5576c); padding: 2.5rem 2rem; border-radius: 20px; color: white; cursor: pointer; transition: transform 0.3s ease;" onclick="selectGameMode('competition')" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+            <i class="fas fa-trophy" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+            <h3 style="margin-bottom: 1rem;">Competition</h3>
+            <p style="opacity: 0.9; margin: 0;">Knowledge-based questions with correct answers. Test your skills and compete!</p>
+        </div>
+    </div>
+    
+    <!-- Player Setup (Initially Hidden) -->
+    <div id="player-setup" style="display: none; margin-top: 2rem;">
+        <div style="background: linear-gradient(45deg, #4caf50, #8bc34a); padding: 3rem 2rem; border-radius: 20px; color: white;">
+            <i class="fas fa-user" style="font-size: 4rem; margin-bottom: 1rem;"></i>
+            <h2 id="game-mode-title" style="margin-bottom: 1rem;">Ready to Play</h2>
             <div style="margin-top: 1.5rem;">
                 <input type="text" 
                        id="new-player-name-input" 
@@ -21,8 +39,14 @@
                 <button onclick="startNewGame()" class="btn" style="background: rgba(255,255,255,0.2); border: 2px solid white; color: white; font-size: 1.1rem; padding: 1rem 2rem;">
                     <i class="fas fa-rocket"></i> Start Game
                 </button>
+                <button onclick="goBack()" class="btn" style="background: transparent; border: 2px solid rgba(255,255,255,0.5); color: white; font-size: 1rem; padding: 0.8rem 1.5rem; margin-left: 1rem;">
+                    <i class="fas fa-arrow-left"></i> Back
+                </button>
             </div>
         </div>
+    </div>
+    
+    <div style="display: flex; flex-direction: column; gap: 2rem; margin: 2rem 0;">
         
         <!-- Join Game -->
         <div style="background: linear-gradient(45deg, #4caf50, #8bc34a); padding: 3rem 2rem; border-radius: 20px; color: white;">
@@ -79,11 +103,70 @@
 {% block extra_js %}
 <script>
     let quizzes = [];
+    let selectedGameMode = '';
+    
+    function selectGameMode(mode) {
+        selectedGameMode = mode;
+        
+        // Hide mode selection and show player setup
+        const modeSelection = document.querySelector('.card > div:nth-child(2)');
+        const playerSetup = document.getElementById('player-setup');
+        
+        modeSelection.style.display = 'none';
+        playerSetup.style.display = 'block';
+        
+        // Update title based on mode
+        const title = document.getElementById('game-mode-title');
+        if (mode === 'thisorthat') {
+            title.textContent = 'This or That - Ready to Play';
+        } else {
+            title.textContent = 'Competition - Ready to Compete';
+        }
+        
+        // Pre-fill name if available
+        try {
+            const storedData = localStorage.getItem('playerData');
+            if (storedData) {
+                const playerData = JSON.parse(storedData);
+                if (playerData.expires > Date.now() && playerData.name) {
+                    document.getElementById('new-player-name-input').value = playerData.name;
+                }
+            } else {
+                const oldName = localStorage.getItem('playerName');
+                if (oldName) {
+                    document.getElementById('new-player-name-input').value = oldName;
+                }
+            }
+        } catch (e) {
+            console.log('Could not restore player name');
+        }
+        
+        // Focus on name input
+        document.getElementById('new-player-name-input').focus();
+        if (document.getElementById('new-player-name-input').value) {
+            document.getElementById('new-player-name-input').select();
+        }
+    }
+    
+    function goBack() {
+        // Show mode selection and hide player setup
+        const modeSelection = document.querySelector('.card > div:nth-child(2)');
+        const playerSetup = document.getElementById('player-setup');
+        
+        modeSelection.style.display = 'flex';
+        playerSetup.style.display = 'none';
+        selectedGameMode = '';
+    }
     
     async function startNewGame() {
         const playerName = document.getElementById('new-player-name-input').value.trim();
         if (!playerName) {
             showNotification('Please enter your name first!', 'error');
+            return;
+        }
+        
+        if (!selectedGameMode) {
+            showNotification('Please select a game mode first!', 'error');
             return;
         }
         
@@ -98,14 +181,24 @@
         
         try {
             const response = await fetch('/api/quizzes');
-            quizzes = await response.json();
+            const allQuizzes = await response.json();
+            
+            // Filter quizzes by game mode
+            quizzes = allQuizzes.filter(quiz => {
+                if (selectedGameMode === 'competition') {
+                    return quiz.type === 'competition';
+                } else {
+                    return quiz.type !== 'competition'; // Default to this or that
+                }
+            });
             
             if (quizzes.length === 0) {
+                const modeText = selectedGameMode === 'competition' ? 'Competition' : 'This or That';
                 quizList.innerHTML = `
                     <div style="text-align: center; padding: 3rem; color: var(--text-light);">
                         <i class="fas fa-inbox" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;"></i>
-                        <h3>No quizzes available yet</h3>
-                        <p>Create your first quiz!</p>
+                        <h3>No ${modeText} quizzes available yet</h3>
+                        <p>Create your first ${modeText.toLowerCase()} quiz!</p>
                         <a href="/admin" class="btn" style="margin-top: 1rem;">
                             <i class="fas fa-plus"></i> Create First Quiz
                         </a>
@@ -114,17 +207,26 @@
                 return;
             }
             
-            quizList.innerHTML = quizzes.map(quiz => `
-                <div class="quiz-item" onclick="playQuiz('${quiz.id}')">
-                    <div class="quiz-title">
-                        <i class="fas fa-puzzle-piece"></i> ${quiz.title}
+            quizList.innerHTML = quizzes.map(quiz => {
+                const isCompetition = quiz.type === 'competition';
+                const icon = isCompetition ? 'fas fa-trophy' : 'fas fa-balance-scale';
+                const typeLabel = isCompetition ? 'Competition' : 'This or That';
+                
+                return `
+                    <div class="quiz-item" onclick="playQuiz('${quiz.id}')">
+                        <div class="quiz-title">
+                            <i class="${icon}"></i> ${quiz.title}
+                        </div>
+                        <div class="quiz-description">${quiz.description || 'No description'}</div>
+                        <div class="quiz-meta">
+                            <span><i class="fas fa-question-circle"></i> ${quiz.question_count} questions</span>
+                            <span style="background: ${isCompetition ? '#f093fb' : '#667eea'}; color: white; padding: 0.2rem 0.5rem; border-radius: 10px; font-size: 0.8rem;">
+                                ${typeLabel}
+                            </span>
+                        </div>
                     </div>
-                    <div class="quiz-description">${quiz.description || 'No description'}</div>
-                    <div class="quiz-meta">
-                        <span><i class="fas fa-question-circle"></i> ${quiz.question_count} questions</span>
-                    </div>
-                </div>
-            `).join('');
+                `;
+            }).join('');
             
         } catch (error) {
             console.error('Error loading quizzes:', error);

@@ -9,10 +9,16 @@ from PIL import Image
 import io
 import pytesseract
 import re
+import requests
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'uploads'
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max file size
+
+# LLM Configuration
+DEEPINFRA_API_KEY = "KOgI2z74uv6eO0gWPpnNQV7xOQvkaWDk"
+DEEPINFRA_BASE_URL = "https://api.deepinfra.com/v1/openai/"
+LLM_MODEL_NAME = "google/gemma-3-27b-it"
 
 # Ensure directories exist
 os.makedirs('quizzes', exist_ok=True)
@@ -96,8 +102,177 @@ def save_quiz_results(session_data):
     with open(f'{results_dir}/{session_data["session_id"]}.json', 'w') as f:
         json.dump(result_data, f, indent=2)
 
-def extract_questions_from_image(image_path):
-    """Extract 'this or that' questions from uploaded image using OCR"""
+def call_llm(messages, max_tokens=1000, temperature=0.7):
+    """Call the DeepInfra LLM API"""
+    try:
+        headers = {
+            "Authorization": f"Bearer {DEEPINFRA_API_KEY}",
+            "Content-Type": "application/json"
+        }
+        
+        data = {
+            "model": LLM_MODEL_NAME,
+            "messages": messages,
+            "max_tokens": max_tokens,
+            "temperature": temperature
+        }
+        
+        response = requests.post(
+            f"{DEEPINFRA_BASE_URL}chat/completions",
+            headers=headers,
+            json=data,
+            timeout=30
+        )
+        
+        if response.status_code == 200:
+            return response.json()["choices"][0]["message"]["content"]
+        else:
+            print(f"LLM API Error: {response.status_code} - {response.text}")
+            return None
+            
+    except Exception as e:
+        print(f"LLM Error: {e}")
+        return None
+
+def generate_question_with_llm(topic, quiz_type="thisorthat", existing_questions=None):
+    """Generate a question using LLM based on topic and quiz type"""
+    try:
+        if quiz_type == "competition":
+            prompt = f"""Generate a knowledge-based competition question about {topic}. 
+Return ONLY a JSON object with this exact format:
+{{
+    "prompt": "Your question here?",
+    "option1": "First answer option",
+    "option2": "Second answer option", 
+    "correct_answer": "option1" or "option2"
+}}
+
+Make it challenging but fair. Ensure one option is clearly correct and the other is a plausible but wrong answer. The question has to be 5 to 8 words max.
+Example topics: history, science, geography, sports, entertainment, etc."""
+
+        else:  # thisorthat mode
+            prompt = f"""Generate a "this or that" preference question about {topic}.
+Return ONLY a JSON object with this exact format:
+{{
+    "prompt": "Your question here?", 
+    "option1": "First preference option",
+    "option2": "Second preference option"
+}}
+
+Make it fun and engaging. These are personal preference questions with no right or wrong answers. The question has to be 5 to 8 words max.
+Example topics: food, entertainment, lifestyle, travel, etc."""
+
+        # Add context about existing questions to avoid duplicates
+        if existing_questions and len(existing_questions) > 0:
+            existing_prompts = [q.get('prompt', '') for q in existing_questions]
+            prompt += f"\n\nAvoid creating questions similar to these existing ones: {existing_prompts[:3]}"
+
+        messages = [{"role": "user", "content": prompt}]
+        
+        response = call_llm(messages, max_tokens=300, temperature=0.8)
+        
+        if response:
+            try:
+                # Try to extract JSON from the response
+                import json
+                # Find JSON in the response (it might have extra text)
+                start = response.find('{')
+                end = response.rfind('}') + 1
+                
+                if start != -1 and end != 0:
+                    json_str = response[start:end]
+                    question_data = json.loads(json_str)
+                    
+                    # Validate the response format
+                    required_fields = ['prompt', 'option1', 'option2']
+                    if quiz_type == "competition":
+                        required_fields.append('correct_answer')
+                    
+                    if all(field in question_data for field in required_fields):
+                        return question_data
+                    
+            except json.JSONDecodeError:
+                pass
+        
+        return None
+        
+    except Exception as e:
+        print(f"Question generation error: {e}")
+        return None
+
+def extract_questions_from_image_with_llm(image_path):
+    """Extract questions from image using LLM vision capabilities"""
+    try:
+        # Convert image to base64
+        with open(image_path, "rb") as image_file:
+            image_data = base64.b64encode(image_file.read()).decode('utf-8')
+        
+        # Create message with image
+        messages = [{
+            "role": "user",
+            "content": [
+                {
+                    "type": "text",
+                    "text": """Analyze this image and extract any "this or that" questions you can find. 
+Return a JSON array of questions in this format:
+[
+    {
+        "prompt": "Question text?",
+        "option1": "First option", 
+        "option2": "Second option"
+    }
+]
+
+Look for any comparison questions, either/or choices, preference questions, or any content that could be turned into "this or that" format. If the image has general content, create relevant questions based on what you see.
+
+Return ONLY the JSON array, no other text."""
+                },
+                {
+                    "type": "image_url",
+                    "image_url": {
+                        "url": f"data:image/jpeg;base64,{image_data}"
+                    }
+                }
+            ]
+        }]
+        
+        response = call_llm(messages, max_tokens=800, temperature=0.7)
+        
+        if response:
+            try:
+                # Find JSON in the response
+                start = response.find('[')
+                end = response.rfind(']') + 1
+                
+                if start != -1 and end != 0:
+                    json_str = response[start:end]
+                    questions = json.loads(json_str)
+                    
+                    # Validate and clean the questions
+                    valid_questions = []
+                    for q in questions:
+                        if isinstance(q, dict) and 'option1' in q and 'option2' in q:
+                            valid_questions.append({
+                                'prompt': q.get('prompt', ''),
+                                'option1': q['option1'],
+                                'option2': q['option2']
+                            })
+                    
+                    return valid_questions[:10]  # Limit to 10 questions
+                    
+            except json.JSONDecodeError:
+                pass
+        
+        # Fallback to OCR if LLM fails
+        return extract_questions_from_image_ocr(image_path)
+        
+    except Exception as e:
+        print(f"LLM Image processing error: {e}")
+        # Fallback to OCR
+        return extract_questions_from_image_ocr(image_path)
+
+def extract_questions_from_image_ocr(image_path):
+    """Extract 'this or that' questions from uploaded image using OCR (fallback method)"""
     try:
         # Extract text from image
         text = pytesseract.image_to_string(Image.open(image_path))
@@ -124,6 +299,11 @@ def extract_questions_from_image(image_path):
     except Exception as e:
         print(f"OCR Error: {e}")
         return []
+
+# Maintain backward compatibility
+def extract_questions_from_image(image_path):
+    """Extract questions from image - tries LLM first, falls back to OCR"""
+    return extract_questions_from_image_with_llm(image_path)
 
 @app.route('/')
 def index():
@@ -233,6 +413,7 @@ def api_create_quiz():
     quiz_data = {
         'title': data.get('title', 'Untitled Quiz'),
         'description': data.get('description', ''),
+        'type': data.get('type', 'thisorthat'),
         'questions': data.get('questions', [])
     }
     
@@ -271,13 +452,37 @@ def api_upload_image():
     filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
     file.save(filepath)
     
-    # Extract questions from image
+    # Extract questions from image (now uses LLM with OCR fallback)
     questions = extract_questions_from_image(filepath)
     
     # Clean up uploaded file
     os.remove(filepath)
     
     return jsonify({'success': True, 'questions': questions})
+
+@app.route('/api/generate_question', methods=['POST'])
+def api_generate_question():
+    """API endpoint to generate a question using LLM"""
+    try:
+        data = request.get_json()
+        topic = data.get('topic', '').strip()
+        quiz_type = data.get('quiz_type', 'thisorthat')
+        existing_questions = data.get('existing_questions', [])
+        
+        if not topic:
+            return jsonify({'success': False, 'error': 'Topic is required'})
+        
+        # Generate question using LLM
+        question_data = generate_question_with_llm(topic, quiz_type, existing_questions)
+        
+        if question_data:
+            return jsonify({'success': True, 'question': question_data})
+        else:
+            return jsonify({'success': False, 'error': 'Failed to generate question. Please try a different topic or try again.'})
+            
+    except Exception as e:
+        print(f"Generate question API error: {e}")
+        return jsonify({'success': False, 'error': 'An error occurred while generating the question'})
 
 @app.route('/api/session/<session_id>/answer', methods=['POST'])
 def api_submit_answer(session_id):
@@ -343,7 +548,8 @@ def api_list_quizzes():
                     'id': quiz_id,
                     'title': quiz_data['title'],
                     'description': quiz_data.get('description', ''),
-                    'question_count': len(quiz_data['questions'])
+                    'question_count': len(quiz_data['questions']),
+                    'type': quiz_data.get('type', 'thisorthat')  # Default to this or that
                 })
     return jsonify(quizzes)
 
@@ -470,6 +676,7 @@ def api_get_multiplayer_results(session_id):
             'session_id': session_id,
             'quiz_id': quiz_id,
             'quiz_title': main_session['quiz_title'],
+            'quiz_type': quiz_data.get('type', 'thisorthat') if quiz_data else 'thisorthat',
             'total_questions': len(main_session['questions']),
             'questions': quiz_data['questions'] if quiz_data else main_session['questions'],
             'players': completed_players,
@@ -573,7 +780,8 @@ def list_all_quizzes():
                     'id': quiz_id,
                     'title': quiz_data['title'],
                     'description': quiz_data.get('description', ''),
-                    'question_count': len(quiz_data['questions'])
+                    'question_count': len(quiz_data['questions']),
+                    'type': quiz_data.get('type', 'thisorthat')  # Default to this or that
                 })
     return quizzes
 
@@ -657,6 +865,206 @@ def get_player_mapping(session_data, friend_data=None):
             'my_player_number': 1,
             'friend_player_number': 2
         }
+
+# Global state for quiz coordination (persistent for longer sessions)
+quiz_requests = {}  # session_id -> {requester_name, timestamp, response}
+player_ready_state = {}  # session_id -> {ready_players: set, timestamp}
+
+def cleanup_old_states():
+    """Clean up old states to prevent memory leaks"""
+    current_time = time.time()
+    
+    # Clean up quiz requests older than 5 minutes
+    to_remove = []
+    for key, data in quiz_requests.items():
+        try:
+            timestamp = datetime.fromisoformat(data['timestamp']).timestamp()
+            if current_time - timestamp > 300:  # 5 minutes
+                to_remove.append(key)
+        except:
+            to_remove.append(key)
+    
+    for key in to_remove:
+        del quiz_requests[key]
+    
+    # Clean up ready states older than 10 minutes
+    to_remove = []
+    for key, data in player_ready_state.items():
+        try:
+            if 'timestamp' in data:
+                timestamp = data['timestamp']
+                if current_time - timestamp > 600:  # 10 minutes
+                    to_remove.append(key)
+        except:
+            pass
+    
+    for key in to_remove:
+        del player_ready_state[key]
+
+@app.route('/api/game-state/<session_id>')
+def api_get_game_state(session_id):
+    """API endpoint to check if both players are connected and ready"""
+    try:
+        with open(f'play_sessions/{session_id}.json', 'r') as f:
+            session_data = json.load(f)
+        
+        quiz_id = session_data['quiz_id']
+        shared_group_id = session_data.get('shared_session_group', session_id)
+        
+        # Find all sessions in the same group
+        group_sessions = []
+        if os.path.exists('play_sessions'):
+            for filename in os.listdir('play_sessions'):
+                if filename.endswith('.json'):
+                    try:
+                        with open(f'play_sessions/{filename}', 'r') as f:
+                            other_session = json.load(f)
+                            if (other_session.get('shared_session_group') == shared_group_id and 
+                                other_session.get('quiz_id') == quiz_id):
+                                group_sessions.append(other_session)
+                    except:
+                        continue
+        
+        # Check readiness state
+        ready_players = player_ready_state.get(shared_group_id, {}).get('ready_players', set())
+        
+        return jsonify({
+            'success': True,
+            'has_friend': len(group_sessions) > 1,
+            'both_ready': len(ready_players) >= 2,
+            'player_names': [s.get('player_name', f"Player {s['session_id'][:4]}") for s in group_sessions],
+            'ready_count': len(ready_players)
+        })
+        
+    except FileNotFoundError:
+        return jsonify({'success': False, 'error': 'Session not found'}), 404
+
+@app.route('/api/player-ready', methods=['POST'])
+def api_player_ready():
+    """API endpoint to signal that a player is ready to start"""
+    try:
+        # Clean up old states periodically
+        cleanup_old_states()
+        
+        data = request.get_json()
+        session_id = data.get('session_id')
+        
+        with open(f'play_sessions/{session_id}.json', 'r') as f:
+            session_data = json.load(f)
+        
+        shared_group_id = session_data.get('shared_session_group', session_id)
+        
+        # Initialize ready state if not exists
+        if shared_group_id not in player_ready_state:
+            player_ready_state[shared_group_id] = {
+                'ready_players': set(),
+                'timestamp': time.time()
+            }
+        
+        # Add this player to ready set and update timestamp
+        player_ready_state[shared_group_id]['ready_players'].add(session_id)
+        player_ready_state[shared_group_id]['timestamp'] = time.time()
+        
+        # Check if both players are ready
+        both_ready = len(player_ready_state[shared_group_id]['ready_players']) >= 2
+        
+        return jsonify({
+            'success': True,
+            'both_ready': both_ready,
+            'ready_count': len(player_ready_state[shared_group_id]['ready_players'])
+        })
+        
+    except FileNotFoundError:
+        return jsonify({'success': False, 'error': 'Session not found'}), 404
+
+@app.route('/api/request-new-quiz', methods=['POST'])
+def api_request_new_quiz():
+    """API endpoint to request permission for a new quiz"""
+    try:
+        data = request.get_json()
+        session_id = data.get('session_id')
+        requester_name = data.get('requester_name', 'Anonymous')
+        
+        with open(f'play_sessions/{session_id}.json', 'r') as f:
+            session_data = json.load(f)
+        
+        shared_group_id = session_data.get('shared_session_group', session_id)
+        
+        # Store the request
+        quiz_requests[shared_group_id] = {
+            'requester_name': requester_name,
+            'timestamp': datetime.now().isoformat(),
+            'response': None
+        }
+        
+        return jsonify({'success': True})
+        
+    except FileNotFoundError:
+        return jsonify({'success': False, 'error': 'Session not found'}), 404
+
+@app.route('/api/pending-quiz-request/<session_id>')
+def api_get_pending_quiz_request(session_id):
+    """API endpoint to check for pending quiz requests"""
+    try:
+        with open(f'play_sessions/{session_id}.json', 'r') as f:
+            session_data = json.load(f)
+        
+        shared_group_id = session_data.get('shared_session_group', session_id)
+        
+        if shared_group_id in quiz_requests:
+            request_data = quiz_requests[shared_group_id]
+            # Only show if response is still pending
+            if request_data['response'] is None:
+                return jsonify({
+                    'has_request': True,
+                    'requester_name': request_data['requester_name']
+                })
+        
+        return jsonify({'has_request': False})
+        
+    except FileNotFoundError:
+        return jsonify({'has_request': False})
+
+@app.route('/api/respond-quiz-request', methods=['POST'])
+def api_respond_quiz_request():
+    """API endpoint to respond to a quiz request"""
+    try:
+        data = request.get_json()
+        session_id = data.get('session_id')
+        accepted = data.get('accepted', False)
+        
+        with open(f'play_sessions/{session_id}.json', 'r') as f:
+            session_data = json.load(f)
+        
+        shared_group_id = session_data.get('shared_session_group', session_id)
+        
+        # Update the request with response
+        if shared_group_id in quiz_requests:
+            quiz_requests[shared_group_id]['response'] = accepted
+        
+        return jsonify({'success': True})
+        
+    except FileNotFoundError:
+        return jsonify({'success': False, 'error': 'Session not found'}), 404
+
+@app.route('/api/quiz-request-status/<session_id>')
+def api_get_quiz_request_status(session_id):
+    """API endpoint to get the status of a quiz request"""
+    try:
+        with open(f'play_sessions/{session_id}.json', 'r') as f:
+            session_data = json.load(f)
+        
+        shared_group_id = session_data.get('shared_session_group', session_id)
+        
+        if shared_group_id in quiz_requests:
+            return jsonify({
+                'response': quiz_requests[shared_group_id]['response']
+            })
+        
+        return jsonify({'response': None})
+        
+    except FileNotFoundError:
+        return jsonify({'response': None})
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))  # fallback to 5000 locally

@@ -1,0 +1,92 @@
+{
+  "session_id": "d82a8eb7",
+  "quiz_id": "f76cec27",
+  "quiz_title": "Historical Knowledge Challenge",
+  "completed_at": "2025-05-25T20:36:40.864184",
+  "started_at": "2025-05-25T20:36:03.869342",
+  "total_questions": 6,
+  "answers": [
+    {
+      "question_index": 0,
+      "answer": "right",
+      "timestamp": "2025-05-25T20:36:13.749631"
+    },
+    {
+      "question_index": 1,
+      "answer": "right",
+      "timestamp": "2025-05-25T20:36:19.560576"
+    },
+    {
+      "question_index": 2,
+      "answer": "left",
+      "timestamp": "2025-05-25T20:36:23.124041"
+    },
+    {
+      "question_index": 3,
+      "answer": "left",
+      "timestamp": "2025-05-25T20:36:27.725053"
+    },
+    {
+      "question_index": 4,
+      "answer": "right",
+      "timestamp": "2025-05-25T20:36:34.973311"
+    },
+    {
+      "question_index": 5,
+      "answer": "left",
+      "timestamp": "2025-05-25T20:36:40.864184"
+    }
+  ],
+  "choices_summary": {
+    "question_0": {
+      "options": [
+        "Louis XIV",
+        "Napoleon Bonaparte"
+      ],
+      "choice": "Napoleon Bonaparte",
+      "choice_side": "right"
+    },
+    "question_1": {
+      "options": [
+        "Sydney",
+        "Canberra"
+      ],
+      "choice": "Canberra",
+      "choice_side": "right"
+    },
+    "question_2": {
+      "options": [
+        "1945",
+        "1944"
+      ],
+      "choice": "1945",
+      "choice_side": "left"
+    },
+    "question_3": {
+      "options": [
+        "Michelangelo",
+        "Leonardo da Vinci"
+      ],
+      "choice": "Michelangelo",
+      "choice_side": "left"
+    },
+    "question_4": {
+      "options": [
+        "Saturn",
+        "Jupiter"
+      ],
+      "choice": "Jupiter",
+      "choice_side": "right"
+    },
+    "question_5": {
+      "options": [
+        "Oxygen",
+        "Gold"
+      ],
+      "choice": "Oxygen",
+      "choice_side": "left"
+    }
+  },
+  "shared_session_group": "947bfc91",
+  "player_name": "Malena"
+}

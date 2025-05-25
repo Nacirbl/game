@@ -1,0 +1,33 @@
+{
+  "id": "bbae6c0a",
+  "title": "Lifestyle Choices",
+  "description": "Discover your lifestyle preferences!",
+  "questions": [
+    {
+      "prompt": "Which pet would you choose?",
+      "option1": "Cat",
+      "option2": "Dog"
+    },
+    {
+      "prompt": "What's your favorite season?",
+      "option1": "Summer",
+      "option2": "Winter"
+    },
+    {
+      "prompt": "How do you prefer to get around?",
+      "option1": "Car",
+      "option2": "Bike"
+    },
+    {
+      "prompt": "Where do you feel most at home?",
+      "option1": "City",
+      "option2": "Nature"
+    },
+    {
+      "prompt": "When are you most productive?",
+      "option1": "Morning",
+      "option2": "Night"
+    }
+  ],
+  "created_at": "2025-05-25T20:34:33.700758"
+}

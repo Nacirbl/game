@@ -1,0 +1,63 @@
+{
+  "session_id": "4d84b275",
+  "quiz_id": "b366a474",
+  "quiz_title": "Friend Personality Quiz",
+  "questions": [
+    {
+      "prompt": "Who is more likely to be the life of the party?",
+      "option1": "Player 1",
+      "option2": "Player 2"
+    },
+    {
+      "prompt": "Who would be more patient in a long line?",
+      "option1": "Player 1",
+      "option2": "Player 2"
+    },
+    {
+      "prompt": "Who is more likely to try exotic food?",
+      "option1": "Player 1",
+      "option2": "Player 2"
+    },
+    {
+      "prompt": "Who would wake up earlier on vacation?",
+      "option1": "Player 1",
+      "option2": "Player 2"
+    },
+    {
+      "prompt": "Who is more organized with their belongings?",
+      "option1": "Player 1",
+      "option2": "Player 2"
+    }
+  ],
+  "current_question": 5,
+  "answers": [
+    {
+      "question_index": 0,
+      "answer": "left",
+      "timestamp": "2025-05-25T20:22:13.936055"
+    },
+    {
+      "question_index": 1,
+      "answer": "right",
+      "timestamp": "2025-05-25T20:22:16.095486"
+    },
+    {
+      "question_index": 2,
+      "answer": "left",
+      "timestamp": "2025-05-25T20:22:18.103951"
+    },
+    {
+      "question_index": 3,
+      "answer": "left",
+      "timestamp": "2025-05-25T20:22:19.584468"
+    },
+    {
+      "question_index": 4,
+      "answer": "left",
+      "timestamp": "2025-05-25T20:22:21.814110"
+    }
+  ],
+  "started_at": "2025-05-25T20:21:59.224874",
+  "shared_session_group": "4d84b275",
+  "player_name": "Nacir"
+}
