@@ -115,10 +115,10 @@
         <div style="margin: 2rem 0;">
             <h4 style="text-align: center; margin-bottom: 1rem;"><i class="fas fa-question-circle"></i> Questions</h4>
             <div class="admin-buttons" style="display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap;">
-                <button type="button" onclick="showAIGenerator(1)" class="btn" style="background: linear-gradient(45deg, #667eea, #764ba2); color: white;">
+                <button type="button" onclick="startAIGeneration(1)" class="btn" style="background: linear-gradient(45deg, #667eea, #764ba2); color: white;">
                     <i class="fas fa-robot"></i> AI Generate (1)
                 </button>
-                <button type="button" onclick="showAIGenerator(10)" class="btn" style="background: linear-gradient(45deg, #9c27b0, #673ab7); color: white;">
+                <button type="button" onclick="startAIGeneration(10)" class="btn" style="background: linear-gradient(45deg, #9c27b0, #673ab7); color: white;">
                     <i class="fas fa-magic"></i> AI Batch (10)
                 </button>
                 <button type="button" onclick="addQuestion()" class="btn">
@@ -224,48 +224,82 @@
     let questions = [];
     let createdQuizId = null;
     
-    // Comprehensive emoji and icon mapping
+    // Comprehensive emoji and icon mapping with extensive coverage
     const emojiMap = {
         // Food & Drink - emojis
         'pizza': '🍕', 'burger': '🍔', 'coffee': '☕', 'tea': '🍵', 'wine': '🍷', 'beer': '🍺',
         'ice cream': '🍦', 'cake': '🎂', 'cookie': '🍪', 'apple': '🍎', 'banana': '🍌',
         'pasta': '🍝', 'sushi': '🍣', 'taco': '🌮', 'sandwich': '🥪', 'salad': '🥗',
-        'donut': '🍩', 'chocolate': '🍫', 'popcorn': '🍿', 'french fries': '🍟',
+        'donut': '🍩', 'chocolate': '🍫', 'popcorn': '🍿', 'french fries': '🍟', 'bread': '🍞',
+        'cheese': '🧀', 'meat': '🥩', 'chicken': '🍗', 'egg': '🥚', 'milk': '🥛', 'water': '💧',
+        'juice': '🧃', 'soda': '🥤', 'cocktail': '🍹', 'smoothie': '🥤', 'rice': '🍚',
+        'noodles': '🍜', 'soup': '🍲', 'hotdog': '🌭', 'pretzel': '🥨', 'pancake': '🥞',
         
         // Animals - emojis
         'cat': '🐱', 'dog': '🐶', 'fish': '🐟', 'bird': '🐦', 'horse': '🐴', 'elephant': '🐘',
         'lion': '🦁', 'tiger': '🐅', 'bear': '🐻', 'panda': '🐼', 'monkey': '🐵', 'rabbit': '🐰',
+        'snake': '🐍', 'frog': '🐸', 'pig': '🐷', 'cow': '🐄', 'sheep': '🐑', 'wolf': '🐺',
+        'fox': '🦊', 'deer': '🦌', 'giraffe': '🦒', 'zebra': '🦓', 'turtle': '🐢', 'penguin': '🐧',
+        'eagle': '🦅', 'owl': '🦉', 'duck': '🦆', 'swan': '🦢', 'butterfly': '🦋', 'bee': '🐝',
         
         // Transportation - emojis
         'car': '🚗', 'bike': '🚲', 'plane': '✈️', 'train': '🚂', 'bus': '🚌', 'ship': '🚢',
-        'motorcycle': '🏍️', 'taxi': '🚕', 'rocket': '🚀',
+        'motorcycle': '🏍️', 'taxi': '🚕', 'rocket': '🚀', 'helicopter': '🚁', 'boat': '⛵',
+        'subway': '🚇', 'ambulance': '🚑', 'truck': '🚚', 'police': '🚓', 'fire truck': '🚒',
         
         // Entertainment - emojis
         'movie': '🎬', 'music': '🎵', 'book': '📚', 'tv': '📺', 'game': '🎮', 'guitar': '🎸',
-        'piano': '🎹', 'dance': '💃', 'party': '🎉',
+        'piano': '🎹', 'dance': '💃', 'party': '🎉', 'theater': '🎭', 'circus': '🎪',
+        'concert': '🎤', 'festival': '🎊', 'karaoke': '🎤', 'podcast': '🎙️', 'radio': '📻',
         
         // Sports - emojis
         'football': '⚽', 'basketball': '🏀', 'tennis': '🎾', 'baseball': '⚾', 'golf': '⛳',
         'swimming': '🏊', 'running': '🏃', 'gym': '💪', 'skiing': '⛷️', 'surfing': '🏄',
+        'boxing': '🥊', 'cycling': '🚴', 'volleyball': '🏐', 'rugby': '🏉', 'bowling': '🎳',
+        'hockey': '🏒', 'archery': '🏹', 'fishing': '🎣', 'climbing': '🧗', 'yoga': '🧘',
         
         // Weather & Nature - emojis
         'summer': '☀️', 'winter': '❄️', 'rain': '🌧️', 'snow': '🌨️', 'beach': '🏖️',
         'mountain': '⛰️', 'forest': '🌲', 'city': '🏙️', 'sunrise': '🌅', 'sunset': '🌇',
+        'rainbow': '🌈', 'lightning': '⚡', 'wind': '💨', 'tornado': '🌪️', 'volcano': '🌋',
+        'desert': '🏜️', 'island': '🏝️', 'waterfall': '💦', 'ocean': '🌊', 'river': '🏞️',
         
         // Technology - emojis
         'phone': '📱', 'laptop': '💻', 'computer': '🖥️', 'tablet': '📱', 'camera': '📷',
-        'internet': '🌐', 'email': '📧', 'wifi': '📶',
+        'internet': '🌐', 'email': '📧', 'wifi': '📶', 'bluetooth': '📶', 'battery': '🔋',
+        'robot': '🤖', 'ai': '🤖', 'code': '💻', 'software': '💽', 'hardware': '🔧',
+        'keyboard': '⌨️', 'mouse': '🖱️', 'printer': '🖨️', 'headphones': '🎧', 'speaker': '🔊',
         
         // Activities & Hobbies - emojis
         'cooking': '👩‍🍳', 'art': '🎨', 'photography': '📸', 'shopping': '🛍️', 'travel': '✈️',
-        'reading': '📖', 'writing': '✍️', 'gardening': '🌱',
+        'reading': '📖', 'writing': '✍️', 'gardening': '🌱', 'cleaning': '🧹', 'laundry': '👕',
+        'meditation': '🧘', 'exercise': '💪', 'study': '📚', 'work': '💼', 'sleep': '😴',
+        'hiking': '🥾', 'camping': '⛺', 'picnic': '🧺', 'bbq': '🔥', 'driving': '🚗',
         
         // Places - emojis
         'home': '🏠', 'school': '🏫', 'hospital': '🏥', 'restaurant': '🍽️', 'hotel': '🏨',
-        'park': '🏞️', 'beach': '🏖️', 'gym': '🏋️',
+        'park': '🏞️', 'beach': '🏖️', 'gym': '🏋️', 'office': '🏢', 'bank': '🏦',
+        'church': '⛪', 'museum': '🏛️', 'library': '📚', 'store': '🏪', 'mall': '🏬',
+        'airport': '✈️', 'station': '🚉', 'stadium': '🏟️', 'theater': '🎭', 'zoo': '🦁',
+        
+        // Emotions & People - emojis
+        'happy': '😊', 'sad': '😢', 'angry': '😠', 'love': '❤️', 'laugh': '😂',
+        'surprise': '😮', 'fear': '😨', 'tired': '😴', 'excited': '🤩', 'nervous': '😰',
+        'family': '👨‍👩‍👧‍👦', 'friends': '👫', 'couple': '💑', 'baby': '👶', 'child': '🧒',
+        'teen': '👦', 'adult': '👨', 'elderly': '👴', 'man': '👨', 'woman': '👩',
+        
+        // Colors - emojis
+        'red': '🔴', 'blue': '🔵', 'green': '🟢', 'yellow': '🟡', 'orange': '🟠',
+        'purple': '🟣', 'pink': '🌸', 'black': '⚫', 'white': '⚪', 'gray': '⚫',
+        
+        // Numbers & Symbols - emojis
+        'one': '1️⃣', 'two': '2️⃣', 'first': '🥇', 'second': '🥈', 'third': '🥉',
+        'winner': '🏆', 'medal': '🏅', 'star': '⭐', 'heart': '❤️', 'fire': '🔥',
+        'money': '💰', 'diamond': '💎', 'crown': '👑', 'key': '🔑', 'lock': '🔒',
         
         // Player mode - emojis
-        'player 1': '👤', 'player 2': '👥', 'you': '👤', 'friend': '👥', 'me': '👤'
+        'player 1': '👤', 'player 2': '👥', 'you': '👤', 'friend': '👥', 'me': '👤',
+        'team': '👥', 'group': '👥', 'opponent': '🆚', 'vs': '🆚', 'versus': '🆚'
     };
     
     // Font Awesome fallback mapping
@@ -370,7 +404,7 @@
             
             if (result.success && result.questions.length > 0) {
                 questions = result.questions;
-                showQuizForm();
+                showAIForm(); // Use AI form instead of manual form
                 populateQuestionsFromImage();
                 showNotification(`Extracted ${result.questions.length} questions from image!`);
             } else {
@@ -387,6 +421,22 @@
         questions = [];
         showQuizForm();
         addQuestion(); // Start with one question
+    }
+    
+    function showAIForm() {
+        questions = [];
+        showQuizForm();
+        // Don't add a blank question for AI mode
+    }
+    
+    function startAIGeneration(count) {
+        // If no questions exist yet, show the form first
+        const form = document.getElementById('quiz-form');
+        if (form.style.display === 'none' || !form.style.display) {
+            showAIForm();
+        }
+        
+        showAIGenerator(count);
     }
     
     function showQuizForm() {
@@ -784,36 +834,64 @@
             // Single question
             if (!currentGeneratedQuestion) return;
             
-            const index = questions.length;
-            questions.push(currentGeneratedQuestion);
+            // Find the first empty question or add new one
+            let targetIndex = -1;
+            for (let i = 0; i < questions.length; i++) {
+                if (!questions[i].prompt || questions[i].prompt.trim() === '') {
+                    targetIndex = i;
+                    break;
+                }
+            }
             
-            addQuestionToDOM(
-                index, 
-                currentGeneratedQuestion.option1, 
-                currentGeneratedQuestion.option2, 
-                currentGeneratedQuestion.prompt,
-                currentGeneratedQuestion.correct_answer
-            );
+            if (targetIndex === -1) {
+                // No empty questions, add new one
+                targetIndex = questions.length;
+                questions.push(currentGeneratedQuestion);
+                
+                addQuestionToDOM(
+                    targetIndex, 
+                    currentGeneratedQuestion.option1, 
+                    currentGeneratedQuestion.option2, 
+                    currentGeneratedQuestion.prompt,
+                    currentGeneratedQuestion.correct_answer
+                );
+            } else {
+                // Replace empty question
+                questions[targetIndex] = currentGeneratedQuestion;
+                refreshQuestionsDisplay();
+            }
             
             showNotification('Question added to your quiz!');
         } else {
             // Batch questions
             if (!currentGeneratedQuestions || currentGeneratedQuestions.length === 0) return;
             
+            let addedCount = 0;
             currentGeneratedQuestions.forEach((question, i) => {
-                const index = questions.length;
-                questions.push(question);
+                // Find the first empty question or add new one
+                let targetIndex = -1;
+                for (let j = 0; j < questions.length; j++) {
+                    if (!questions[j].prompt || questions[j].prompt.trim() === '') {
+                        targetIndex = j;
+                        break;
+                    }
+                }
                 
-                addQuestionToDOM(
-                    index, 
-                    question.option1, 
-                    question.option2, 
-                    question.prompt,
-                    question.correct_answer
-                );
+                if (targetIndex === -1) {
+                    // No empty questions, add new one
+                    targetIndex = questions.length;
+                    questions.push(question);
+                } else {
+                    // Replace empty question
+                    questions[targetIndex] = question;
+                }
+                addedCount++;
             });
             
-            showNotification(`Added ${currentGeneratedQuestions.length} questions to your quiz!`);
+            // Refresh the entire display
+            refreshQuestionsDisplay();
+            
+            showNotification(`Added ${addedCount} questions to your quiz!`);
         }
         
         // Close the modal
