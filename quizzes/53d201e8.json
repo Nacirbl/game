@@ -1,0 +1,59 @@
+{
+  "title": "My quiz",
+  "description": "",
+  "type": "thisorthat",
+  "questions": [
+    {
+      "option1": "Equations",
+      "option2": "Proofs",
+      "prompt": "Equations or geometric proofs?"
+    },
+    {
+      "option1": "Fascinating",
+      "option2": "Tedious",
+      "prompt": "Prime numbers: fascinating or tedious?"
+    },
+    {
+      "option1": "Beautiful",
+      "option2": "Brutal",
+      "prompt": "Calculus: beautiful or brutal?"
+    },
+    {
+      "option1": "Logic puzzles",
+      "option2": "Word problems",
+      "prompt": "Logic puzzles or word problems?"
+    },
+    {
+      "option1": "Elegant",
+      "option2": "Esoteric",
+      "prompt": "Abstract algebra: elegant or esoteric?"
+    },
+    {
+      "option1": "Real",
+      "option2": "Imaginary",
+      "prompt": "Real numbers or imaginary?"
+    },
+    {
+      "option1": "Visual",
+      "option2": "Conceptual",
+      "prompt": "Graph theory: visual or conceptual?"
+    },
+    {
+      "option1": "Prediction",
+      "option2": "Description",
+      "prompt": "Statistics: prediction or description?"
+    },
+    {
+      "option1": "Stories",
+      "option2": "Theorems",
+      "prompt": "Math history: stories or theorems?"
+    },
+    {
+      "option1": "Mental math",
+      "option2": "Calculator",
+      "prompt": "Mental math or calculator?"
+    }
+  ],
+  "id": "53d201e8",
+  "created_at": "2025-05-25T23:04:08.164821"
+}

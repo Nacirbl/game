@@ -134,11 +134,13 @@ def call_llm(messages, max_tokens=1000, temperature=0.7):
         print(f"LLM Error: {e}")
         return None
 
-def generate_question_with_llm(topic, quiz_type="thisorthat", existing_questions=None):
-    """Generate a question using LLM based on topic and quiz type"""
+def generate_question_with_llm(topic, quiz_type="thisorthat", existing_questions=None, count=1):
+    """Generate one or more questions using LLM based on topic and quiz type"""
     try:
-        if quiz_type == "competition":
-            prompt = f"""Generate a knowledge-based competition question about {topic}. 
+        if count == 1:
+            # Single question generation (existing logic)
+            if quiz_type == "competition":
+                prompt = f"""Generate a knowledge-based competition question about {topic}. 
 Return ONLY a JSON object with this exact format:
 {{
     "prompt": "Your question here?",
@@ -147,11 +149,24 @@ Return ONLY a JSON object with this exact format:
     "correct_answer": "option1" or "option2"
 }}
 
-Make it challenging but fair. Ensure one option is clearly correct and the other is a plausible but wrong answer. The question has to be 5 to 8 words max.
-Example topics: history, science, geography, sports, entertainment, etc."""
+Make it challenging but fair. Ensure one option is clearly correct and the other is a plausible but wrong answer. The question prompt should be 5-8 words max. Answer options should be short (1-3 words).
 
-        else:  # thisorthat mode
-            prompt = f"""Generate a "this or that" preference question about {topic}.
+IMPORTANT: Randomly choose which option (option1 or option2) is correct. Mix it up - sometimes option1 should be correct, sometimes option2. Don't always make the same option correct."""
+
+            elif quiz_type == "player":
+                prompt = f"""Generate a "Player 1 vs Player 2" comparison question about {topic}.
+Return ONLY a JSON object with this exact format:
+{{
+    "prompt": "Your question here?",
+    "option1": "Player 1",
+    "option2": "Player 2"
+}}
+
+The question should be about who is more likely to do something or who would be better at something related to {topic}. Question prompt should be 5-8 words max.
+Examples: "Who wakes up earlier?", "Who is more adventurous?", "Who cooks better food?"""
+
+            else:  # thisorthat mode
+                prompt = f"""Generate a "this or that" preference question about {topic}.
 Return ONLY a JSON object with this exact format:
 {{
     "prompt": "Your question here?", 
@@ -159,46 +174,225 @@ Return ONLY a JSON object with this exact format:
     "option2": "Second preference option"
 }}
 
-Make it fun and engaging. These are personal preference questions with no right or wrong answers. The question has to be 5 to 8 words max.
-Example topics: food, entertainment, lifestyle, travel, etc."""
+Make it fun and engaging. These are personal preference questions with no right or wrong answers. Question prompt should be 5-8 words max. Answer options should be short (1-3 words)."""
 
-        # Add context about existing questions to avoid duplicates
-        if existing_questions and len(existing_questions) > 0:
-            existing_prompts = [q.get('prompt', '') for q in existing_questions]
-            prompt += f"\n\nAvoid creating questions similar to these existing ones: {existing_prompts[:3]}"
+            # Add context about existing questions to avoid duplicates
+            if existing_questions and len(existing_questions) > 0:
+                existing_prompts = [q.get('prompt', '') for q in existing_questions]
+                prompt += f"\n\nAvoid creating questions similar to these existing ones: {existing_prompts[:3]}"
 
-        messages = [{"role": "user", "content": prompt}]
-        
-        response = call_llm(messages, max_tokens=300, temperature=0.8)
-        
-        if response:
-            try:
-                # Try to extract JSON from the response
-                import json
-                # Find JSON in the response (it might have extra text)
-                start = response.find('{')
-                end = response.rfind('}') + 1
+            messages = [{"role": "user", "content": prompt}]
+            response = call_llm(messages, max_tokens=300, temperature=0.8)
+            
+            if response:
+                question_data = parse_single_question_response(response, quiz_type)
+                return question_data if question_data else None
                 
-                if start != -1 and end != 0:
-                    json_str = response[start:end]
-                    question_data = json.loads(json_str)
-                    
-                    # Validate the response format
-                    required_fields = ['prompt', 'option1', 'option2']
-                    if quiz_type == "competition":
-                        required_fields.append('correct_answer')
-                    
-                    if all(field in question_data for field in required_fields):
-                        return question_data
-                    
-            except json.JSONDecodeError:
-                pass
+        else:
+            # Batch question generation (10 questions)
+            if quiz_type == "competition":
+                prompt = f"""Generate {count} knowledge-based competition questions about {topic}. 
+Return ONLY a JSON array with this exact format:
+[
+    {{
+        "prompt": "Question 1?",
+        "option1": "Answer option",
+        "option2": "Answer option", 
+        "correct_answer": "option1" or "option2"
+    }},
+    {{
+        "prompt": "Question 2?",
+        "option1": "Answer option",
+        "option2": "Answer option", 
+        "correct_answer": "option1" or "option2"
+    }}
+    // ... continue for {count} questions
+]
+
+Make each question challenging but fair. Ensure one option is clearly correct and the other is plausible but wrong. Question prompts should be 5-8 words max. Answer options should be short (1-3 words).
+
+IMPORTANT: Randomly vary which option is correct across all questions. For some questions make option1 correct, for others make option2 correct. Aim for roughly 50/50 distribution. Don't make the same option correct for all questions."""
+
+            elif quiz_type == "player":
+                prompt = f"""Generate {count} "Player 1 vs Player 2" comparison questions about {topic}.
+Return ONLY a JSON array with this exact format:
+[
+    {{
+        "prompt": "Question 1?",
+        "option1": "Player 1",
+        "option2": "Player 2"
+    }},
+    {{
+        "prompt": "Question 2?",
+        "option1": "Player 1",
+        "option2": "Player 2"
+    }}
+    // ... continue for {count} questions
+]
+
+Each question should be about who is more likely to do something or who would be better at something related to {topic}. Question prompts should be 5-8 words max.
+Examples: "Who wakes up earlier?", "Who is more adventurous?", "Who cooks better?"""
+
+            else:  # thisorthat mode
+                prompt = f"""Generate {count} "this or that" preference questions about {topic}.
+Return ONLY a JSON array with this exact format:
+[
+    {{
+        "prompt": "Question 1?", 
+        "option1": "Option A",
+        "option2": "Option B"
+    }},
+    {{
+        "prompt": "Question 2?", 
+        "option1": "Option A",
+        "option2": "Option B"
+    }}
+    // ... continue for {count} questions
+]
+
+Make them fun and engaging. These are personal preference questions with no right or wrong answers. Question prompts should be 5-8 words max. Answer options should be short (1-3 words)."""
+
+            # Add context about existing questions
+            if existing_questions and len(existing_questions) > 0:
+                existing_prompts = [q.get('prompt', '') for q in existing_questions]
+                prompt += f"\n\nAvoid creating questions similar to these existing ones: {existing_prompts[:5]}"
+
+            messages = [{"role": "user", "content": prompt}]
+            response = call_llm(messages, max_tokens=1500, temperature=0.8)
+            
+            if response:
+                questions_data = parse_batch_questions_response(response, quiz_type)
+                return questions_data if questions_data and len(questions_data) > 0 else None
         
         return None
         
     except Exception as e:
         print(f"Question generation error: {e}")
         return None
+
+def parse_single_question_response(response, quiz_type):
+    """Parse a single question response from LLM"""
+    try:
+        import json
+        import random
+        
+        # Find JSON in the response (it might have extra text)
+        start = response.find('{')
+        end = response.rfind('}') + 1
+        
+        if start != -1 and end != 0:
+            json_str = response[start:end]
+            question_data = json.loads(json_str)
+            
+            # Validate the response format
+            required_fields = ['prompt', 'option1', 'option2']
+            if quiz_type == "competition":
+                required_fields.append('correct_answer')
+            
+            if all(field in question_data for field in required_fields):
+                # For competition mode, add some randomization if AI didn't mix it up
+                if quiz_type == "competition" and random.random() < 0.5:
+                    # 50% chance to swap the options to ensure randomization
+                    option1 = question_data['option1']
+                    option2 = question_data['option2']
+                    correct = question_data['correct_answer']
+                    
+                    # Swap options
+                    question_data['option1'] = option2
+                    question_data['option2'] = option1
+                    
+                    # Update correct answer accordingly
+                    if correct == 'option1':
+                        question_data['correct_answer'] = 'option2'
+                    else:
+                        question_data['correct_answer'] = 'option1'
+                
+                return question_data
+                
+    except json.JSONDecodeError:
+        pass
+    return None
+
+def parse_batch_questions_response(response, quiz_type):
+    """Parse batch questions response from LLM"""
+    try:
+        import json
+        import random
+        
+        # Find JSON array in the response
+        start = response.find('[')
+        end = response.rfind(']') + 1
+        
+        if start != -1 and end != 0:
+            json_str = response[start:end]
+            questions_array = json.loads(json_str)
+            
+            if isinstance(questions_array, list):
+                valid_questions = []
+                required_fields = ['prompt', 'option1', 'option2']
+                if quiz_type == "competition":
+                    required_fields.append('correct_answer')
+                
+                for question_data in questions_array:
+                    if isinstance(question_data, dict) and all(field in question_data for field in required_fields):
+                        # For competition mode, add randomization
+                        if quiz_type == "competition" and random.random() < 0.5:
+                            # 50% chance to swap the options to ensure good mix
+                            option1 = question_data['option1']
+                            option2 = question_data['option2']
+                            correct = question_data['correct_answer']
+                            
+                            # Swap options
+                            question_data['option1'] = option2
+                            question_data['option2'] = option1
+                            
+                            # Update correct answer accordingly
+                            if correct == 'option1':
+                                question_data['correct_answer'] = 'option2'
+                            else:
+                                question_data['correct_answer'] = 'option1'
+                        
+                        valid_questions.append(question_data)
+                
+                # For competition mode, ensure we have a good mix of correct answers
+                if quiz_type == "competition" and len(valid_questions) > 1:
+                    option1_count = sum(1 for q in valid_questions if q['correct_answer'] == 'option1')
+                    option2_count = len(valid_questions) - option1_count
+                    
+                    # If too imbalanced (more than 70% one way), rebalance some
+                    if option1_count > 0.7 * len(valid_questions):
+                        # Too many option1 correct, flip some to option2
+                        need_to_flip = option1_count - len(valid_questions) // 2
+                        flipped = 0
+                        for question in valid_questions:
+                            if question['correct_answer'] == 'option1' and flipped < need_to_flip:
+                                # Swap options
+                                option1 = question['option1']
+                                option2 = question['option2']
+                                question['option1'] = option2
+                                question['option2'] = option1
+                                question['correct_answer'] = 'option2'
+                                flipped += 1
+                    
+                    elif option2_count > 0.7 * len(valid_questions):
+                        # Too many option2 correct, flip some to option1
+                        need_to_flip = option2_count - len(valid_questions) // 2
+                        flipped = 0
+                        for question in valid_questions:
+                            if question['correct_answer'] == 'option2' and flipped < need_to_flip:
+                                # Swap options
+                                option1 = question['option1']
+                                option2 = question['option2']
+                                question['option1'] = option2
+                                question['option2'] = option1
+                                question['correct_answer'] = 'option1'
+                                flipped += 1
+                
+                return valid_questions[:10]  # Limit to 10 questions max
+                
+    except json.JSONDecodeError:
+        pass
+    return None
 
 def extract_questions_from_image_with_llm(image_path):
     """Extract questions from image using LLM vision capabilities"""
@@ -462,27 +656,38 @@ def api_upload_image():
 
 @app.route('/api/generate_question', methods=['POST'])
 def api_generate_question():
-    """API endpoint to generate a question using LLM"""
+    """API endpoint to generate one or more questions using LLM"""
     try:
         data = request.get_json()
         topic = data.get('topic', '').strip()
         quiz_type = data.get('quiz_type', 'thisorthat')
         existing_questions = data.get('existing_questions', [])
+        count = data.get('count', 1)  # Default to single question
         
         if not topic:
             return jsonify({'success': False, 'error': 'Topic is required'})
         
-        # Generate question using LLM
-        question_data = generate_question_with_llm(topic, quiz_type, existing_questions)
-        
-        if question_data:
-            return jsonify({'success': True, 'question': question_data})
+        # Determine actual quiz type for player mode
+        is_player_mode = data.get('is_player_mode', False)
+        if is_player_mode and quiz_type == 'thisorthat':
+            actual_quiz_type = 'player'
         else:
-            return jsonify({'success': False, 'error': 'Failed to generate question. Please try a different topic or try again.'})
+            actual_quiz_type = quiz_type
+        
+        # Generate question(s) using LLM
+        result = generate_question_with_llm(topic, actual_quiz_type, existing_questions, count)
+        
+        if result:
+            if count == 1:
+                return jsonify({'success': True, 'question': result})
+            else:
+                return jsonify({'success': True, 'questions': result, 'count': len(result)})
+        else:
+            return jsonify({'success': False, 'error': 'Failed to generate questions. Please try a different topic or try again.'})
             
     except Exception as e:
         print(f"Generate question API error: {e}")
-        return jsonify({'success': False, 'error': 'An error occurred while generating the question'})
+        return jsonify({'success': False, 'error': 'An error occurred while generating questions'})
 
 @app.route('/api/session/<session_id>/answer', methods=['POST'])
 def api_submit_answer(session_id):
