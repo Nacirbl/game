@@ -73,6 +73,21 @@
             <textarea id="quiz-description" rows="3" placeholder="Describe what your quiz is about..."></textarea>
         </div>
         
+        <!-- Player Quiz Toggle -->
+        <div class="input-group" style="border: 2px solid var(--primary-color); border-radius: 15px; padding: 1.5rem; background: linear-gradient(45deg, rgba(102, 126, 234, 0.05), rgba(118, 75, 162, 0.05));">
+            <label style="display: flex; align-items: center; cursor: pointer; margin: 0;">
+                <input type="checkbox" id="player-quiz-mode" onchange="togglePlayerQuizMode()" style="margin-right: 1rem; transform: scale(1.5);">
+                <div>
+                    <div style="font-weight: bold; color: var(--primary-color);">
+                        <i class="fas fa-users"></i> Player Quiz Mode
+                    </div>
+                    <div style="font-size: 0.9rem; color: var(--text-light); margin-top: 0.25rem;">
+                        Automatically set options to "Player 1" and "Player 2" for personality/comparison questions
+                    </div>
+                </div>
+            </label>
+        </div>
+        
         <div style="display: flex; justify-content: space-between; align-items: center; margin: 2rem 0;">
             <h4><i class="fas fa-question-circle"></i> Questions</h4>
             <button type="button" onclick="addQuestion()" class="btn">
@@ -182,6 +197,10 @@
         'rain': 'fas fa-cloud-rain',
         'snow': 'fas fa-snowman',
         
+        // Player mode
+        'player 1': 'fas fa-user',
+        'player 2': 'fas fa-user-friends',
+        
         // Default fallbacks
         'default': 'fas fa-star'
     };
@@ -254,18 +273,25 @@
         container.innerHTML = '';
         
         questions.forEach((question, index) => {
-            addQuestionToDOM(index, question.option1, question.option2);
+            addQuestionToDOM(index, question.option1, question.option2, question.prompt);
         });
     }
     
     function addQuestion() {
         const index = questions.length;
-        questions.push({ option1: '', option2: '' });
+        questions.push({ prompt: '', option1: '', option2: '' });
         addQuestionToDOM(index);
     }
     
-    function addQuestionToDOM(index, option1 = '', option2 = '') {
+    function addQuestionToDOM(index, option1 = '', option2 = '', prompt = '') {
         const container = document.getElementById('questions-container');
+        const isPlayerMode = document.getElementById('player-quiz-mode').checked;
+        
+        // Set default options based on mode
+        if (isPlayerMode && !option1 && !option2) {
+            option1 = 'Player 1';
+            option2 = 'Player 2';
+        }
         
         const questionDiv = document.createElement('div');
         questionDiv.className = 'card';
@@ -278,14 +304,25 @@
                 </button>
             </div>
             
+            <div class="input-group" style="margin-bottom: 1.5rem;">
+                <label><i class="fas fa-question-circle"></i> Question Prompt</label>
+                <input type="text" 
+                       id="prompt-${index}" 
+                       value="${prompt || ''}"
+                       placeholder="${isPlayerMode ? 'e.g., Who is more likely to wake up early?' : 'e.g., Where do you want to spend a vacation?'}"
+                       oninput="updateQuestion(${index})"
+                       required>
+            </div>
+            
             <div style="display: grid; grid-template-columns: 1fr auto 1fr; gap: 1rem; align-items: end;">
                 <div class="input-group">
                     <label><i class="fas fa-arrow-left"></i> Left Option</label>
                     <input type="text" 
                            id="option1-${index}" 
                            value="${option1}"
-                           placeholder="e.g., Pizza"
+                           placeholder="${isPlayerMode ? 'Player 1' : 'e.g., Mountain'}"
                            oninput="updateQuestion(${index})"
+                           ${isPlayerMode ? 'readonly style="background: #f8f9fa; color: #6c757d;"' : ''}
                            required>
                 </div>
                 
@@ -300,14 +337,18 @@
                     <input type="text" 
                            id="option2-${index}" 
                            value="${option2}"
-                           placeholder="e.g., Burger"
+                           placeholder="${isPlayerMode ? 'Player 2' : 'e.g., Beach'}"
                            oninput="updateQuestion(${index})"
+                           ${isPlayerMode ? 'readonly style="background: #f8f9fa; color: #6c757d;"' : ''}
                            required>
                 </div>
             </div>
             
             <div style="margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 10px;">
                 <h6><i class="fas fa-eye"></i> Preview</h6>
+                <div style="text-align: center; margin-bottom: 1rem; padding: 0.75rem; background: white; border-radius: 8px; border: 2px dashed var(--secondary-color);">
+                    <div id="question-preview-${index}" style="font-weight: 600; color: var(--text-dark);">${prompt || 'Question prompt will appear here'}</div>
+                </div>
                 <div style="display: grid; grid-template-columns: 1fr auto 1fr; gap: 1rem; align-items: center; margin-top: 0.5rem;">
                     <div style="text-align: center; padding: 1rem; background: linear-gradient(135deg, #667eea, #764ba2); color: white; border-radius: 10px;">
                         <i id="icon1-${index}" class="${getIconForText(option1)}" style="font-size: 2rem; margin-bottom: 0.5rem;"></i>
@@ -326,12 +367,14 @@
     }
     
     function updateQuestion(index) {
+        const prompt = document.getElementById(`prompt-${index}`).value;
         const option1 = document.getElementById(`option1-${index}`).value;
         const option2 = document.getElementById(`option2-${index}`).value;
         
-        questions[index] = { option1, option2 };
+        questions[index] = { prompt, option1, option2 };
         
         // Update preview
+        document.getElementById(`question-preview-${index}`).textContent = prompt || 'Question prompt will appear here';
         document.getElementById(`preview1-${index}`).textContent = option1 || 'Left Option';
         document.getElementById(`preview2-${index}`).textContent = option2 || 'Right Option';
         
@@ -350,8 +393,35 @@
         container.innerHTML = '';
         
         questions.forEach((question, index) => {
-            addQuestionToDOM(index, question.option1, question.option2);
+            addQuestionToDOM(index, question.option1, question.option2, question.prompt);
         });
+    }
+    
+    function togglePlayerQuizMode() {
+        const isPlayerMode = document.getElementById('player-quiz-mode').checked;
+        
+        if (isPlayerMode) {
+            // Convert existing questions to player mode
+            questions.forEach((question, index) => {
+                question.option1 = 'Player 1';
+                question.option2 = 'Player 2';
+            });
+            
+            // Update prompt placeholder
+            document.querySelectorAll('[id^="prompt-"]').forEach(input => {
+                if (!input.value) {
+                    input.placeholder = "e.g., Who is more likely to wake up early?";
+                }
+            });
+        } else {
+            // Clear player options when switching back
+            questions.forEach((question, index) => {
+                if (question.option1 === 'Player 1') question.option1 = '';
+                if (question.option2 === 'Player 2') question.option2 = '';
+            });
+        }
+        
+        refreshQuestionsDisplay();
     }
     
     document.getElementById('create-quiz-form').addEventListener('submit', async function(e) {
@@ -366,9 +436,9 @@
         }
         
         // Validate questions
-        const validQuestions = questions.filter(q => q.option1.trim() && q.option2.trim());
+        const validQuestions = questions.filter(q => q.prompt && q.prompt.trim() && q.option1.trim() && q.option2.trim());
         if (validQuestions.length === 0) {
-            showNotification('Please fill in all question options', 'error');
+            showNotification('Please fill in all question prompts and options', 'error');
             return;
         }
         

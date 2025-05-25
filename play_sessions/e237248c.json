@@ -1,0 +1,37 @@
+{
+  "session_id": "e237248c",
+  "quiz_id": "343369f9",
+  "quiz_title": "Entertainment Choices",
+  "questions": [
+    {
+      "prompt": "How do you prefer to unwind?",
+      "option1": "Movie",
+      "option2": "Book"
+    },
+    {
+      "prompt": "What's your video streaming choice?",
+      "option1": "Netflix",
+      "option2": "YouTube"
+    },
+    {
+      "prompt": "What's your audio entertainment?",
+      "option1": "Music",
+      "option2": "Podcast"
+    },
+    {
+      "prompt": "What's your ideal Friday night?",
+      "option1": "Gaming",
+      "option2": "Movie"
+    },
+    {
+      "prompt": "Which sport do you enjoy watching?",
+      "option1": "Football",
+      "option2": "Basketball"
+    }
+  ],
+  "current_question": 0,
+  "answers": [],
+  "started_at": "2025-05-25T17:06:30.063119",
+  "shared_session_group": "02004504",
+  "player_name": "Malena"
+}

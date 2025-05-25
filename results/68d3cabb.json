@@ -1,0 +1,53 @@
+{
+  "session_id": "68d3cabb",
+  "quiz_id": "dcdc6735",
+  "quiz_title": "Personal Test",
+  "completed_at": "2025-05-25T16:46:22.872769",
+  "started_at": "2025-05-25T16:45:51.750331",
+  "total_questions": 3,
+  "answers": [
+    {
+      "question_index": 0,
+      "answer": "right",
+      "timestamp": "2025-05-25T16:46:17.793870"
+    },
+    {
+      "question_index": 1,
+      "answer": "left",
+      "timestamp": "2025-05-25T16:46:20.938058"
+    },
+    {
+      "question_index": 2,
+      "answer": "left",
+      "timestamp": "2025-05-25T16:46:22.872769"
+    }
+  ],
+  "choices_summary": {
+    "question_0": {
+      "options": [
+        "Player 1",
+        "Player 2"
+      ],
+      "choice": "Player 2",
+      "choice_side": "right"
+    },
+    "question_1": {
+      "options": [
+        "Player 1",
+        "Player 2"
+      ],
+      "choice": "Player 1",
+      "choice_side": "left"
+    },
+    "question_2": {
+      "options": [
+        "Player 1",
+        "Player 2"
+      ],
+      "choice": "Player 1",
+      "choice_side": "left"
+    }
+  },
+  "shared_session_group": "68d3cabb",
+  "player_name": "Player 68d3"
+}

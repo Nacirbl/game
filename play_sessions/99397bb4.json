@@ -1,0 +1,61 @@
+{
+  "session_id": "99397bb4",
+  "quiz_id": "8968990d",
+  "quiz_title": "Lifestyle Choices",
+  "questions": [
+    {
+      "option1": "Cat",
+      "option2": "Dog"
+    },
+    {
+      "option1": "Summer",
+      "option2": "Winter"
+    },
+    {
+      "option1": "Car",
+      "option2": "Bike"
+    },
+    {
+      "option1": "City",
+      "option2": "Nature"
+    },
+    {
+      "option1": "Morning",
+      "option2": "Night"
+    }
+  ],
+  "current_question": 6,
+  "answers": [
+    {
+      "question_index": 0,
+      "answer": "right",
+      "timestamp": "2025-05-25T14:41:24.874743"
+    },
+    {
+      "question_index": 1,
+      "answer": "right",
+      "timestamp": "2025-05-25T14:41:26.492980"
+    },
+    {
+      "question_index": 2,
+      "answer": "right",
+      "timestamp": "2025-05-25T14:41:28.184177"
+    },
+    {
+      "question_index": 3,
+      "answer": "right",
+      "timestamp": "2025-05-25T14:41:29.247551"
+    },
+    {
+      "question_index": 4,
+      "answer": "right",
+      "timestamp": "2025-05-25T14:41:30.112116"
+    },
+    {
+      "question_index": 5,
+      "answer": "right",
+      "timestamp": "2025-05-25T14:41:30.991084"
+    }
+  ],
+  "started_at": "2025-05-25T14:41:17.403258"
+}

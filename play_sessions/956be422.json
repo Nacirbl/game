@@ -1,0 +1,63 @@
+{
+  "session_id": "956be422",
+  "quiz_id": "648ecaf0",
+  "quiz_title": "Entertainment Choices",
+  "questions": [
+    {
+      "prompt": "How do you prefer to unwind?",
+      "option1": "Movie",
+      "option2": "Book"
+    },
+    {
+      "prompt": "What's your video streaming choice?",
+      "option1": "Netflix",
+      "option2": "YouTube"
+    },
+    {
+      "prompt": "What's your audio entertainment?",
+      "option1": "Music",
+      "option2": "Podcast"
+    },
+    {
+      "prompt": "What's your ideal Friday night?",
+      "option1": "Gaming",
+      "option2": "Movie"
+    },
+    {
+      "prompt": "Which sport do you enjoy watching?",
+      "option1": "Football",
+      "option2": "Basketball"
+    }
+  ],
+  "current_question": 5,
+  "answers": [
+    {
+      "question_index": 0,
+      "answer": "left",
+      "timestamp": "2025-05-25T16:24:30.267322"
+    },
+    {
+      "question_index": 1,
+      "answer": "left",
+      "timestamp": "2025-05-25T16:24:32.251516"
+    },
+    {
+      "question_index": 2,
+      "answer": "left",
+      "timestamp": "2025-05-25T16:24:33.405780"
+    },
+    {
+      "question_index": 3,
+      "answer": "left",
+      "timestamp": "2025-05-25T16:24:35.501809"
+    },
+    {
+      "question_index": 4,
+      "answer": "left",
+      "timestamp": "2025-05-25T16:24:37.013290"
+    }
+  ],
+  "started_at": "2025-05-25T16:24:22.909743",
+  "shared_session_group": "221e19d9",
+  "player_name": "Nacir"
+}

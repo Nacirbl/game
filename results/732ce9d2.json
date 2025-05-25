@@ -1,0 +1,53 @@
+{
+  "session_id": "732ce9d2",
+  "quiz_id": "dcdc6735",
+  "quiz_title": "Personal Test",
+  "completed_at": "2025-05-25T16:55:49.347509",
+  "started_at": "2025-05-25T16:55:20.481569",
+  "total_questions": 3,
+  "answers": [
+    {
+      "question_index": 0,
+      "answer": "right",
+      "timestamp": "2025-05-25T16:55:40.278446"
+    },
+    {
+      "question_index": 1,
+      "answer": "left",
+      "timestamp": "2025-05-25T16:55:44.197096"
+    },
+    {
+      "question_index": 2,
+      "answer": "left",
+      "timestamp": "2025-05-25T16:55:49.342579"
+    }
+  ],
+  "choices_summary": {
+    "question_0": {
+      "options": [
+        "Player 1",
+        "Player 2"
+      ],
+      "choice": "Player 2",
+      "choice_side": "right"
+    },
+    "question_1": {
+      "options": [
+        "Player 1",
+        "Player 2"
+      ],
+      "choice": "Player 1",
+      "choice_side": "left"
+    },
+    "question_2": {
+      "options": [
+        "Player 1",
+        "Player 2"
+      ],
+      "choice": "Player 1",
+      "choice_side": "left"
+    }
+  },
+  "shared_session_group": "732ce9d2",
+  "player_name": "Nacir"
+}

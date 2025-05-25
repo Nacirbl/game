@@ -1,0 +1,56 @@
+{
+  "session_id": "e0e92cce",
+  "quiz_id": "6919e546",
+  "quiz_title": "Tech Preferences",
+  "questions": [
+    {
+      "prompt": "What's your essential daily device?",
+      "option1": "Phone",
+      "option2": "Laptop"
+    },
+    {
+      "prompt": "Which smartphone ecosystem?",
+      "option1": "iPhone",
+      "option2": "Android"
+    },
+    {
+      "prompt": "What's your portable work device?",
+      "option1": "Tablet",
+      "option2": "Laptop"
+    },
+    {
+      "prompt": "Which operating system?",
+      "option1": "Mac",
+      "option2": "PC"
+    },
+    {
+      "prompt": "What's your computer mainly for?",
+      "option1": "Gaming",
+      "option2": "Work"
+    }
+  ],
+  "current_question": 4,
+  "answers": [
+    {
+      "question_index": 0,
+      "answer": "right",
+      "timestamp": "2025-05-25T14:35:18.083299"
+    },
+    {
+      "question_index": 1,
+      "answer": "left",
+      "timestamp": "2025-05-25T14:35:20.974169"
+    },
+    {
+      "question_index": 2,
+      "answer": "right",
+      "timestamp": "2025-05-25T14:35:36.382868"
+    },
+    {
+      "question_index": 3,
+      "answer": "left",
+      "timestamp": "2025-05-25T14:35:37.715208"
+    }
+  ],
+  "started_at": "2025-05-25T14:35:16.502548"
+}

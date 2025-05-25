@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+
+{% block title %}Join Quiz - {{ quiz_title }}{% endblock %}
+
+{% block header %}
+<h1><i class="fas fa-users"></i> Join Quiz</h1>
+<p>Your friend invited you to play: <strong>{{ quiz_title }}</strong></p>
+{% endblock %}
+
+{% block content %}
+<div class="card" style="max-width: 500px; margin: 0 auto; text-align: center;">
+    <div style="background: linear-gradient(45deg, #667eea, #764ba2); padding: 2rem; border-radius: 20px; margin-bottom: 2rem;">
+        <i class="fas fa-user-friends" style="font-size: 3rem; color: white; margin-bottom: 1rem;"></i>
+        <h2 style="color: white; margin-bottom: 0.5rem;">Join Your Friend!</h2>
+        <p style="color: rgba(255,255,255,0.9); margin: 0;">Enter your name to start playing together</p>
+    </div>
+    
+    <form id="join-form">
+        <div class="input-group">
+            <label for="player-name">
+                <i class="fas fa-user"></i> Your Name
+            </label>
+            <input type="text" id="player-name" placeholder="Enter your name" required maxlength="20">
+        </div>
+        
+        <div style="margin-top: 2rem;">
+            <button type="submit" class="btn" style="font-size: 1.2rem; padding: 1rem 2rem; width: 100%;">
+                <i class="fas fa-play"></i> Join Quiz
+            </button>
+        </div>
+    </form>
+    
+    <div style="margin-top: 1.5rem; padding: 1rem; background: #f8f9fa; border-radius: 15px; font-size: 0.9rem; color: var(--text-light);">
+        <i class="fas fa-info-circle"></i> 
+        You'll be connected to the same quiz as your friend. Have fun!
+    </div>
+</div>
+
+<div id="join-status" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; align-items: center; justify-content: center;">
+    <div class="card" style="max-width: 400px; margin: 2rem; text-align: center;">
+        <div class="loading">
+            <div class="spinner"></div>
+        </div>
+        <h3>Joining Quiz...</h3>
+        <p style="color: var(--text-light);">Please wait while we connect you</p>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    const sessionId = '{{ session_id }}';
+    
+    document.getElementById('join-form').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const playerName = document.getElementById('player-name').value.trim();
+        if (!playerName) {
+            showNotification('Please enter your name', 'error');
+            return;
+        }
+        
+        // Store name in localStorage
+        localStorage.setItem('playerName', playerName);
+        
+        // Show loading status
+        document.getElementById('join-status').style.display = 'flex';
+        
+        try {
+            // Get the original session data to find the quiz_id
+            const sessionResponse = await fetch(`/api/session/${sessionId}`);
+            const sessionData = await sessionResponse.json();
+            
+            if (!sessionData.quiz_id) {
+                throw new Error('Invalid session');
+            }
+            
+            // Create a new session for this player that's linked to the original
+            const response = await fetch('/api/create-session', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    quiz_id: sessionData.quiz_id,
+                    shared_session_group: sessionData.shared_session_group || sessionId,
+                    player_name: playerName
+                })
+            });
+            
+            const result = await response.json();
+            
+            if (result.success) {
+                // Redirect to the new session
+                window.location.href = `/session/${result.session_id}`;
+            } else {
+                throw new Error(result.error || 'Failed to join session');
+            }
+        } catch (error) {
+            console.error('Error joining session:', error);
+            document.getElementById('join-status').style.display = 'none';
+            showNotification('Failed to join quiz. Please try again.', 'error');
+        }
+    });
+    
+    // Auto-focus name input
+    document.getElementById('player-name').focus();
+</script>
+{% endblock %} 

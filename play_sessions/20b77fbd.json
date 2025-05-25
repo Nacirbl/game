@@ -1,0 +1,57 @@
+{
+  "session_id": "20b77fbd",
+  "quiz_id": "223895b9",
+  "quiz_title": "Travel Dreams",
+  "questions": [
+    {
+      "option1": "Beach",
+      "option2": "Mountains"
+    },
+    {
+      "option1": "Paris",
+      "option2": "Tokyo"
+    },
+    {
+      "option1": "Plane",
+      "option2": "Train"
+    },
+    {
+      "option1": "Hotel",
+      "option2": "Camping"
+    },
+    {
+      "option1": "Adventure",
+      "option2": "Relaxation"
+    }
+  ],
+  "current_question": 5,
+  "answers": [
+    {
+      "question_index": 0,
+      "answer": "right",
+      "timestamp": "2025-05-25T14:51:02.476137"
+    },
+    {
+      "question_index": 1,
+      "answer": "left",
+      "timestamp": "2025-05-25T14:51:04.732460"
+    },
+    {
+      "question_index": 2,
+      "answer": "right",
+      "timestamp": "2025-05-25T14:51:06.524212"
+    },
+    {
+      "question_index": 3,
+      "answer": "left",
+      "timestamp": "2025-05-25T14:51:08.999309"
+    },
+    {
+      "question_index": 4,
+      "answer": "left",
+      "timestamp": "2025-05-25T14:51:15.153785"
+    }
+  ],
+  "started_at": "2025-05-25T14:50:23.614027",
+  "shared_session_group": "20b77fbd"
+}

@@ -4,6 +4,24 @@
 
 {% block header %}
 <h1><i class="fas fa-play-circle"></i> {{ session.quiz_title }}</h1>
+
+<!-- Multiplayer Session Info -->
+<div id="session-info" style="background: rgba(255,255,255,0.15); padding: 0.8rem; border-radius: 15px; margin-bottom: 1rem; text-align: center; transition: all 0.3s ease;">
+    <div id="session-summary" style="cursor: pointer;" onclick="toggleSessionInfo()">
+        <i class="fas fa-users"></i> <span id="session-status">{{ session.player_name or ('Player ' + session.session_id[:4]) }} is playing</span>
+        <i id="toggle-icon" class="fas fa-chevron-down" style="margin-left: 0.5rem; font-size: 0.8rem;"></i>
+    </div>
+    
+    <div id="session-details" style="margin-top: 1rem; display: none;">
+        <div style="font-family: monospace; font-size: 1rem; font-weight: bold; letter-spacing: 1px; background: rgba(255,255,255,0.2); padding: 0.5rem; border-radius: 8px; margin-bottom: 0.5rem;">
+            {{ session.session_id }}
+        </div>
+        <button onclick="shareSession()" style="background: none; border: 1px solid rgba(255,255,255,0.5); color: white; padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.8rem; cursor: pointer;">
+            <i class="fas fa-share-alt"></i> Share Link
+        </button>
+    </div>
+</div>
+
 <div class="question-counter">
     Question <span id="current-question">{{ session.current_question + 1 }}</span> of <span id="total-questions">{{ session.questions|length }}</span>
 </div>
@@ -36,7 +54,41 @@
         overflow: hidden;
         will-change: transform, opacity;
         display: flex;
+        flex-direction: column;
+    }
+    
+    .question-prompt {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        right: 20px;
+        background: rgba(255,255,255,0.95);
+        padding: 1rem;
+        border-radius: 15px;
+        text-align: center;
+        font-weight: 600;
+        font-size: 1.1rem;
+        color: var(--text-dark);
+        z-index: 5;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        backdrop-filter: blur(10px);
+    }
+    
+    .options-container {
+        flex: 1;
+        display: flex;
         flex-direction: row;
+        margin-top: 80px;
+    }
+    
+    .option-left {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+    }
+    
+    .option-right {
+        background: linear-gradient(135deg, #f093fb, #f5576c);
+        color: white;
     }
     
     .tinder-card:active {
@@ -121,12 +173,12 @@
     }
     
     .action-btn.reject {
-        background: linear-gradient(45deg, #ff4458, #ff6b7a);
+        background: linear-gradient(45deg, #667eea, #764ba2);
         color: white;
     }
     
     .action-btn.like {
-        background: linear-gradient(45deg, #42a5f5, #66bb6a);
+        background: linear-gradient(45deg, #f093fb, #f5576c);
         color: white;
     }
     
@@ -190,6 +242,29 @@
             font-size: 0.8rem;
         }
     }
+    
+    /* Animation keyframes for notifications */
+    @keyframes slideInFromTop {
+        from {
+            opacity: 0;
+            transform: translateY(-100px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    @keyframes slideOutToTop {
+        from {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        to {
+            opacity: 0;
+            transform: translateY(-100px);
+        }
+    }
 </style>
 {% endblock %}
 
@@ -207,16 +282,22 @@
             <div class="card-content">
                 {% set question = session.questions[session.current_question] %}
                 
-                <div class="option option-left" id="left-option">
-                    <i class="option-icon" id="left-icon"></i>
-                    <div class="option-text" id="left-text">{{ question.option1 }}</div>
+                <div class="question-prompt" id="question-prompt">
+                    {{ question.prompt or question.option1 + " or " + question.option2 + "?" }}
                 </div>
                 
-                <div class="vs-indicator">VS</div>
-                
-                <div class="option option-right" id="right-option">
-                    <i class="option-icon" id="right-icon"></i>
-                    <div class="option-text" id="right-text">{{ question.option2 }}</div>
+                <div class="options-container">
+                    <div class="option option-left" id="left-option">
+                        <i class="option-icon" id="left-icon"></i>
+                        <div class="option-text" id="left-text">{{ question.option1 }}</div>
+                    </div>
+                    
+                    <div class="vs-indicator">VS</div>
+                    
+                    <div class="option option-right" id="right-option">
+                        <i class="option-icon" id="right-icon"></i>
+                        <div class="option-text" id="right-text">{{ question.option2 }}</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -227,16 +308,22 @@
             <div class="card-content">
                 {% set next_question = session.questions[session.current_question + 1] %}
                 
-                <div class="option option-left">
-                    <i class="option-icon next-left-icon"></i>
-                    <div class="option-text">{{ next_question.option1 }}</div>
+                <div class="question-prompt">
+                    {{ next_question.prompt or next_question.option1 + " or " + next_question.option2 + "?" }}
                 </div>
                 
-                <div class="vs-indicator">VS</div>
-                
-                <div class="option option-right">
-                    <i class="option-icon next-right-icon"></i>
-                    <div class="option-text">{{ next_question.option2 }}</div>
+                <div class="options-container">
+                    <div class="option option-left">
+                        <i class="option-icon next-left-icon"></i>
+                        <div class="option-text">{{ next_question.option1 }}</div>
+                    </div>
+                    
+                    <div class="vs-indicator">VS</div>
+                    
+                    <div class="option option-right">
+                        <i class="option-icon next-right-icon"></i>
+                        <div class="option-text">{{ next_question.option2 }}</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -254,34 +341,31 @@
     
     {% else %}
     <!-- Quiz Complete -->
-    <div class="card" style="text-align: center; max-width: 500px;">
-        <div style="background: linear-gradient(45deg, #4caf50, #8bc34a); padding: 3rem 2rem; border-radius: 20px; margin-bottom: 2rem;">
-            <i class="fas fa-trophy" style="font-size: 4rem; color: white; margin-bottom: 1rem;"></i>
-            <h2 style="color: white; margin-bottom: 1rem;">Quiz Complete!</h2>
-            <p style="color: rgba(255,255,255,0.9);">Thanks for playing {{ session.quiz_title }}!</p>
+    <div class="card" style="text-align: center; max-width: 600px;">
+        <div style="background: linear-gradient(45deg, #4caf50, #8bc34a); padding: 2rem; border-radius: 20px; margin-bottom: 2rem;">
+            <i class="fas fa-trophy" style="font-size: 3rem; color: white; margin-bottom: 1rem;"></i>
+            <h2 style="color: white; margin-bottom: 0.5rem;">Quiz Complete!</h2>
+            <p style="color: rgba(255,255,255,0.9); margin: 0;">{{ session.quiz_title }}</p>
         </div>
         
-        <div style="margin-bottom: 2rem;">
-            <h4 style="margin-bottom: 1rem;">Your Results</h4>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 1rem; margin: 1rem 0;">
-                <div style="text-align: center;">
-                    <div style="font-size: 2rem; color: var(--primary-color);">{{ session.answers|length }}</div>
-                    <div style="color: var(--text-light);">Answered</div>
-                </div>
-                <div style="text-align: center;">
-                    <div style="font-size: 2rem; color: var(--secondary-color);">{{ session.questions|length }}</div>
-                    <div style="color: var(--text-light);">Total</div>
-                </div>
+        <!-- Auto-loading multiplayer results -->
+        <div id="completion-results">
+            <div class="loading" style="margin: 2rem 0;">
+                <div class="spinner"></div>
+                <p>Checking for friends...</p>
             </div>
         </div>
         
-        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-            <a href="/" class="btn">
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 2rem;">
+            <button onclick="playAnotherQuiz()" class="btn" style="background: var(--primary-color); font-size: 1.1rem; padding: 0.8rem 1.5rem;">
+                <i class="fas fa-dice"></i> Play Another Quiz
+            </button>
+            <button onclick="shareSession()" class="btn btn-secondary">
+                <i class="fas fa-share-alt"></i> Invite More
+            </button>
+            <a href="/" class="btn btn-secondary">
                 <i class="fas fa-home"></i> Home
             </a>
-            <button onclick="shareResults()" class="btn btn-secondary">
-                <i class="fas fa-share-alt"></i> Share Quiz
-            </button>
         </div>
     </div>
     {% endif %}
@@ -294,9 +378,12 @@
     const sessionId = '{{ session.session_id }}';
     const quizId = '{{ session.quiz_id }}';
     const quizTitle = '{{ session.quiz_title }}';
+    const sessionPlayerName = '{{ session.player_name or "" }}';
+    
     const allQuestions = [
         {% for q in session.questions %}
         {
+            prompt: {{ (q.get('prompt', '') or '') | tojson }},
             option1: {{ q.option1 | tojson }},
             option2: {{ q.option2 | tojson }}
         }{% if not loop.last %},{% endif %}
@@ -324,14 +411,29 @@
         'summer': 'fas fa-sun', 'winter': 'fas fa-snowflake', 'rain': 'fas fa-cloud-rain',
         'snow': 'fas fa-snowman', 'beach': 'fas fa-umbrella-beach', 'mountain': 'fas fa-mountain',
         'city': 'fas fa-city', 'nature': 'fas fa-tree', 'morning': 'fas fa-sun',
-        'night': 'fas fa-moon', 'hotel': 'fas fa-hotel', 'camping': 'fas fa-campground'
+        'night': 'fas fa-moon', 'hotel': 'fas fa-hotel', 'camping': 'fas fa-campground',
+        // Player mode - use person emojis (same for both players)
+        'player 1': 'fas fa-user',
+        'player 2': 'fas fa-user'
     };
     
     function getIconForText(text) {
         const lowerText = text.toLowerCase();
+        
+        // First check for exact player matches - use same icon for both
+        if (lowerText === 'player 1') return 'fas fa-user';
+        if (lowerText === 'player 2') return 'fas fa-user';
+        
+        // Then check for keyword matches
         for (const [keyword, icon] of Object.entries(iconMap)) {
             if (lowerText.includes(keyword)) return icon;
         }
+        
+        // For player comparison questions, default to person icons
+        if (lowerText.includes('you') || lowerText.includes('me') || lowerText.includes('player')) {
+            return 'fas fa-user';
+        }
+        
         return 'fas fa-star';
     }
     
@@ -516,6 +618,42 @@
         if (currentQuestionIndex >= allQuestions.length) return;
         
         const question = allQuestions[currentQuestionIndex];
+        
+        // Get player names - use global player mapping if available
+        const myPlayerName = localStorage.getItem('playerName') || 'You';
+        let friendName = 'Your Friend';
+        
+        // Try to get names from global player mapping or session data
+        if (window.playerMapping) {
+            // Use the proper mapping
+            const player1Name = window.playerMapping['Player 1'];
+            const player2Name = window.playerMapping['Player 2'];
+            
+            // Update question text with correct player names
+            const questionPrompt = document.getElementById('question-prompt');
+            if (questionPrompt) {
+                let promptText = question.prompt || question.option1 + " or " + question.option2 + "?";
+                promptText = promptText.replace(/Player 1/g, player1Name);
+                promptText = promptText.replace(/Player 2/g, player2Name);
+                questionPrompt.textContent = promptText;
+            }
+            
+            // Update option text with correct player names
+            const leftText = document.getElementById('left-text');
+            const rightText = document.getElementById('right-text');
+            if (leftText && rightText) {
+                let leftOption = question.option1.replace(/Player 1/g, player1Name).replace(/Player 2/g, player2Name);
+                let rightOption = question.option2.replace(/Player 1/g, player1Name).replace(/Player 2/g, player2Name);
+                leftText.textContent = leftOption;
+                rightText.textContent = rightOption;
+            }
+        } else {
+            // If no player mapping available, don't replace names to avoid confusion
+            // This ensures all players see the same raw "Player 1" vs "Player 2" 
+            // rather than personalized but inconsistent mappings
+            console.warn('No player mapping available - showing original Player 1/Player 2 text');
+        }
+        
         const leftIcon = document.getElementById('left-icon');
         const rightIcon = document.getElementById('right-icon');
         
@@ -618,8 +756,9 @@
         const currentQuestion = allQuestions[currentQuestionIndex];
         const nextQuestion = allQuestions[currentQuestionIndex + 1];
         
-        // Update question counter
-        document.getElementById('current-question').textContent = currentQuestionIndex + 1;
+        // Update question counter (cap at total questions)
+        const displayQuestionNumber = Math.min(currentQuestionIndex + 1, allQuestions.length);
+        document.getElementById('current-question').textContent = displayQuestionNumber;
         
         // Remove old current card
         const oldCard = document.getElementById('current-card');
@@ -645,11 +784,36 @@
             nextCard.insertBefore(leftOverlay, nextCard.firstChild);
             nextCard.insertBefore(rightOverlay, nextCard.firstChild);
             
-            // Update the text content
+            // Update the question prompt with player names
+            const questionPrompt = nextCard.querySelector('#question-prompt') || nextCard.querySelector('.question-prompt');
+            if (questionPrompt) {
+                let promptText = currentQuestion.prompt || currentQuestion.option1 + " or " + currentQuestion.option2 + "?";
+                if (window.playerMapping) {
+                    promptText = promptText.replace(/Player 1/g, window.playerMapping['Player 1'])
+                                          .replace(/Player 2/g, window.playerMapping['Player 2']);
+                }
+                questionPrompt.textContent = promptText;
+            }
+            
+            // Update the text content with player names
             const leftText = nextCard.querySelector('#left-text') || nextCard.querySelector('.option-text');
             const rightText = nextCard.querySelectorAll('.option-text')[1];
-            if (leftText) leftText.textContent = currentQuestion.option1;
-            if (rightText) rightText.textContent = currentQuestion.option2;
+            if (leftText) {
+                let leftOption = currentQuestion.option1;
+                if (window.playerMapping) {
+                    leftOption = leftOption.replace(/Player 1/g, window.playerMapping['Player 1'])
+                                          .replace(/Player 2/g, window.playerMapping['Player 2']);
+                }
+                leftText.textContent = leftOption;
+            }
+            if (rightText) {
+                let rightOption = currentQuestion.option2;
+                if (window.playerMapping) {
+                    rightOption = rightOption.replace(/Player 1/g, window.playerMapping['Player 1'])
+                                            .replace(/Player 2/g, window.playerMapping['Player 2']);
+                }
+                rightText.textContent = rightOption;
+            }
             
             // Update icons
             const leftIcon = nextCard.querySelector('#left-icon') || nextCard.querySelector('.option-icon');
@@ -669,16 +833,36 @@
             const newNextCard = document.createElement('div');
             newNextCard.id = 'next-card';
             newNextCard.className = 'tinder-card next-card';
+            
+            // Prepare text with player name replacement
+            let nextPromptText = nextQuestion.prompt || nextQuestion.option1 + " or " + nextQuestion.option2 + "?";
+            let nextOption1 = nextQuestion.option1;
+            let nextOption2 = nextQuestion.option2;
+            
+            if (window.playerMapping) {
+                nextPromptText = nextPromptText.replace(/Player 1/g, window.playerMapping['Player 1'])
+                                              .replace(/Player 2/g, window.playerMapping['Player 2']);
+                nextOption1 = nextOption1.replace(/Player 1/g, window.playerMapping['Player 1'])
+                                        .replace(/Player 2/g, window.playerMapping['Player 2']);
+                nextOption2 = nextOption2.replace(/Player 1/g, window.playerMapping['Player 1'])
+                                        .replace(/Player 2/g, window.playerMapping['Player 2']);
+            }
+            
             newNextCard.innerHTML = `
                 <div class="card-content">
-                    <div class="option option-left">
-                        <i class="option-icon next-left-icon ${getIconForText(nextQuestion.option1)}"></i>
-                        <div class="option-text">${nextQuestion.option1}</div>
+                    <div class="question-prompt">
+                        ${nextPromptText}
                     </div>
-                    <div class="vs-indicator">VS</div>
-                    <div class="option option-right">
-                        <i class="option-icon next-right-icon ${getIconForText(nextQuestion.option2)}"></i>
-                        <div class="option-text">${nextQuestion.option2}</div>
+                    <div class="options-container">
+                        <div class="option option-left">
+                            <i class="option-icon next-left-icon ${getIconForText(nextQuestion.option1)}"></i>
+                            <div class="option-text">${nextOption1}</div>
+                        </div>
+                        <div class="vs-indicator">VS</div>
+                        <div class="option option-right">
+                            <i class="option-icon next-right-icon ${getIconForText(nextQuestion.option2)}"></i>
+                            <div class="option-text">${nextOption2}</div>
+                        </div>
                     </div>
                 </div>
             `;
@@ -696,6 +880,39 @@
         const progressFill = document.getElementById('progress-fill');
         const percentage = (currentQuestionIndex / allQuestions.length) * 100;
         progressFill.style.width = percentage + '%';
+    }
+    
+    function toggleSessionInfo() {
+        const details = document.getElementById('session-details');
+        const icon = document.getElementById('toggle-icon');
+        
+        if (details.style.display === 'none') {
+            details.style.display = 'block';
+            icon.className = 'fas fa-chevron-up';
+        } else {
+            details.style.display = 'none';
+            icon.className = 'fas fa-chevron-down';
+        }
+    }
+    
+    function shareSession() {
+        const shareUrl = `${window.location.origin}/join/${sessionId}`;
+        const shareText = `🎮 Join me for "${quizTitle}" quiz!`;
+        
+        if (navigator.share) {
+            navigator.share({
+                title: `Join This or That: ${quizTitle}`,
+                text: shareText,
+                url: shareUrl
+            }).catch(err => {
+                console.log('Share failed:', err);
+                copyToClipboard(shareUrl);
+                showNotification('Game link copied to clipboard!');
+            });
+        } else {
+            copyToClipboard(shareUrl);
+            showNotification('Game link copied to clipboard!');
+        }
     }
     
     function shareResults() {
@@ -716,9 +933,246 @@
         }
     }
     
+    async function loadCompletionResults() {
+        try {
+            const response = await fetch(`/api/multiplayer-results/${sessionId}`);
+            const data = await response.json();
+            
+            // Store player mapping globally for consistent name replacement
+            if (data.player_mapping) {
+                window.playerMapping = data.player_mapping;
+            }
+            
+            const resultsContainer = document.getElementById('completion-results');
+            
+            // Handle waiting for friends
+            if (data.waiting_for_friends && data.in_progress_players.length > 0) {
+                const waitingPlayer = data.in_progress_players[0];
+                const timeElapsed = Math.floor(waitingPlayer.time_elapsed);
+                const timeLeft = Math.max(0, 60 - timeElapsed); // 1 minute max wait
+                
+                if (timeLeft > 0) {
+                    resultsContainer.innerHTML = `
+                        <div style="padding: 2rem; background: #e3f2fd; border-radius: 15px; margin: 1rem 0; text-align: center;">
+                            <div style="font-size: 2.5rem; margin-bottom: 1rem;">⏳</div>
+                            <h3 style="color: #1976d2; margin-bottom: 1rem;">Waiting for ${waitingPlayer.player_name}</h3>
+                            <p style="color: #1565c0; margin-bottom: 1rem;">
+                                They're on question ${waitingPlayer.current_question + 1}/${waitingPlayer.total_questions}
+                            </p>
+                            <div style="background: #bbdefb; padding: 1rem; border-radius: 10px; margin-bottom: 1rem;">
+                                <div style="font-size: 1.2rem; font-weight: bold; color: #0d47a1;">
+                                    ${timeLeft} seconds remaining
+                                </div>
+                                <div style="font-size: 0.9rem; color: #1565c0; margin-top: 0.5rem;">
+                                    Results will show automatically when they finish or time runs out
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    
+                    // Set up countdown and auto-refresh
+                    setTimeout(() => {
+                        loadCompletionResults(); // Refresh in 5 seconds
+                    }, 5000);
+                    return;
+                }
+            }
+            
+            if (!data.players || data.players.length <= 1) {
+                // Solo completion or friend didn't finish in time
+                let message = `You completed ${data.total_questions} questions!`;
+                if (data.in_progress_players.length > 0) {
+                    const waitingPlayer = data.in_progress_players[0];
+                    message = `You finished first! ${waitingPlayer.player_name} didn't complete the quiz in time.`;
+                }
+                
+                resultsContainer.innerHTML = `
+                    <div style="padding: 2rem; background: #f8f9fa; border-radius: 15px; margin: 1rem 0;">
+                        <h3 style="margin-bottom: 1rem;">🎯 Your Results</h3>
+                        <p style="color: var(--text-light); margin-bottom: 1.5rem;">${message}</p>
+                        <div style="background: linear-gradient(45deg, #667eea, #764ba2); color: white; padding: 1rem; border-radius: 10px;">
+                            <i class="fas fa-share-alt"></i> Share this quiz with friends to compare your choices!
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Multiplayer results
+            const mySession = data.players.find(p => p.session_id === sessionId);
+            const otherPlayers = data.players.filter(p => p.session_id !== sessionId);
+            
+            if (otherPlayers.length === 0) {
+                resultsContainer.innerHTML = `
+                    <div style="padding: 2rem; background: #f8f9fa; border-radius: 15px; margin: 1rem 0;">
+                        <h3>🎯 Waiting for Friends...</h3>
+                        <p style="color: var(--text-light);">Share your link with friends to see how your choices compare!</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Calculate compatibility
+            const totalQuestions = data.questions.length;
+            let matches = 0;
+            
+            // Build comparison
+            let comparisonHTML = '';
+            data.questions.forEach((question, qIndex) => {
+                const myAnswer = mySession.answers.find(a => a.question_index === qIndex);
+                const otherAnswer = otherPlayers[0].answers.find(a => a.question_index === qIndex);
+                
+                if (myAnswer && otherAnswer) {
+                    let myChoice = myAnswer.answer === 'left' ? question.option1 : question.option2;
+                    let otherChoice = otherAnswer.answer === 'left' ? question.option1 : question.option2;
+                    const isMatch = myAnswer.answer === otherAnswer.answer;
+                    
+                    // Use player mapping if available for better name replacement
+                    const myPlayerName = mySession.player_name || 'You';
+                    const otherPlayerName = otherPlayers[0].player_name || 'Your friend';
+                    
+                    // Replace Player 1/Player 2 with actual names using the mapping
+                    if (data.player_mapping) {
+                        myChoice = myChoice.replace(/Player 1/g, data.player_mapping['Player 1'])
+                                          .replace(/Player 2/g, data.player_mapping['Player 2']);
+                        otherChoice = otherChoice.replace(/Player 1/g, data.player_mapping['Player 1'])
+                                                .replace(/Player 2/g, data.player_mapping['Player 2']);
+                    } else {
+                        // Fallback to simple replacement
+                        myChoice = myChoice.replace(/Player 1/g, myPlayerName).replace(/Player 2/g, otherPlayerName);
+                        otherChoice = otherChoice.replace(/Player 1/g, myPlayerName).replace(/Player 2/g, otherPlayerName);
+                    }
+                    
+                    if (isMatch) matches++;
+                        
+                        comparisonHTML += `
+                            <div style="display: flex; align-items: center; padding: 1rem; margin: 0.5rem 0; background: ${isMatch ? '#e8f5e8' : '#fff3e0'}; border-radius: 10px; border-left: 4px solid ${isMatch ? '#4caf50' : '#ff9800'};">
+                                <div style="flex: 1;">
+                                    <div style="font-weight: 600; margin-bottom: 0.3rem;">
+                                        ${question.prompt || question.option1 + " or " + question.option2 + "?"}
+                                    </div>
+                                    <div style="color: ${isMatch ? '#2e7d32' : '#e65100'};">
+                                        ${isMatch ? `🤝 You both chose ${myChoice}` : `🤔 You chose ${myChoice}, ${otherPlayerName} chose ${otherChoice}`}
+                                    </div>
+                                </div>
+                                <div style="font-size: 1.5rem;">
+                                    ${isMatch ? '✅' : '❌'}
+                                </div>
+                            </div>
+                        `;
+                }
+            });
+            
+            // Compatibility score and message
+            const compatibility = Math.round((matches / totalQuestions) * 100);
+            let compatibilityMessage = '';
+            let compatibilityColor = '';
+            
+            if (compatibility >= 80) {
+                compatibilityMessage = "Wow! You're basically twins! 👯";
+                compatibilityColor = '#4caf50';
+            } else if (compatibility >= 60) {
+                compatibilityMessage = "Great compatibility! Similar taste 😊";
+                compatibilityColor = '#8bc34a';
+            } else if (compatibility >= 40) {
+                compatibilityMessage = "Some similarities, some differences 🤷";
+                compatibilityColor = '#ff9800';
+            } else {
+                compatibilityMessage = "Opposites attract! Very different choices 🙃";
+                compatibilityColor = '#f44336';
+            }
+            
+                         resultsContainer.innerHTML = `
+                 <div style="margin: 1rem 0;">
+                     <div style="background: linear-gradient(45deg, ${compatibilityColor}, ${compatibilityColor}dd); color: white; padding: 2rem; border-radius: 15px; margin-bottom: 1.5rem; text-align: center;">
+                         <div style="font-size: 3rem; margin-bottom: 0.5rem;">${matches}/${totalQuestions}</div>
+                         <div style="font-size: 1.2rem; margin-bottom: 0.5rem;">Compatibility</div>
+                         <div style="opacity: 0.9;">${compatibilityMessage}</div>
+                     </div>
+                     
+                     <div style="text-align: left;">
+                         <h4 style="margin-bottom: 1rem; text-align: center;">📊 Choice Comparison</h4>
+                         ${comparisonHTML}
+                     </div>
+                     
+                     <div style="background: #e3f2fd; padding: 1rem; border-radius: 10px; margin-top: 1.5rem; text-align: center; border-left: 4px solid #2196f3;">
+                         <div style="color: #1976d2; font-weight: 600; margin-bottom: 0.5rem;">
+                             <i class="fas fa-users"></i> Playing Together
+                         </div>
+                         <div style="color: #1565c0; font-size: 0.9rem;">
+                             When you click "Play Another Quiz", you'll both get a new random quiz to play together!
+                         </div>
+                     </div>
+                 </div>
+             `;
+            
+        } catch (error) {
+            console.error('Error loading completion results:', error);
+            document.getElementById('completion-results').innerHTML = `
+                <div style="padding: 2rem; background: #f8f9fa; border-radius: 15px;">
+                    <h3>🎯 Quiz Complete!</h3>
+                    <p>Share with friends to compare your choices!</p>
+                </div>
+            `;
+        }
+    }
+    
+    async function playAnotherQuiz() {
+        try {
+            // Use coordinated quiz selection for the shared group
+            const response = await fetch('/api/next-group-quiz', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ 
+                    current_session_id: sessionId,
+                    current_quiz_id: quizId,
+                    player_name: localStorage.getItem('playerName') || 'Anonymous'
+                })
+            });
+            
+            const data = await response.json();
+            if (data.success) {
+                showNotification(`Starting "${data.quiz_title}"...`);
+                window.location.href = `/session/${data.session_id}`;
+            } else {
+                showNotification(data.error || 'Error creating new session', 'error');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            showNotification('Connection error', 'error');
+        }
+    }
+    
     // Initialize on page load
-    document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('DOMContentLoaded', async () => {
+        // Update localStorage with session name if available
+        if (sessionPlayerName) {
+            localStorage.setItem('playerName', sessionPlayerName);
+        }
+        
+        // Always fetch proper player mapping from backend for consistency
+        await fetchPlayerMapping();
+        
+        // Initialize player mapping fallback for solo play if backend didn't provide one
+        if (!window.playerMapping) {
+            const myPlayerName = sessionPlayerName || localStorage.getItem('playerName') || 'You';
+            window.playerMapping = {
+                'Player 1': myPlayerName,
+                'Player 2': 'Your Friend'
+            };
+        }
+        
         initializeCard();
+        
+        // Check session status for multiplayer coordination
+        checkSessionStatus();
+        
+        // Check if quiz is completed and load results
+        if (currentQuestionIndex >= allQuestions.length) {
+            setTimeout(() => {
+                loadCompletionResults();
+            }, 1000);
+        }
         
         // Add some entrance animation
         const cardStack = document.getElementById('card-stack');
@@ -733,5 +1187,134 @@
             }, 100);
         }
     });
+    
+    // Session status checking for multiplayer coordination
+    let statusCheckInterval = null;
+    
+    async function fetchPlayerMapping() {
+        try {
+            const response = await fetch(`/api/multiplayer-results/${sessionId}`);
+            const data = await response.json();
+            
+            if (data.player_mapping) {
+                window.playerMapping = data.player_mapping;
+                updateCardIcons(); // Refresh card display with proper mapping
+                console.log('Player mapping updated:', window.playerMapping);
+            }
+        } catch (error) {
+            console.error('Error fetching player mapping:', error);
+        }
+    }
+    
+    async function checkSessionStatus() {
+        try {
+            const response = await fetch(`/api/session-status/${sessionId}`);
+            const data = await response.json();
+            
+            if (data.success) {
+                // Update friend status information
+                if (data.friend_sessions.length > 0) {
+                    // Friends have joined - fetch proper player mapping from backend
+                    const friend = data.friend_sessions[0];
+                    await fetchPlayerMapping();
+                    updateSessionInfoWithFriend(friend);
+                    
+                    // Show appropriate notification based on friend's status
+                    const notificationKey = `${friend.session_id}_${friend.is_complete ? 'finished' : 'started'}`;
+                    if (!window.friendNotifications) window.friendNotifications = new Set();
+                    
+                    if (!window.friendNotifications.has(notificationKey)) {
+                        if (friend.is_complete) {
+                            showFriendFinishedNotification(friend.player_name);
+                        } else {
+                            showFriendStartedNotification(friend.player_name);
+                        }
+                        window.friendNotifications.add(notificationKey);
+                    }
+                    
+                    // Stop frequent checking once friends are found
+                    if (statusCheckInterval) {
+                        clearInterval(statusCheckInterval);
+                        statusCheckInterval = null;
+                    }
+                } else if (currentQuestionIndex === 0) {
+                    // No friends yet, check more frequently
+                    if (!statusCheckInterval) {
+                        statusCheckInterval = setInterval(checkSessionStatus, 3000);
+                    }
+                }
+            }
+        } catch (error) {
+            console.error('Error checking session status:', error);
+        }
+    }
+    
+    function updateSessionInfoWithFriend(friend) {
+        const statusElement = document.getElementById('session-status');
+        if (statusElement) {
+            const myName = localStorage.getItem('playerName') || 'You';
+            const friendName = friend.player_name || `Player ${friend.session_id.substring(0, 4)}`;
+            
+            if (friend.is_complete) {
+                statusElement.innerHTML = `<i class="fas fa-users"></i> ${myName} & ${friendName} (friend finished)`;
+            } else {
+                statusElement.innerHTML = `<i class="fas fa-users"></i> ${myName} & ${friendName} (playing together)`;
+            }
+        }
+    }
+    
+    function showFriendStartedNotification(friendName) {
+        const notification = document.createElement('div');
+        notification.style.cssText = `
+            position: fixed; top: 20px; right: 20px; left: 20px; max-width: 400px; margin: 0 auto;
+            background: linear-gradient(45deg, #4caf50, #8bc34a); color: white; padding: 1rem;
+            border-radius: 15px; box-shadow: 0 8px 32px rgba(0,0,0,0.2); z-index: 1001;
+            text-align: center; animation: slideInFromTop 0.5s ease;
+        `;
+        
+        notification.innerHTML = `
+            <div style="font-size: 1.1rem; font-weight: bold; margin-bottom: 0.5rem;">
+                🎉 ${friendName} has started the quiz!
+            </div>
+            <div style="font-size: 0.9rem; opacity: 0.9;">
+                You can start playing now
+            </div>
+        `;
+        
+        document.body.appendChild(notification);
+        
+        // Auto-remove after 4 seconds
+        setTimeout(() => {
+            notification.style.animation = 'slideOutToTop 0.5s ease';
+            setTimeout(() => notification.remove(), 500);
+        }, 4000);
+    }
+    
+    function showFriendFinishedNotification(friendName) {
+        const notification = document.createElement('div');
+        notification.style.cssText = `
+            position: fixed; top: 20px; right: 20px; left: 20px; max-width: 400px; margin: 0 auto;
+            background: linear-gradient(45deg, #2196f3, #4fc3f7); color: white; padding: 1rem;
+            border-radius: 15px; box-shadow: 0 8px 32px rgba(0,0,0,0.2); z-index: 1001;
+            text-align: center; animation: slideInFromTop 0.5s ease;
+        `;
+        
+        notification.innerHTML = `
+            <div style="font-size: 1.1rem; font-weight: bold; margin-bottom: 0.5rem;">
+                🏁 ${friendName} has finished the quiz!
+            </div>
+            <div style="font-size: 0.9rem; opacity: 0.9;">
+                Complete yours to see the results comparison
+            </div>
+        `;
+        
+        document.body.appendChild(notification);
+        
+        // Auto-remove after 4 seconds
+        setTimeout(() => {
+            notification.style.animation = 'slideOutToTop 0.5s ease';
+            setTimeout(() => notification.remove(), 500);
+        }, 4000);
+    }
 </script>
 {% endblock %} 

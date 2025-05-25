@@ -1,0 +1,58 @@
+{
+  "session_id": "a919cd0b",
+  "quiz_id": "8968990d",
+  "quiz_title": "Lifestyle Choices",
+  "questions": [
+    {
+      "option1": "Cat",
+      "option2": "Dog"
+    },
+    {
+      "option1": "Summer",
+      "option2": "Winter"
+    },
+    {
+      "option1": "Car",
+      "option2": "Bike"
+    },
+    {
+      "option1": "City",
+      "option2": "Nature"
+    },
+    {
+      "option1": "Morning",
+      "option2": "Night"
+    }
+  ],
+  "current_question": 5,
+  "answers": [
+    {
+      "question_index": 0,
+      "answer": "right",
+      "timestamp": "2025-05-25T16:31:56.940870"
+    },
+    {
+      "question_index": 1,
+      "answer": "left",
+      "timestamp": "2025-05-25T16:31:58.950076"
+    },
+    {
+      "question_index": 2,
+      "answer": "left",
+      "timestamp": "2025-05-25T16:32:00.716497"
+    },
+    {
+      "question_index": 3,
+      "answer": "left",
+      "timestamp": "2025-05-25T16:32:02.651327"
+    },
+    {
+      "question_index": 4,
+      "answer": "left",
+      "timestamp": "2025-05-25T16:32:03.989397"
+    }
+  ],
+  "started_at": "2025-05-25T16:31:51.858697",
+  "shared_session_group": "c41d8597",
+  "player_name": "Nacir"
+}

@@ -1,0 +1,37 @@
+{
+  "session_id": "de826b94",
+  "quiz_id": "639faa67",
+  "quiz_title": "Food Preferences",
+  "questions": [
+    {
+      "prompt": "What's your go-to comfort food?",
+      "option1": "Pizza",
+      "option2": "Burger"
+    },
+    {
+      "prompt": "What's your morning drink of choice?",
+      "option1": "Coffee",
+      "option2": "Tea"
+    },
+    {
+      "prompt": "Which dessert makes you happiest?",
+      "option1": "Ice Cream",
+      "option2": "Cake"
+    },
+    {
+      "prompt": "Which is your healthy snack choice?",
+      "option1": "Apple",
+      "option2": "Nuts"
+    },
+    {
+      "prompt": "What's your weekend drink?",
+      "option1": "Wine",
+      "option2": "Beer"
+    }
+  ],
+  "current_question": 0,
+  "answers": [],
+  "started_at": "2025-05-25T16:30:04.031013",
+  "shared_session_group": "ef19c3fd",
+  "player_name": "Malena"
+}

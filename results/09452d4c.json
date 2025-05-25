@@ -1,0 +1,79 @@
+{
+  "session_id": "09452d4c",
+  "quiz_id": "343369f9",
+  "quiz_title": "Entertainment Choices",
+  "completed_at": "2025-05-25T17:07:23.002674",
+  "started_at": "2025-05-25T17:06:26.989094",
+  "total_questions": 5,
+  "answers": [
+    {
+      "question_index": 0,
+      "answer": "right",
+      "timestamp": "2025-05-25T17:07:16.767452"
+    },
+    {
+      "question_index": 1,
+      "answer": "right",
+      "timestamp": "2025-05-25T17:07:18.243140"
+    },
+    {
+      "question_index": 2,
+      "answer": "right",
+      "timestamp": "2025-05-25T17:07:19.465509"
+    },
+    {
+      "question_index": 3,
+      "answer": "right",
+      "timestamp": "2025-05-25T17:07:21.342857"
+    },
+    {
+      "question_index": 4,
+      "answer": "right",
+      "timestamp": "2025-05-25T17:07:22.997866"
+    }
+  ],
+  "choices_summary": {
+    "question_0": {
+      "options": [
+        "Movie",
+        "Book"
+      ],
+      "choice": "Book",
+      "choice_side": "right"
+    },
+    "question_1": {
+      "options": [
+        "Netflix",
+        "YouTube"
+      ],
+      "choice": "YouTube",
+      "choice_side": "right"
+    },
+    "question_2": {
+      "options": [
+        "Music",
+        "Podcast"
+      ],
+      "choice": "Podcast",
+      "choice_side": "right"
+    },
+    "question_3": {
+      "options": [
+        "Gaming",
+        "Movie"
+      ],
+      "choice": "Movie",
+      "choice_side": "right"
+    },
+    "question_4": {
+      "options": [
+        "Football",
+        "Basketball"
+      ],
+      "choice": "Basketball",
+      "choice_side": "right"
+    }
+  },
+  "shared_session_group": "02004504",
+  "player_name": "Nacir"
+}

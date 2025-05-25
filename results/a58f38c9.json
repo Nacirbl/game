@@ -1,0 +1,78 @@
+{
+  "session_id": "a58f38c9",
+  "quiz_id": "223895b9",
+  "quiz_title": "Travel Dreams",
+  "completed_at": "2025-05-25T15:05:35.110945",
+  "started_at": "2025-05-25T15:04:10.385492",
+  "total_questions": 5,
+  "answers": [
+    {
+      "question_index": 0,
+      "answer": "left",
+      "timestamp": "2025-05-25T15:05:27.892244"
+    },
+    {
+      "question_index": 1,
+      "answer": "right",
+      "timestamp": "2025-05-25T15:05:29.746440"
+    },
+    {
+      "question_index": 2,
+      "answer": "right",
+      "timestamp": "2025-05-25T15:05:32.042056"
+    },
+    {
+      "question_index": 3,
+      "answer": "right",
+      "timestamp": "2025-05-25T15:05:33.551478"
+    },
+    {
+      "question_index": 4,
+      "answer": "right",
+      "timestamp": "2025-05-25T15:05:35.108987"
+    }
+  ],
+  "choices_summary": {
+    "question_0": {
+      "options": [
+        "Beach",
+        "Mountains"
+      ],
+      "choice": "Beach",
+      "choice_side": "left"
+    },
+    "question_1": {
+      "options": [
+        "Paris",
+        "Tokyo"
+      ],
+      "choice": "Tokyo",
+      "choice_side": "right"
+    },
+    "question_2": {
+      "options": [
+        "Plane",
+        "Train"
+      ],
+      "choice": "Train",
+      "choice_side": "right"
+    },
+    "question_3": {
+      "options": [
+        "Hotel",
+        "Camping"
+      ],
+      "choice": "Camping",
+      "choice_side": "right"
+    },
+    "question_4": {
+      "options": [
+        "Adventure",
+        "Relaxation"
+      ],
+      "choice": "Relaxation",
+      "choice_side": "right"
+    }
+  },
+  "shared_session_group": "a58f38c9"
+}

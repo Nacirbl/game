@@ -1,0 +1,33 @@
+{
+  "id": "b366a474",
+  "title": "Friend Personality Quiz",
+  "description": "Compare personalities with your friends!",
+  "questions": [
+    {
+      "prompt": "Who is more likely to be the life of the party?",
+      "option1": "Player 1",
+      "option2": "Player 2"
+    },
+    {
+      "prompt": "Who would be more patient in a long line?",
+      "option1": "Player 1",
+      "option2": "Player 2"
+    },
+    {
+      "prompt": "Who is more likely to try exotic food?",
+      "option1": "Player 1",
+      "option2": "Player 2"
+    },
+    {
+      "prompt": "Who would wake up earlier on vacation?",
+      "option1": "Player 1",
+      "option2": "Player 2"
+    },
+    {
+      "prompt": "Who is more organized with their belongings?",
+      "option1": "Player 1",
+      "option2": "Player 2"
+    }
+  ],
+  "created_at": "2025-05-25T16:21:44.417724"
+}

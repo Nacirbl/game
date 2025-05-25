@@ -1,0 +1,53 @@
+{
+  "session_id": "153c2f2f",
+  "quiz_id": "dcdc6735",
+  "quiz_title": "Personal Test",
+  "completed_at": "2025-05-25T16:44:05.547090",
+  "started_at": "2025-05-25T16:42:55.703817",
+  "total_questions": 3,
+  "answers": [
+    {
+      "question_index": 0,
+      "answer": "right",
+      "timestamp": "2025-05-25T16:44:01.474695"
+    },
+    {
+      "question_index": 1,
+      "answer": "right",
+      "timestamp": "2025-05-25T16:44:03.196209"
+    },
+    {
+      "question_index": 2,
+      "answer": "right",
+      "timestamp": "2025-05-25T16:44:05.547090"
+    }
+  ],
+  "choices_summary": {
+    "question_0": {
+      "options": [
+        "Player 1",
+        "Player 2"
+      ],
+      "choice": "Player 2",
+      "choice_side": "right"
+    },
+    "question_1": {
+      "options": [
+        "Player 1",
+        "Player 2"
+      ],
+      "choice": "Player 2",
+      "choice_side": "right"
+    },
+    "question_2": {
+      "options": [
+        "Player 1",
+        "Player 2"
+      ],
+      "choice": "Player 2",
+      "choice_side": "right"
+    }
+  },
+  "shared_session_group": "008d36dd",
+  "player_name": "Malena"
+}

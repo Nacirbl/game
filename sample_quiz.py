@@ -36,55 +36,66 @@ sample_quizzes = [
         'title': 'Food Preferences',
         'description': 'Discover your favorite foods in this delicious quiz!',
         'questions': [
-            {'option1': 'Pizza', 'option2': 'Burger'},
-            {'option1': 'Coffee', 'option2': 'Tea'},
-            {'option1': 'Ice Cream', 'option2': 'Cake'},
-            {'option1': 'Apple', 'option2': 'Burger'},
-            {'option1': 'Wine', 'option2': 'Beer'},
+            {'prompt': 'What\'s your go-to comfort food?', 'option1': 'Pizza', 'option2': 'Burger'},
+            {'prompt': 'What\'s your morning drink of choice?', 'option1': 'Coffee', 'option2': 'Tea'},
+            {'prompt': 'Which dessert makes you happiest?', 'option1': 'Ice Cream', 'option2': 'Cake'},
+            {'prompt': 'Which is your healthy snack choice?', 'option1': 'Apple', 'option2': 'Nuts'},
+            {'prompt': 'What\'s your weekend drink?', 'option1': 'Wine', 'option2': 'Beer'},
         ]
     },
     {
         'title': 'Entertainment Choices',
         'description': 'What type of entertainment do you prefer?',
         'questions': [
-            {'option1': 'Movie', 'option2': 'Book'},
-            {'option1': 'Netflix', 'option2': 'YouTube'},
-            {'option1': 'Music', 'option2': 'TV'},
-            {'option1': 'Game', 'option2': 'Movie'},
-            {'option1': 'Football', 'option2': 'Basketball'},
+            {'prompt': 'How do you prefer to unwind?', 'option1': 'Movie', 'option2': 'Book'},
+            {'prompt': 'What\'s your video streaming choice?', 'option1': 'Netflix', 'option2': 'YouTube'},
+            {'prompt': 'What\'s your audio entertainment?', 'option1': 'Music', 'option2': 'Podcast'},
+            {'prompt': 'What\'s your ideal Friday night?', 'option1': 'Gaming', 'option2': 'Movie'},
+            {'prompt': 'Which sport do you enjoy watching?', 'option1': 'Football', 'option2': 'Basketball'},
         ]
     },
     {
         'title': 'Tech Preferences',
         'description': 'Which technology do you prefer?',
         'questions': [
-            {'option1': 'Phone', 'option2': 'Laptop'},
-            {'option1': 'iPhone', 'option2': 'Android'},
-            {'option1': 'Tablet', 'option2': 'Computer'},
-            {'option1': 'Mac', 'option2': 'PC'},
-            {'option1': 'Gaming', 'option2': 'Productivity'},
+            {'prompt': 'What\'s your essential daily device?', 'option1': 'Phone', 'option2': 'Laptop'},
+            {'prompt': 'Which smartphone ecosystem?', 'option1': 'iPhone', 'option2': 'Android'},
+            {'prompt': 'What\'s your portable work device?', 'option1': 'Tablet', 'option2': 'Laptop'},
+            {'prompt': 'Which operating system?', 'option1': 'Mac', 'option2': 'PC'},
+            {'prompt': 'What\'s your computer mainly for?', 'option1': 'Gaming', 'option2': 'Work'},
         ]
     },
     {
         'title': 'Lifestyle Choices',
         'description': 'Discover your lifestyle preferences!',
         'questions': [
-            {'option1': 'Cat', 'option2': 'Dog'},
-            {'option1': 'Summer', 'option2': 'Winter'},
-            {'option1': 'Car', 'option2': 'Bike'},
-            {'option1': 'City', 'option2': 'Nature'},
-            {'option1': 'Morning', 'option2': 'Night'},
+            {'prompt': 'Which pet would you choose?', 'option1': 'Cat', 'option2': 'Dog'},
+            {'prompt': 'What\'s your favorite season?', 'option1': 'Summer', 'option2': 'Winter'},
+            {'prompt': 'How do you prefer to get around?', 'option1': 'Car', 'option2': 'Bike'},
+            {'prompt': 'Where do you feel most at home?', 'option1': 'City', 'option2': 'Nature'},
+            {'prompt': 'When are you most productive?', 'option1': 'Morning', 'option2': 'Night'},
         ]
     },
     {
         'title': 'Travel Dreams',
         'description': 'Where would you rather go?',
         'questions': [
-            {'option1': 'Beach', 'option2': 'Mountains'},
-            {'option1': 'Paris', 'option2': 'Tokyo'},
-            {'option1': 'Plane', 'option2': 'Train'},
-            {'option1': 'Hotel', 'option2': 'Camping'},
-            {'option1': 'Adventure', 'option2': 'Relaxation'},
+            {'prompt': 'Where do you want to spend your vacation?', 'option1': 'Beach', 'option2': 'Mountains'},
+            {'prompt': 'Which city would you visit?', 'option1': 'Paris', 'option2': 'Tokyo'},
+            {'prompt': 'How do you prefer to travel?', 'option1': 'Plane', 'option2': 'Train'},
+            {'prompt': 'Where would you stay?', 'option1': 'Hotel', 'option2': 'Camping'},
+            {'prompt': 'What\'s your travel style?', 'option1': 'Adventure', 'option2': 'Relaxation'},
+        ]
+    },
+    {
+        'title': 'Friend Personality Quiz',
+        'description': 'Compare personalities with your friends!',
+        'questions': [
+            {'prompt': 'Who is more likely to be the life of the party?', 'option1': 'Player 1', 'option2': 'Player 2'},
+            {'prompt': 'Who would be more patient in a long line?', 'option1': 'Player 1', 'option2': 'Player 2'},
+            {'prompt': 'Who is more likely to try exotic food?', 'option1': 'Player 1', 'option2': 'Player 2'},
+            {'prompt': 'Who would wake up earlier on vacation?', 'option1': 'Player 1', 'option2': 'Player 2'},
+            {'prompt': 'Who is more organized with their belongings?', 'option1': 'Player 1', 'option2': 'Player 2'},
         ]
     }
 ]

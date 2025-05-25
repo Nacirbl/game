@@ -1,0 +1,78 @@
+{
+  "session_id": "56d52c7b",
+  "quiz_id": "bc15df9d",
+  "quiz_title": "Food Preferences",
+  "completed_at": "2025-05-25T15:00:21.964427",
+  "started_at": "2025-05-25T15:00:04.057247",
+  "total_questions": 5,
+  "answers": [
+    {
+      "question_index": 0,
+      "answer": "right",
+      "timestamp": "2025-05-25T15:00:08.631316"
+    },
+    {
+      "question_index": 1,
+      "answer": "left",
+      "timestamp": "2025-05-25T15:00:11.533396"
+    },
+    {
+      "question_index": 2,
+      "answer": "right",
+      "timestamp": "2025-05-25T15:00:14.961503"
+    },
+    {
+      "question_index": 3,
+      "answer": "left",
+      "timestamp": "2025-05-25T15:00:19.098503"
+    },
+    {
+      "question_index": 4,
+      "answer": "left",
+      "timestamp": "2025-05-25T15:00:21.964427"
+    }
+  ],
+  "choices_summary": {
+    "question_0": {
+      "options": [
+        "Pizza",
+        "Burger"
+      ],
+      "choice": "Burger",
+      "choice_side": "right"
+    },
+    "question_1": {
+      "options": [
+        "Coffee",
+        "Tea"
+      ],
+      "choice": "Coffee",
+      "choice_side": "left"
+    },
+    "question_2": {
+      "options": [
+        "Ice Cream",
+        "Cake"
+      ],
+      "choice": "Cake",
+      "choice_side": "right"
+    },
+    "question_3": {
+      "options": [
+        "Apple",
+        "Burger"
+      ],
+      "choice": "Apple",
+      "choice_side": "left"
+    },
+    "question_4": {
+      "options": [
+        "Wine",
+        "Beer"
+      ],
+      "choice": "Wine",
+      "choice_side": "left"
+    }
+  },
+  "shared_session_group": "3b9e1747"
+}

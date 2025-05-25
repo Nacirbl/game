@@ -1,0 +1,62 @@
+{
+  "session_id": "db923d50",
+  "quiz_id": "0d2d375f",
+  "quiz_title": "Lifestyle Choices",
+  "questions": [
+    {
+      "prompt": "Which pet would you choose?",
+      "option1": "Cat",
+      "option2": "Dog"
+    },
+    {
+      "prompt": "What's your favorite season?",
+      "option1": "Summer",
+      "option2": "Winter"
+    },
+    {
+      "prompt": "How do you prefer to get around?",
+      "option1": "Car",
+      "option2": "Bike"
+    },
+    {
+      "prompt": "Where do you feel most at home?",
+      "option1": "City",
+      "option2": "Nature"
+    },
+    {
+      "prompt": "When are you most productive?",
+      "option1": "Morning",
+      "option2": "Night"
+    }
+  ],
+  "current_question": 5,
+  "answers": [
+    {
+      "question_index": 0,
+      "answer": "left",
+      "timestamp": "2025-05-25T14:55:22.965253"
+    },
+    {
+      "question_index": 1,
+      "answer": "left",
+      "timestamp": "2025-05-25T14:55:25.416196"
+    },
+    {
+      "question_index": 2,
+      "answer": "right",
+      "timestamp": "2025-05-25T14:55:27.183417"
+    },
+    {
+      "question_index": 3,
+      "answer": "right",
+      "timestamp": "2025-05-25T14:55:28.729920"
+    },
+    {
+      "question_index": 4,
+      "answer": "left",
+      "timestamp": "2025-05-25T14:55:33.573299"
+    }
+  ],
+  "started_at": "2025-05-25T14:55:13.016452",
+  "shared_session_group": "db923d50"
+}

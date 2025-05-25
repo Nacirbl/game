@@ -1,0 +1,43 @@
+{
+  "session_id": "97486c41",
+  "quiz_id": "dcdc6735",
+  "quiz_title": "Personal Test",
+  "questions": [
+    {
+      "prompt": "Who is better at maths?",
+      "option1": "Player 1",
+      "option2": "Player 2"
+    },
+    {
+      "prompt": "Who is better in computers?",
+      "option1": "Player 1",
+      "option2": "Player 2"
+    },
+    {
+      "prompt": "Who is a better cook?",
+      "option1": "Player 1",
+      "option2": "Player 2"
+    }
+  ],
+  "current_question": 3,
+  "answers": [
+    {
+      "question_index": 0,
+      "answer": "right",
+      "timestamp": "2025-05-25T17:03:27.658623"
+    },
+    {
+      "question_index": 1,
+      "answer": "left",
+      "timestamp": "2025-05-25T17:03:33.178824"
+    },
+    {
+      "question_index": 2,
+      "answer": "left",
+      "timestamp": "2025-05-25T17:03:36.004976"
+    }
+  ],
+  "started_at": "2025-05-25T17:03:12.069185",
+  "shared_session_group": "97486c41",
+  "player_name": "Nacir"
+}

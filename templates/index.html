@@ -1,97 +1,76 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="card">
-    <h2 style="text-align: center; margin-bottom: 2rem; color: var(--text-dark);">
-        <i class="fas fa-gamepad"></i> Welcome to This or That!
-    </h2>
+<div class="card" style="text-align: center; max-width: 500px; margin: 0 auto;">
+    <h1 style="margin-bottom: 3rem; color: var(--text-dark); font-size: 3rem;">
+        <i class="fas fa-gamepad"></i><br>
+        This or That
+    </h1>
     
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin: 2rem 0;">
-        <div style="text-align: center;">
-            <div style="background: linear-gradient(45deg, #667eea, #764ba2); padding: 3rem 2rem; border-radius: 20px; margin-bottom: 1rem;">
-                <i class="fas fa-plus-circle" style="font-size: 4rem; color: white; margin-bottom: 1rem;"></i>
-                <h3 style="color: white; margin-bottom: 1rem;">Create Quiz</h3>
-                <p style="color: rgba(255,255,255,0.9);">Design your own This or That quiz and share it with friends!</p>
+    <div style="display: flex; flex-direction: column; gap: 2rem; margin: 2rem 0;">
+        
+        <!-- Start New Game -->
+        <div style="background: linear-gradient(45deg, #667eea, #764ba2); padding: 3rem 2rem; border-radius: 20px; color: white;">
+            <i class="fas fa-rocket" style="font-size: 4rem; margin-bottom: 1rem;"></i>
+            <h2 style="margin-bottom: 1rem;">Start New Game</h2>
+            <div style="margin-top: 1.5rem;">
+                <input type="text" 
+                       id="new-player-name-input" 
+                       placeholder="Enter your name..." 
+                       style="width: 100%; padding: 1rem; border: none; border-radius: 10px; text-align: center; font-size: 1.1rem; margin-bottom: 1rem;">
+                <button onclick="startNewGame()" class="btn" style="background: rgba(255,255,255,0.2); border: 2px solid white; color: white; font-size: 1.1rem; padding: 1rem 2rem;">
+                    <i class="fas fa-rocket"></i> Start Game
+                </button>
             </div>
-            <a href="/admin" class="btn">
-                <i class="fas fa-magic"></i> Create New Quiz
-            </a>
         </div>
         
-        <div style="text-align: center;">
-            <div style="background: linear-gradient(45deg, #4caf50, #8bc34a); padding: 3rem 2rem; border-radius: 20px; margin-bottom: 1rem;">
-                <i class="fas fa-chart-bar" style="font-size: 4rem; color: white; margin-bottom: 1rem;"></i>
-                <h3 style="color: white; margin-bottom: 1rem;">View Results</h3>
-                <p style="color: rgba(255,255,255,0.9);">Check quiz completion results and analytics!</p>
+        <!-- Join Game -->
+        <div style="background: linear-gradient(45deg, #4caf50, #8bc34a); padding: 3rem 2rem; border-radius: 20px; color: white;">
+            <i class="fas fa-users" style="font-size: 4rem; margin-bottom: 1rem;"></i>
+            <h2 style="margin-bottom: 1rem;">Join Friends</h2>
+            <div style="margin-top: 1.5rem;">
+                <input type="text" 
+                       id="player-name-input" 
+                       placeholder="Enter your name..." 
+                       style="width: 100%; padding: 1rem; border: none; border-radius: 10px; text-align: center; font-size: 1.1rem; margin-bottom: 1rem;">
+                <input type="text" 
+                       id="session-id-input" 
+                       placeholder="Enter game link or session ID..." 
+                       style="width: 100%; padding: 1rem; border: none; border-radius: 10px; text-align: center; font-size: 1.1rem; margin-bottom: 1rem;">
+                <button onclick="joinGame()" class="btn" style="background: rgba(255,255,255,0.2); border: 2px solid white; color: white; font-size: 1.1rem; padding: 1rem 2rem;">
+                    <i class="fas fa-sign-in-alt"></i> Join Game
+                </button>
             </div>
-            <a href="/results" class="btn">
-                <i class="fas fa-analytics"></i> View Results
-            </a>
         </div>
         
-        <div style="text-align: center;">
-            <div style="background: linear-gradient(45deg, #f093fb, #f5576c); padding: 3rem 2rem; border-radius: 20px; margin-bottom: 1rem;">
-                <i class="fas fa-play-circle" style="font-size: 4rem; color: white; margin-bottom: 1rem;"></i>
-                <h3 style="color: white; margin-bottom: 1rem;">Play Quiz</h3>
-                <p style="color: rgba(255,255,255,0.9);">Swipe through available quizzes and make your choices!</p>
-            </div>
-            <button onclick="loadAvailableQuizzes()" class="btn btn-secondary">
-                <i class="fas fa-list"></i> Browse Quizzes
-            </button>
-        </div>
     </div>
+    
+    <!-- Admin Link -->
+    <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid #eee;">
+        <a href="/admin" style="color: var(--text-light); text-decoration: none; font-size: 0.9rem;">
+            <i class="fas fa-cog"></i> Create Quiz (Admin)
+        </a>
+    </div>
+    
 </div>
 
-<div id="quiz-browser" style="display: none;">
-    <div class="card">
-        <h3 style="text-align: center; margin-bottom: 1.5rem;">
-            <i class="fas fa-search"></i> Available Quizzes
+<!-- Quiz Selection Modal -->
+<div id="quiz-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000;" onclick="closeModal()">
+    <div class="card" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); max-width: 600px; width: 90%; max-height: 80%; overflow-y: auto;" onclick="event.stopPropagation()">
+        <h3 style="text-align: center; margin-bottom: 2rem;">
+            <i class="fas fa-list"></i> Choose a Quiz
         </h3>
-        
-        <div class="input-group">
-            <input type="text" 
-                   id="quiz-id-input" 
-                   placeholder="Enter Quiz ID to play directly..." 
-                   style="text-align: center; font-size: 1.2rem;">
-            <button onclick="playQuizById()" class="btn" style="margin-top: 1rem; width: 100%;">
-                <i class="fas fa-rocket"></i> Play by ID
-            </button>
-        </div>
-        
-        <div style="text-align: center; margin: 2rem 0; color: var(--text-light);">
-            <i class="fas fa-grip-lines"></i> OR CHOOSE FROM AVAILABLE QUIZZES <i class="fas fa-grip-lines"></i>
-        </div>
         
         <div id="quiz-list" class="quiz-grid">
             <div class="loading">
                 <div class="spinner"></div>
             </div>
         </div>
-    </div>
-</div>
-
-<div class="card" style="text-align: center; background: linear-gradient(145deg, #f8f9fa, #e9ecef);">
-    <h3 style="color: var(--text-dark); margin-bottom: 1rem;">
-        <i class="fas fa-info-circle"></i> How it Works
-    </h3>
-    
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-top: 2rem;">
-        <div>
-            <i class="fas fa-swatchbook" style="font-size: 2.5rem; color: var(--primary-color); margin-bottom: 1rem;"></i>
-            <h4>Create</h4>
-            <p style="color: var(--text-light);">Upload an image or manually create your This or That quiz</p>
-        </div>
         
-        <div>
-            <i class="fas fa-share-alt" style="font-size: 2.5rem; color: var(--secondary-color); margin-bottom: 1rem;"></i>
-            <h4>Share</h4>
-            <p style="color: var(--text-light);">Get a unique ID to share your quiz with friends</p>
-        </div>
-        
-        <div>
-            <i class="fas fa-hand-paper" style="font-size: 2.5rem; color: var(--accent-color); margin-bottom: 1rem;"></i>
-            <h4>Swipe</h4>
-            <p style="color: var(--text-light);">Swipe left or right to make your choices, just like Tinder!</p>
+        <div style="text-align: center; margin-top: 2rem;">
+            <button onclick="closeModal()" class="btn btn-secondary">
+                <i class="fas fa-times"></i> Cancel
+            </button>
         </div>
     </div>
 </div>
@@ -101,13 +80,21 @@
 <script>
     let quizzes = [];
     
-    async function loadAvailableQuizzes() {
-        const quizBrowser = document.getElementById('quiz-browser');
+    async function startNewGame() {
+        const playerName = document.getElementById('new-player-name-input').value.trim();
+        if (!playerName) {
+            showNotification('Please enter your name first!', 'error');
+            return;
+        }
+        
+        // Store player name for later use
+        localStorage.setItem('playerName', playerName);
+        
+        const modal = document.getElementById('quiz-modal');
         const quizList = document.getElementById('quiz-list');
         
-        // Show the browser
-        quizBrowser.style.display = 'block';
-        quizBrowser.scrollIntoView({ behavior: 'smooth' });
+        // Show the modal
+        modal.style.display = 'block';
         
         try {
             const response = await fetch('/api/quizzes');
@@ -118,7 +105,7 @@
                     <div style="text-align: center; padding: 3rem; color: var(--text-light);">
                         <i class="fas fa-inbox" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;"></i>
                         <h3>No quizzes available yet</h3>
-                        <p>Be the first to create a quiz!</p>
+                        <p>Create your first quiz!</p>
                         <a href="/admin" class="btn" style="margin-top: 1rem;">
                             <i class="fas fa-plus"></i> Create First Quiz
                         </a>
@@ -135,9 +122,6 @@
                     <div class="quiz-description">${quiz.description || 'No description'}</div>
                     <div class="quiz-meta">
                         <span><i class="fas fa-question-circle"></i> ${quiz.question_count} questions</span>
-                        <span style="font-family: monospace; background: var(--primary-color); color: white; padding: 0.2rem 0.5rem; border-radius: 5px;">
-                            ${quiz.id}
-                        </span>
                     </div>
                 </div>
             `).join('');
@@ -155,24 +139,106 @@
     }
     
     function playQuiz(quizId) {
-        showNotification(`Starting quiz ${quizId}...`);
-        window.location.href = `/play/${quizId}`;
+        const playerName = localStorage.getItem('playerName');
+        showNotification(`Starting quiz...`);
+        
+        if (playerName) {
+            // Pass player name as URL parameter
+            window.location.href = `/play/${quizId}?player_name=${encodeURIComponent(playerName)}`;
+        } else {
+            window.location.href = `/play/${quizId}`;
+        }
+        closeModal();
     }
     
-    function playQuizById() {
-        const quizId = document.getElementById('quiz-id-input').value.trim();
-        if (!quizId) {
-            showNotification('Please enter a Quiz ID', 'error');
+    async function joinGame() {
+        const playerName = document.getElementById('player-name-input').value.trim();
+        const input = document.getElementById('session-id-input').value.trim();
+        
+        if (!playerName) {
+            showNotification('Please enter your name first!', 'error');
             return;
         }
         
-        playQuiz(quizId);
+        if (!input) {
+            showNotification('Please enter a session ID or game link', 'error');
+            return;
+        }
+        
+        // Store player name for later use
+        localStorage.setItem('playerName', playerName);
+        
+        // Extract session ID from URL if it's a full link
+        let sessionId = input;
+        if (input.includes('/session/')) {
+            sessionId = input.split('/session/')[1];
+        }
+        
+        showNotification(`Joining game...`);
+        
+        try {
+            // Get the original session info
+            const response = await fetch(`/api/session/${sessionId}`);
+            if (response.ok) {
+                const sessionData = await response.json();
+                
+                // Create a new session for the same quiz in the same group
+                const createResponse = await fetch('/api/create-session', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        quiz_id: sessionData.quiz_id,
+                        shared_session_group: sessionData.shared_session_group || sessionId,
+                        player_name: playerName
+                    })
+                });
+                
+                const createData = await createResponse.json();
+                if (createData.success) {
+                    window.location.href = `/session/${createData.session_id}`;
+                } else {
+                    // Fallback to original session
+                    window.location.href = `/session/${sessionId}`;
+                }
+            } else {
+                // Fallback to original session
+                window.location.href = `/session/${sessionId}`;
+            }
+        } catch (error) {
+            console.error('Error joining game:', error);
+            // Fallback to original session
+            window.location.href = `/session/${sessionId}`;
+        }
     }
     
-    // Allow Enter key to play quiz by ID
-    document.getElementById('quiz-id-input').addEventListener('keypress', function(e) {
+    function closeModal() {
+        document.getElementById('quiz-modal').style.display = 'none';
+    }
+    
+    function showNotification(message, type = 'success') {
+        // Create toast notification
+        const toast = document.createElement('div');
+        toast.style.cssText = `
+            position: fixed; top: 20px; right: 20px; z-index: 9999;
+            background: ${type === 'error' ? '#f44336' : '#4caf50'};
+            color: white; padding: 1rem 1.5rem; border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transform: translateX(400px); transition: transform 0.3s ease;
+        `;
+        toast.textContent = message;
+        document.body.appendChild(toast);
+        
+        setTimeout(() => toast.style.transform = 'translateX(0)', 100);
+        setTimeout(() => {
+            toast.style.transform = 'translateX(400px)';
+            setTimeout(() => document.body.removeChild(toast), 300);
+        }, 3000);
+    }
+    
+    // Allow Enter key to join game
+    document.getElementById('session-id-input').addEventListener('keypress', function(e) {
         if (e.key === 'Enter') {
-            playQuizById();
+            joinGame();
         }
     });
 </script>

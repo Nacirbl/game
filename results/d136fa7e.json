@@ -1,0 +1,79 @@
+{
+  "session_id": "d136fa7e",
+  "quiz_id": "8968990d",
+  "quiz_title": "Lifestyle Choices",
+  "completed_at": "2025-05-25T16:32:04.923608",
+  "started_at": "2025-05-25T16:31:54.685743",
+  "total_questions": 5,
+  "answers": [
+    {
+      "question_index": 0,
+      "answer": "right",
+      "timestamp": "2025-05-25T16:31:57.632703"
+    },
+    {
+      "question_index": 1,
+      "answer": "left",
+      "timestamp": "2025-05-25T16:31:59.794579"
+    },
+    {
+      "question_index": 2,
+      "answer": "right",
+      "timestamp": "2025-05-25T16:32:01.376931"
+    },
+    {
+      "question_index": 3,
+      "answer": "right",
+      "timestamp": "2025-05-25T16:32:03.397106"
+    },
+    {
+      "question_index": 4,
+      "answer": "right",
+      "timestamp": "2025-05-25T16:32:04.921604"
+    }
+  ],
+  "choices_summary": {
+    "question_0": {
+      "options": [
+        "Cat",
+        "Dog"
+      ],
+      "choice": "Dog",
+      "choice_side": "right"
+    },
+    "question_1": {
+      "options": [
+        "Summer",
+        "Winter"
+      ],
+      "choice": "Summer",
+      "choice_side": "left"
+    },
+    "question_2": {
+      "options": [
+        "Car",
+        "Bike"
+      ],
+      "choice": "Bike",
+      "choice_side": "right"
+    },
+    "question_3": {
+      "options": [
+        "City",
+        "Nature"
+      ],
+      "choice": "Nature",
+      "choice_side": "right"
+    },
+    "question_4": {
+      "options": [
+        "Morning",
+        "Night"
+      ],
+      "choice": "Night",
+      "choice_side": "right"
+    }
+  },
+  "shared_session_group": "c41d8597",
+  "player_name": "Malena"
+}

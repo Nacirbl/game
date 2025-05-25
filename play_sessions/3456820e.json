@@ -1,0 +1,31 @@
+{
+  "session_id": "3456820e",
+  "quiz_id": "bc15df9d",
+  "quiz_title": "Food Preferences",
+  "questions": [
+    {
+      "option1": "Pizza",
+      "option2": "Burger"
+    },
+    {
+      "option1": "Coffee",
+      "option2": "Tea"
+    },
+    {
+      "option1": "Ice Cream",
+      "option2": "Cake"
+    },
+    {
+      "option1": "Apple",
+      "option2": "Burger"
+    },
+    {
+      "option1": "Wine",
+      "option2": "Beer"
+    }
+  ],
+  "current_question": 0,
+  "answers": [],
+  "started_at": "2025-05-25T15:00:38.212374",
+  "shared_session_group": "3b9e1747"
+}

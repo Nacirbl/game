@@ -176,7 +176,7 @@
             height: 100%;
             width: 100%;
             display: flex;
-            flex-direction: row;
+            flex-direction: column;
             position: relative;
         }
 
@@ -393,6 +393,68 @@
         .notification.error {
             background: linear-gradient(45deg, #f44336, #ff5722);
         }
+
+        .home-button {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(255, 68, 88, 0.3);
+            transition: var(--transition);
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+        }
+
+        .home-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 25px rgba(255, 68, 88, 0.4);
+        }
+
+        .home-button:active {
+            transform: scale(0.95);
+        }
+
+        @media (max-width: 768px) {
+            .home-button {
+                bottom: 15px;
+                left: 15px;
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
+            }
+        }
+        
+        @keyframes slideInFromTop {
+            from {
+                transform: translateY(-100px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        @keyframes slideOutToTop {
+            from {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateY(-100px);
+                opacity: 0;
+            }
+        }
     </style>
     
     {% block extra_css %}{% endblock %}
@@ -410,6 +472,13 @@
             {% block content %}{% endblock %}
         </main>
     </div>
+    
+    <!-- Floating Home Button (hidden on homepage) -->
+    {% if request.endpoint != 'index' %}
+    <a href="/" class="home-button" title="Go Home">
+        <i class="fas fa-home"></i>
+    </a>
+    {% endif %}
     
     <div id="notification" class="notification"></div>
     
