@@ -445,6 +445,17 @@
                 padding: 0.7rem 1rem;
                 font-size: 0.9rem;
             }
+            
+            /* AI Modal mobile fixes */
+            #ai-generator-modal {
+                padding: 0.5rem !important;
+            }
+            
+            #ai-generator-modal .card {
+                margin: 0.5rem !important;
+                width: calc(100% - 1rem) !important;
+                max-height: calc(100vh - 1rem) !important;
+            }
         }
         
         @media (max-width: 480px) {
@@ -473,6 +484,17 @@
             .btn {
                 padding: 0.7rem 1.2rem;
                 font-size: 0.9rem;
+            }
+            
+            /* AI Modal small mobile fixes */
+            #ai-generator-modal .card {
+                max-height: calc(100vh - 0.5rem) !important;
+            }
+            
+            #ai-generator-modal .admin-buttons .btn {
+                padding: 0.6rem 0.8rem !important;
+                font-size: 0.8rem !important;
+                min-width: 80px !important;
             }
         }
 
