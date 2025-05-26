@@ -1,0 +1,25 @@
+{
+  "timestamp": "2025-05-26T20:05:35.118608",
+  "results": {
+    "performance": {
+      "dict_time": 0.0010046958923339844,
+      "file_time": 8.43507719039917,
+      "speedup": 8395.652112007594,
+      "operations_tested": 2000
+    },
+    "concurrency": {
+      "sessions_created": 50,
+      "total_sessions": 50,
+      "error_count": 0,
+      "total_time": 10.307258367538452,
+      "sessions_per_second": 4.850950487228434,
+      "avg_response_time": 2.048638033866882
+    },
+    "cleanup": {
+      "before_sessions": 156,
+      "after_sessions": 156,
+      "sessions_cleaned": 0,
+      "backup_saved": true
+    }
+  }
+}

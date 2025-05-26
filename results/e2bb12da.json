@@ -1,0 +1,27 @@
+{
+  "session_id": "e2bb12da",
+  "quiz_id": "d14dc845",
+  "quiz_title": "Malena Challenge",
+  "completed_at": "2025-05-26T20:22:27.459535",
+  "started_at": "2025-05-26T20:22:09.343902",
+  "total_questions": 1,
+  "answers": [
+    {
+      "question_index": 0,
+      "answer": "right",
+      "timestamp": "2025-05-26T20:22:27.459535"
+    }
+  ],
+  "choices_summary": {
+    "question_0": {
+      "options": [
+        "Oxygen (O\u2082)",
+        "Methane (CH\u2084)"
+      ],
+      "choice": "Methane (CH\u2084)",
+      "choice_side": "right"
+    }
+  },
+  "shared_session_group": "e2bb12da",
+  "player_name": "Malena"
+}

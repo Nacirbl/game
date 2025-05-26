@@ -450,10 +450,17 @@
         {
             prompt: {{ (q.get('prompt', '') or '') | tojson }},
             option1: {{ q.option1 | tojson }},
-            option2: {{ q.option2 | tojson }}
+            option2: {{ q.option2 | tojson }},
+            correct_answer: {{ q.get('correct_answer', '') | tojson }}
         }{% if not loop.last %},{% endif %}
         {% endfor %}
     ];
+    
+    // Detect if this is a player mode quiz
+    const isPlayerMode = allQuestions.some(function(q) {
+        return q.option1.includes('Player 1') || q.option1.includes('Player 2') ||
+               q.option2.includes('Player 1') || q.option2.includes('Player 2');
+    });
     
     let currentQuestionIndex = {{ session.current_question }};
     let isAnimating = false;
@@ -774,10 +781,32 @@
         const choice = direction; // 'left' or 'right'
         
         try {
+            // Prepare the request body
+            let requestBody = { answer: choice };
+            
+            // For player mode, determine which actual player was chosen
+            if (isPlayerMode && window.playerMapping) {
+                const currentQuestion = allQuestions[currentQuestionIndex];
+                let chosenPlayer;
+                
+                if (choice === 'left') {
+                    chosenPlayer = currentQuestion.option1;
+                } else {
+                    chosenPlayer = currentQuestion.option2;
+                }
+                
+                // Map to actual player name using the consistent mapping
+                if (chosenPlayer.includes('Player 1')) {
+                    requestBody.player_choice = window.playerMapping['Player 1'];
+                } else if (chosenPlayer.includes('Player 2')) {
+                    requestBody.player_choice = window.playerMapping['Player 2'];
+                }
+            }
+            
             const response = await fetch(`/api/session/${sessionId}/answer`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ answer: choice })
+                body: JSON.stringify(requestBody)
             });
             
             const result = await response.json();
@@ -1576,13 +1605,17 @@
     
     async function fetchPlayerMapping() {
         try {
-            const response = await fetch(`/api/multiplayer-results/${sessionId}`);
+            const response = await fetch(`/api/player-mapping/${sessionId}`);
             const data = await response.json();
             
-            if (data.player_mapping) {
+            if (data.success && data.player_mapping) {
                 window.playerMapping = data.player_mapping;
                 updateCardIcons(); // Refresh card display with proper mapping
                 console.log('Player mapping updated:', window.playerMapping);
+                console.log('Has friend connected:', data.has_friend);
+                
+                // Also update all visible card text immediately
+                updateAllCardText();
             }
         } catch (error) {
             console.error('Error fetching player mapping:', error);
@@ -1719,5 +1752,196 @@
             setTimeout(() => notification.remove(), 500);
         }, 4000);
     }
+    
+    // Initialize the page
+    function initializePage() {
+        // Load persistent player name from localStorage
+        const savedPlayerName = localStorage.getItem('playerName');
+        if (savedPlayerName && sessionPlayerName === '') {
+            // Update session with saved name if not already set
+            updateSessionPlayerName(savedPlayerName);
+        }
+        
+        // For player mode quizzes, fetch player mapping
+        if (isPlayerMode) {
+            fetchPlayerMapping();
+            
+            // Set up periodic player mapping refresh for new sessions
+            // This helps when players join a new quiz together
+            let mappingRetries = 0;
+            const mappingInterval = setInterval(async () => {
+                if (mappingRetries < 10) { // Try for up to 20 seconds
+                    await fetchPlayerMapping();
+                    mappingRetries++;
+                    
+                    // Stop retrying if we have both players mapped
+                    if (window.playerMapping && window.playerMapping['Player 1'] !== 'Your Friend' && window.playerMapping['Player 2'] !== 'Your Friend') {
+                        clearInterval(mappingInterval);
+                    }
+                } else {
+                    clearInterval(mappingInterval);
+                }
+            }, 2000);
+        }
+        
+        // Initialize other components
+        initializeCard();
+        checkGameState();
+        
+        // Start session status checking for multiplayer
+        checkSessionStatus();
+    }
+    
+    async function updateSessionPlayerName(playerName) {
+        try {
+            const response = await fetch(`/api/session/${sessionId}`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ player_name: playerName })
+            });
+            
+            if (response.ok) {
+                sessionPlayerName = playerName;
+                console.log('Updated session player name:', playerName);
+            }
+        } catch (error) {
+            console.error('Error updating player name:', error);
+        }
+    }
+    
+    function updateAllCardText() {
+        if (!window.playerMapping) return;
+        
+        // Update current card
+        const currentCard = document.getElementById('current-card');
+        if (currentCard && currentQuestionIndex < allQuestions.length) {
+            const question = allQuestions[currentQuestionIndex];
+            
+            // Update prompt
+            const questionPrompt = currentCard.querySelector('.question-prompt');
+            if (questionPrompt) {
+                let promptText = question.prompt || question.option1 + " or " + question.option2 + "?";
+                promptText = promptText.replace(/Player 1/g, window.playerMapping['Player 1'])
+                                      .replace(/Player 2/g, window.playerMapping['Player 2']);
+                questionPrompt.textContent = promptText;
+            }
+            
+            // Update option text
+            const leftText = currentCard.querySelector('#left-text');
+            const rightText = currentCard.querySelector('#right-text');
+            if (leftText && rightText) {
+                let leftOption = question.option1.replace(/Player 1/g, window.playerMapping['Player 1'])
+                                                 .replace(/Player 2/g, window.playerMapping['Player 2']);
+                let rightOption = question.option2.replace(/Player 1/g, window.playerMapping['Player 1'])
+                                                  .replace(/Player 2/g, window.playerMapping['Player 2']);
+                leftText.textContent = leftOption;
+                rightText.textContent = rightOption;
+            }
+        }
+        
+        // Update next card if it exists
+        const nextCard = document.getElementById('next-card');
+        if (nextCard && currentQuestionIndex + 1 < allQuestions.length) {
+            const nextQuestion = allQuestions[currentQuestionIndex + 1];
+            
+            const nextPrompt = nextCard.querySelector('.question-prompt');
+            if (nextPrompt) {
+                let promptText = nextQuestion.prompt || nextQuestion.option1 + " or " + nextQuestion.option2 + "?";
+                promptText = promptText.replace(/Player 1/g, window.playerMapping['Player 1'])
+                                      .replace(/Player 2/g, window.playerMapping['Player 2']);
+                nextPrompt.textContent = promptText;
+            }
+            
+            const nextOptions = nextCard.querySelectorAll('.option-text');
+            if (nextOptions.length >= 2) {
+                let option1 = nextQuestion.option1.replace(/Player 1/g, window.playerMapping['Player 1'])
+                                                  .replace(/Player 2/g, window.playerMapping['Player 2']);
+                let option2 = nextQuestion.option2.replace(/Player 1/g, window.playerMapping['Player 1'])
+                                                  .replace(/Player 2/g, window.playerMapping['Player 2']);
+                nextOptions[0].textContent = option1;
+                nextOptions[1].textContent = option2;
+            }
+        }
+    }
+
+    function updateCardIcons() {
+        // Update current card if it exists
+        const currentCard = document.getElementById('current-card');
+        if (currentCard && window.playerMapping) {
+            const question = allQuestions[currentQuestionIndex];
+            if (question) {
+                // Update question prompt with actual names
+                const questionPrompt = currentCard.querySelector('.question-prompt');
+                if (questionPrompt) {
+                    let promptText = question.prompt || question.option1 + " or " + question.option2 + "?";
+                    promptText = promptText.replace(/Player 1/g, window.playerMapping['Player 1'])
+                                          .replace(/Player 2/g, window.playerMapping['Player 2']);
+                    questionPrompt.textContent = promptText;
+                }
+                
+                // Update option texts with actual names
+                const optionTexts = currentCard.querySelectorAll('.option-text');
+                if (optionTexts.length >= 2) {
+                    let option1Text = question.option1;
+                    let option2Text = question.option2;
+                    
+                    option1Text = option1Text.replace(/Player 1/g, window.playerMapping['Player 1'])
+                                            .replace(/Player 2/g, window.playerMapping['Player 2']);
+                    option2Text = option2Text.replace(/Player 1/g, window.playerMapping['Player 1'])
+                                            .replace(/Player 2/g, window.playerMapping['Player 2']);
+                    
+                    optionTexts[0].textContent = option1Text;
+                    optionTexts[1].textContent = option2Text;
+                }
+            }
+        }
+    }
+    
+    // Start the initialization when page loads
+    // Heartbeat system for disconnect detection
+    let heartbeatInterval;
+    
+    function startHeartbeat() {
+        if (sessionId && hasMultiplayerFriend) {
+            heartbeatInterval = setInterval(async () => {
+                try {
+                    await fetch(`/api/heartbeat/${sessionId}`, { method: 'POST' });
+                    
+                    // Check if partner disconnected
+                    const statusResponse = await fetch(`/api/check-partner-status/${sessionId}`);
+                    const statusData = await statusResponse.json();
+                    
+                    if (statusData.partner_disconnected) {
+                        clearInterval(heartbeatInterval);
+                        showDisconnectionNotice();
+                    }
+                } catch (error) {
+                    console.warn('Heartbeat failed:', error);
+                }
+            }, 10000); // Every 10 seconds
+        }
+    }
+    
+    function showDisconnectionNotice() {
+        const notice = document.createElement('div');
+        notice.innerHTML = `
+            <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); z-index: 10000; display: flex; align-items: center; justify-content: center;">
+                <div style="background: white; padding: 2rem; border-radius: 15px; text-align: center; max-width: 400px;">
+                    <i class="fas fa-user-times" style="font-size: 3rem; color: #dc3545; margin-bottom: 1rem;"></i>
+                    <h3 style="margin-bottom: 1rem; color: #333;">Partner Disconnected</h3>
+                    <p style="margin-bottom: 2rem; color: #666;">Your partner has left the game. You can continue playing solo or return to the main menu.</p>
+                    <button onclick="location.href='/'" style="padding: 0.75rem 1.5rem; background: #007bff; color: white; border: none; border-radius: 8px; font-size: 1rem; cursor: pointer;">
+                        Return to Menu
+                    </button>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(notice);
+    }
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        initializePage();
+        startHeartbeat();
+    });
 </script>
 {% endblock %} 

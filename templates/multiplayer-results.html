@@ -93,6 +93,12 @@
     function displayMultiplayerResults(data) {
         const container = document.getElementById('results-container');
         
+        // Check if this is a player mode quiz
+        const isPlayerMode = data.questions.some(q => 
+            q.option1.includes('Player 1') || q.option1.includes('Player 2') ||
+            q.option2.includes('Player 1') || q.option2.includes('Player 2')
+        );
+        
         let html = `
             <div style="margin-bottom: 2rem;">
                 <h3 style="text-align: center; margin-bottom: 1.5rem;">
@@ -105,7 +111,7 @@
                             <div style="font-size: 2rem; margin-bottom: 0.5rem;">
                                 ${index === 0 ? '🏆' : '🎮'}
                             </div>
-                            <h4>Player ${index + 1}</h4>
+                            <h4>${player.player_name || `Player ${index + 1}`}</h4>
                             <div style="font-size: 0.9rem; opacity: 0.8; margin-bottom: 0.5rem;">
                                 Completed: ${new Date(player.completed_at).toLocaleTimeString()}
                             </div>
@@ -122,42 +128,70 @@
                 ${data.questions.map((question, qIndex) => {
                     const playerChoices = data.players.map(player => {
                         const answer = player.answers.find(a => a.question_index === qIndex);
-                        return answer ? answer.answer : null;
+                        return answer ? answer : null;
                     });
+                    
+                    // Replace Player 1/Player 2 with actual names if this is player mode
+                    let displayQuestion = { ...question };
+                    let questionPrompt = question.prompt || (question.option1 + " or " + question.option2 + "?");
+                    
+                    if (isPlayerMode && data.player_mapping) {
+                        displayQuestion.option1 = question.option1.replace(/Player 1/g, data.player_mapping['Player 1'])
+                                                                  .replace(/Player 2/g, data.player_mapping['Player 2']);
+                        displayQuestion.option2 = question.option2.replace(/Player 1/g, data.player_mapping['Player 1'])
+                                                                  .replace(/Player 2/g, data.player_mapping['Player 2']);
+                        questionPrompt = questionPrompt.replace(/Player 1/g, data.player_mapping['Player 1'])
+                                                     .replace(/Player 2/g, data.player_mapping['Player 2']);
+                    }
                     
                     return `
                         <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 15px;">
                             <h6 style="margin-bottom: 1rem; text-align: center;">
-                                ${question.prompt || (question.option1 + " or " + question.option2 + "?")}
+                                ${questionPrompt}
                             </h6>
                             
                             <div style="display: grid; grid-template-columns: 1fr auto 1fr; gap: 1rem; align-items: center; margin-bottom: 1rem;">
                                 <div style="text-align: center; padding: 1rem; background: linear-gradient(135deg, #667eea, #764ba2); color: white; border-radius: 10px;">
-                                    <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">${question.option1}</div>
+                                    <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">${displayQuestion.option1}</div>
                                     <div style="font-size: 0.9rem; opacity: 0.8;">
-                                        ${playerChoices.filter(choice => choice === 'left').length} chose this
+                                        ${playerChoices.filter(choice => choice && choice.answer === 'left').length} chose this
                                     </div>
                                 </div>
                                 
                                 <div style="color: var(--primary-color); font-weight: bold; font-size: 1.2rem;">VS</div>
                                 
                                 <div style="text-align: center; padding: 1rem; background: linear-gradient(135deg, #f093fb, #f5576c); color: white; border-radius: 10px;">
-                                    <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">${question.option2}</div>
+                                    <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">${displayQuestion.option2}</div>
                                     <div style="font-size: 0.9rem; opacity: 0.8;">
-                                        ${playerChoices.filter(choice => choice === 'right').length} chose this
+                                        ${playerChoices.filter(choice => choice && choice.answer === 'right').length} chose this
                                     </div>
                                 </div>
                             </div>
                             
                             <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
                                 ${data.players.map((player, pIndex) => {
-                                    const choice = playerChoices[pIndex];
-                                    const choiceText = choice === 'left' ? question.option1 : choice === 'right' ? question.option2 : 'No answer';
-                                    const choiceColor = choice === 'left' ? '#667eea' : choice === 'right' ? '#f093fb' : '#999';
+                                    const answerObj = playerChoices[pIndex];
+                                    let choiceText = 'No answer';
+                                    let choiceColor = '#999';
+                                    
+                                    if (answerObj) {
+                                        if (isPlayerMode && answerObj.player_choice) {
+                                            // For player mode, use the actual player choice
+                                            choiceText = answerObj.player_choice;
+                                            // Color based on which actual player was chosen
+                                            if (data.player_mapping) {
+                                                choiceColor = answerObj.player_choice === data.player_mapping['Player 1'] ? '#667eea' : '#f093fb';
+                                            }
+                                        } else {
+                                            // For regular mode, use left/right mapping
+                                            choiceText = answerObj.answer === 'left' ? displayQuestion.option1 : displayQuestion.option2;
+                                            choiceColor = answerObj.answer === 'left' ? '#667eea' : '#f093fb';
+                                        }
+                                    }
                                     
                                     return `
                                         <div style="text-align: center; padding: 0.5rem 1rem; background: ${choiceColor}; color: white; border-radius: 20px; font-size: 0.8rem;">
-                                            Player ${pIndex + 1}: ${choiceText}
+                                            ${player.player_name || `Player ${pIndex + 1}`}: ${choiceText}
                                         </div>
                                     `;
                                 }).join('')}

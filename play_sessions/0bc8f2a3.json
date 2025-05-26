@@ -1,0 +1,63 @@
+{
+  "session_id": "0bc8f2a3",
+  "quiz_id": "5aed6ecf",
+  "quiz_title": "Food Preferences",
+  "questions": [
+    {
+      "prompt": "What's your go-to comfort food?",
+      "option1": "Pizza",
+      "option2": "Burger"
+    },
+    {
+      "prompt": "What's your morning drink of choice?",
+      "option1": "Coffee",
+      "option2": "Tea"
+    },
+    {
+      "prompt": "Which dessert makes you happiest?",
+      "option1": "Ice Cream",
+      "option2": "Cake"
+    },
+    {
+      "prompt": "Which is your healthy snack choice?",
+      "option1": "Apple",
+      "option2": "Nuts"
+    },
+    {
+      "prompt": "What's your weekend drink?",
+      "option1": "Wine",
+      "option2": "Beer"
+    }
+  ],
+  "current_question": 5,
+  "answers": [
+    {
+      "question_index": 0,
+      "answer": "left",
+      "timestamp": "2025-05-26T22:42:36.973141"
+    },
+    {
+      "question_index": 1,
+      "answer": "right",
+      "timestamp": "2025-05-26T22:42:38.755956"
+    },
+    {
+      "question_index": 2,
+      "answer": "left",
+      "timestamp": "2025-05-26T22:42:40.403919"
+    },
+    {
+      "question_index": 3,
+      "answer": "left",
+      "timestamp": "2025-05-26T22:42:42.646500"
+    },
+    {
+      "question_index": 4,
+      "answer": "left",
+      "timestamp": "2025-05-26T22:42:44.831364"
+    }
+  ],
+  "started_at": "2025-05-26T22:42:19.519498",
+  "shared_session_group": "0bc8f2a3",
+  "player_name": "Malena"
+}

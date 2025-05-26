@@ -1,0 +1,7179 @@
+{
+  "timestamp": "2025-05-26T21:46:20.679032",
+  "active_sessions": {
+    "4ff4c036": {
+      "session_id": "4ff4c036",
+      "quiz_id": "8f71d8fe",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "prompt": "Where do you want to spend your vacation?",
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "prompt": "Which city would you visit?",
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "prompt": "How do you prefer to travel?",
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "prompt": "Where would you stay?",
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "prompt": "What's your travel style?",
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T19:39:43.169195",
+      "last_activity": "2025-05-26T19:43:36.518602",
+      "shared_session_group": "4ff4c036",
+      "player_name": "Malena"
+    },
+    "42ea7df5": {
+      "session_id": "42ea7df5",
+      "quiz_id": "8f71d8fe",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "prompt": "Where do you want to spend your vacation?",
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "prompt": "Which city would you visit?",
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "prompt": "How do you prefer to travel?",
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "prompt": "Where would you stay?",
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "prompt": "What's your travel style?",
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T19:40:07.520346",
+      "last_activity": "2025-05-26T19:43:50.713302",
+      "shared_session_group": "42ea7df5",
+      "player_name": "Nacir"
+    },
+    "fb356a3a": {
+      "session_id": "fb356a3a",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T19:44:06.803180",
+      "last_activity": "2025-05-26T19:44:06.803180",
+      "shared_session_group": "fb356a3a",
+      "player_name": "TestPlayer1"
+    },
+    "ba831aed": {
+      "session_id": "ba831aed",
+      "quiz_id": "bbae6c0a",
+      "quiz_title": "Lifestyle Choices",
+      "questions": [
+        {
+          "prompt": "Which pet would you choose?",
+          "option1": "Cat",
+          "option2": "Dog"
+        },
+        {
+          "prompt": "What's your favorite season?",
+          "option1": "Summer",
+          "option2": "Winter"
+        },
+        {
+          "prompt": "How do you prefer to get around?",
+          "option1": "Car",
+          "option2": "Bike"
+        },
+        {
+          "prompt": "Where do you feel most at home?",
+          "option1": "City",
+          "option2": "Nature"
+        },
+        {
+          "prompt": "When are you most productive?",
+          "option1": "Morning",
+          "option2": "Night"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T19:46:13.530434",
+      "last_activity": "2025-05-26T19:46:23.706157",
+      "shared_session_group": "ba831aed",
+      "player_name": "Nacir"
+    },
+    "ba49fd7e": {
+      "session_id": "ba49fd7e",
+      "quiz_id": "bbae6c0a",
+      "quiz_title": "Lifestyle Choices",
+      "questions": [
+        {
+          "prompt": "Which pet would you choose?",
+          "option1": "Cat",
+          "option2": "Dog"
+        },
+        {
+          "prompt": "What's your favorite season?",
+          "option1": "Summer",
+          "option2": "Winter"
+        },
+        {
+          "prompt": "How do you prefer to get around?",
+          "option1": "Car",
+          "option2": "Bike"
+        },
+        {
+          "prompt": "Where do you feel most at home?",
+          "option1": "City",
+          "option2": "Nature"
+        },
+        {
+          "prompt": "When are you most productive?",
+          "option1": "Morning",
+          "option2": "Night"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T19:46:24.025759",
+      "last_activity": "2025-05-26T19:46:24.025759",
+      "shared_session_group": "ba49fd7e",
+      "player_name": "Malena"
+    },
+    "a3c53fde": {
+      "session_id": "a3c53fde",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T19:54:41.128506",
+      "last_activity": "2025-05-26T19:55:52.377021",
+      "shared_session_group": "a3c53fde",
+      "player_name": "Player_T7_S0"
+    },
+    "11b050b4": {
+      "session_id": "11b050b4",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T19:54:41.132544",
+      "last_activity": "2025-05-26T19:55:11.734839",
+      "shared_session_group": "11b050b4",
+      "player_name": "Player_T9_S0"
+    },
+    "0b1f61b6": {
+      "session_id": "0b1f61b6",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T19:54:41.132544",
+      "last_activity": "2025-05-26T19:55:01.565307",
+      "shared_session_group": "0b1f61b6",
+      "player_name": "Player_T1_S0"
+    },
+    "710ff5a8": {
+      "session_id": "710ff5a8",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T19:54:41.132544",
+      "last_activity": "2025-05-26T19:55:32.062847",
+      "shared_session_group": "710ff5a8",
+      "player_name": "Player_T2_S0"
+    },
+    "8dd9999e": {
+      "session_id": "8dd9999e",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T19:54:41.137607",
+      "last_activity": "2025-05-26T19:54:51.401124",
+      "shared_session_group": "8dd9999e",
+      "player_name": "Player_T3_S0"
+    },
+    "900a17bf": {
+      "session_id": "900a17bf",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T19:54:41.137607",
+      "last_activity": "2025-05-26T19:55:21.911663",
+      "shared_session_group": "900a17bf",
+      "player_name": "Player_T4_S0"
+    },
+    "85d65d9a": {
+      "session_id": "85d65d9a",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T19:54:41.137607",
+      "last_activity": "2025-05-26T19:56:23.048467",
+      "shared_session_group": "85d65d9a",
+      "player_name": "Player_T0_S0"
+    },
+    "92ec5822": {
+      "session_id": "92ec5822",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T19:54:41.144976",
+      "last_activity": "2025-05-26T19:56:02.548733",
+      "shared_session_group": "92ec5822",
+      "player_name": "Player_T8_S0"
+    },
+    "d41efd23": {
+      "session_id": "d41efd23",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T19:54:41.144976",
+      "last_activity": "2025-05-26T19:56:12.791730",
+      "shared_session_group": "d41efd23",
+      "player_name": "Player_T5_S0"
+    },
+    "adac4139": {
+      "session_id": "adac4139",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T19:54:41.152529",
+      "last_activity": "2025-05-26T19:55:42.209060",
+      "shared_session_group": "adac4139",
+      "player_name": "Player_T6_S0"
+    },
+    "170dd5eb": {
+      "session_id": "170dd5eb",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T19:54:43.159118",
+      "last_activity": "2025-05-26T19:54:53.413190",
+      "shared_session_group": "170dd5eb",
+      "player_name": "Player_T3_S1"
+    },
+    "41e09c78": {
+      "session_id": "41e09c78",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T19:54:43.160213",
+      "last_activity": "2025-05-26T19:55:03.607848",
+      "shared_session_group": "41e09c78",
+      "player_name": "Player_T1_S1"
+    },
+    "dc109aed": {
+      "session_id": "dc109aed",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T19:54:43.177038",
+      "last_activity": "2025-05-26T19:55:13.777987",
+      "shared_session_group": "dc109aed",
+      "player_name": "Player_T9_S1"
+    },
+    "8e0ca097": {
+      "session_id": "8e0ca097",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T19:54:43.183097",
+      "last_activity": "2025-05-26T19:55:23.949870",
+      "shared_session_group": "8e0ca097",
+      "player_name": "Player_T4_S1"
+    },
+    "b79ed077": {
+      "session_id": "b79ed077",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T19:54:43.183097",
+      "last_activity": "2025-05-26T19:55:34.099309",
+      "shared_session_group": "b79ed077",
+      "player_name": "Player_T2_S1"
+    },
+    "7e6f9d94": {
+      "session_id": "7e6f9d94",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T19:54:43.183097",
+      "last_activity": "2025-05-26T19:56:25.082731",
+      "shared_session_group": "7e6f9d94",
+      "player_name": "Player_T0_S1"
+    },
+    "c9abcba9": {
+      "session_id": "c9abcba9",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T19:54:43.183097",
+      "last_activity": "2025-05-26T19:56:04.588734",
+      "shared_session_group": "c9abcba9",
+      "player_name": "Player_T8_S1"
+    },
+    "009954ce": {
+      "session_id": "009954ce",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T19:54:43.199319",
+      "last_activity": "2025-05-26T19:55:54.410600",
+      "shared_session_group": "009954ce",
+      "player_name": "Player_T7_S1"
+    },
+    "00c2c56f": {
+      "session_id": "00c2c56f",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T19:54:43.200339",
+      "last_activity": "2025-05-26T19:56:14.848756",
+      "shared_session_group": "00c2c56f",
+      "player_name": "Player_T5_S1"
+    },
+    "a967b044": {
+      "session_id": "a967b044",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T19:54:43.201364",
+      "last_activity": "2025-05-26T19:55:44.239679",
+      "shared_session_group": "a967b044",
+      "player_name": "Player_T6_S1"
+    },
+    "7fb316df": {
+      "session_id": "7fb316df",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T19:54:45.200931",
+      "last_activity": "2025-05-26T19:55:15.813901",
+      "shared_session_group": "7fb316df",
+      "player_name": "Player_T9_S2"
+    },
+    "a0015d87": {
+      "session_id": "a0015d87",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T19:54:45.200931",
+      "last_activity": "2025-05-26T19:55:05.632055",
+      "shared_session_group": "a0015d87",
+      "player_name": "Player_T1_S2"
+    },
+    "1736e134": {
+      "session_id": "1736e134",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T19:54:45.200931",
+      "last_activity": "2025-05-26T19:54:55.443497",
+      "shared_session_group": "1736e134",
+      "player_name": "Player_T3_S2"
+    },
+    "63093e64": {
+      "session_id": "63093e64",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T19:54:45.233149",
+      "last_activity": "2025-05-26T19:55:46.263500",
+      "shared_session_group": "63093e64",
+      "player_name": "Player_T6_S2"
+    },
+    "fc481b07": {
+      "session_id": "fc481b07",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T19:54:45.236122",
+      "last_activity": "2025-05-26T19:55:25.965762",
+      "shared_session_group": "fc481b07",
+      "player_name": "Player_T4_S2"
+    },
+    "f870db83": {
+      "session_id": "f870db83",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T19:54:45.245040",
+      "last_activity": "2025-05-26T19:56:16.870770",
+      "shared_session_group": "f870db83",
+      "player_name": "Player_T5_S2"
+    },
+    "6eae8eb2": {
+      "session_id": "6eae8eb2",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T19:54:45.246159",
+      "last_activity": "2025-05-26T19:56:27.103491",
+      "shared_session_group": "6eae8eb2",
+      "player_name": "Player_T0_S2"
+    },
+    "ae8226cc": {
+      "session_id": "ae8226cc",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T19:54:45.246159",
+      "last_activity": "2025-05-26T19:55:36.111488",
+      "shared_session_group": "ae8226cc",
+      "player_name": "Player_T2_S2"
+    },
+    "9834e5b9": {
+      "session_id": "9834e5b9",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T19:54:45.250731",
+      "last_activity": "2025-05-26T19:55:56.437069",
+      "shared_session_group": "9834e5b9",
+      "player_name": "Player_T7_S2"
+    },
+    "7792c416": {
+      "session_id": "7792c416",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T19:54:45.250731",
+      "last_activity": "2025-05-26T19:56:06.630693",
+      "shared_session_group": "7792c416",
+      "player_name": "Player_T8_S2"
+    },
+    "5461bd63": {
+      "session_id": "5461bd63",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T19:54:47.227490",
+      "last_activity": "2025-05-26T19:55:17.839112",
+      "shared_session_group": "5461bd63",
+      "player_name": "Player_T9_S3"
+    },
+    "dbcf0488": {
+      "session_id": "dbcf0488",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T19:54:47.234560",
+      "last_activity": "2025-05-26T19:55:07.664403",
+      "shared_session_group": "dbcf0488",
+      "player_name": "Player_T1_S3"
+    },
+    "6ddf2ac9": {
+      "session_id": "6ddf2ac9",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T19:54:47.234560",
+      "last_activity": "2025-05-26T19:54:57.474014",
+      "shared_session_group": "6ddf2ac9",
+      "player_name": "Player_T3_S3"
+    },
+    "761b02c1": {
+      "session_id": "761b02c1",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T19:54:47.256963",
+      "last_activity": "2025-05-26T19:55:27.984708",
+      "shared_session_group": "761b02c1",
+      "player_name": "Player_T4_S3"
+    },
+    "c94f42a7": {
+      "session_id": "c94f42a7",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T19:54:47.280955",
+      "last_activity": "2025-05-26T19:55:58.466918",
+      "shared_session_group": "c94f42a7",
+      "player_name": "Player_T7_S3"
+    },
+    "3e90c7bf": {
+      "session_id": "3e90c7bf",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T19:54:47.280955",
+      "last_activity": "2025-05-26T19:55:38.148673",
+      "shared_session_group": "3e90c7bf",
+      "player_name": "Player_T2_S3"
+    },
+    "ca824e7f": {
+      "session_id": "ca824e7f",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T19:54:47.280955",
+      "last_activity": "2025-05-26T19:56:08.683086",
+      "shared_session_group": "ca824e7f",
+      "player_name": "Player_T8_S3"
+    },
+    "28fd5920": {
+      "session_id": "28fd5920",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T19:54:47.288598",
+      "last_activity": "2025-05-26T19:55:48.309244",
+      "shared_session_group": "28fd5920",
+      "player_name": "Player_T6_S3"
+    },
+    "12c544c6": {
+      "session_id": "12c544c6",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T19:54:47.323573",
+      "last_activity": "2025-05-26T19:56:29.168627",
+      "shared_session_group": "12c544c6",
+      "player_name": "Player_T0_S3"
+    },
+    "d6f6bdb8": {
+      "session_id": "d6f6bdb8",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T19:54:47.323573",
+      "last_activity": "2025-05-26T19:56:18.925264",
+      "shared_session_group": "d6f6bdb8",
+      "player_name": "Player_T5_S3"
+    },
+    "2ed76e37": {
+      "session_id": "2ed76e37",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T19:54:49.255710",
+      "last_activity": "2025-05-26T19:54:59.528861",
+      "shared_session_group": "2ed76e37",
+      "player_name": "Player_T3_S4"
+    },
+    "b814d8a4": {
+      "session_id": "b814d8a4",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T19:54:49.258083",
+      "last_activity": "2025-05-26T19:55:09.698686",
+      "shared_session_group": "b814d8a4",
+      "player_name": "Player_T1_S4"
+    },
+    "cfba9328": {
+      "session_id": "cfba9328",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T19:54:49.274259",
+      "last_activity": "2025-05-26T19:55:19.862810",
+      "shared_session_group": "cfba9328",
+      "player_name": "Player_T9_S4"
+    },
+    "a285a376": {
+      "session_id": "a285a376",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T19:54:49.304053",
+      "last_activity": "2025-05-26T19:55:30.020167",
+      "shared_session_group": "a285a376",
+      "player_name": "Player_T4_S4"
+    },
+    "876fdb37": {
+      "session_id": "876fdb37",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T19:54:49.323673",
+      "last_activity": "2025-05-26T19:55:40.195933",
+      "shared_session_group": "876fdb37",
+      "player_name": "Player_T2_S4"
+    },
+    "d0a0702a": {
+      "session_id": "d0a0702a",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T19:54:49.323673",
+      "last_activity": "2025-05-26T19:55:50.345144",
+      "shared_session_group": "d0a0702a",
+      "player_name": "Player_T6_S4"
+    },
+    "ed32e848": {
+      "session_id": "ed32e848",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T19:54:49.324672",
+      "last_activity": "2025-05-26T19:56:00.518133",
+      "shared_session_group": "ed32e848",
+      "player_name": "Player_T7_S4"
+    },
+    "65e305b2": {
+      "session_id": "65e305b2",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T19:54:49.334157",
+      "last_activity": "2025-05-26T19:56:10.727585",
+      "shared_session_group": "65e305b2",
+      "player_name": "Player_T8_S4"
+    },
+    "39721eec": {
+      "session_id": "39721eec",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T19:54:49.359434",
+      "last_activity": "2025-05-26T19:56:20.954912",
+      "shared_session_group": "39721eec",
+      "player_name": "Player_T5_S4"
+    },
+    "f137ee60": {
+      "session_id": "f137ee60",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T19:54:49.359434",
+      "last_activity": "2025-05-26T19:56:31.215136",
+      "shared_session_group": "f137ee60",
+      "player_name": "Player_T0_S4"
+    },
+    "c797ddce": {
+      "session_id": "c797ddce",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T19:58:15.469902",
+      "last_activity": "2025-05-26T19:58:15.469902",
+      "shared_session_group": "c797ddce",
+      "player_name": "SeqPlayer5"
+    },
+    "451a05dc": {
+      "session_id": "451a05dc",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T19:58:17.523102",
+      "last_activity": "2025-05-26T19:58:17.523102",
+      "shared_session_group": "451a05dc",
+      "player_name": "SeqPlayer6"
+    },
+    "aff322d7": {
+      "session_id": "aff322d7",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T19:58:19.542808",
+      "last_activity": "2025-05-26T19:58:19.542808",
+      "shared_session_group": "aff322d7",
+      "player_name": "SeqPlayer7"
+    },
+    "43903ee0": {
+      "session_id": "43903ee0",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T19:58:21.608009",
+      "last_activity": "2025-05-26T19:58:21.608009",
+      "shared_session_group": "43903ee0",
+      "player_name": "SeqPlayer8"
+    },
+    "d52df06e": {
+      "session_id": "d52df06e",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T19:58:23.656953",
+      "last_activity": "2025-05-26T19:58:23.656953",
+      "shared_session_group": "d52df06e",
+      "player_name": "SeqPlayer9"
+    },
+    "be47507d": {
+      "session_id": "be47507d",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T19:58:25.697018",
+      "last_activity": "2025-05-26T19:58:25.697018",
+      "shared_session_group": "be47507d",
+      "player_name": "Thread2_S0"
+    },
+    "2188e23c": {
+      "session_id": "2188e23c",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T19:58:25.698045",
+      "last_activity": "2025-05-26T19:58:25.698045",
+      "shared_session_group": "2188e23c",
+      "player_name": "Thread0_S0"
+    },
+    "1f335dbd": {
+      "session_id": "1f335dbd",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T19:58:25.716343",
+      "last_activity": "2025-05-26T19:58:25.716343",
+      "shared_session_group": "1f335dbd",
+      "player_name": "Thread4_S0"
+    },
+    "d78fc39c": {
+      "session_id": "d78fc39c",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T19:58:25.716343",
+      "last_activity": "2025-05-26T19:58:25.716343",
+      "shared_session_group": "d78fc39c",
+      "player_name": "Thread3_S0"
+    },
+    "0ca0104b": {
+      "session_id": "0ca0104b",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T19:58:25.716343",
+      "last_activity": "2025-05-26T19:58:25.716343",
+      "shared_session_group": "0ca0104b",
+      "player_name": "Thread1_S0"
+    },
+    "7128b0ae": {
+      "session_id": "7128b0ae",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T19:58:27.716901",
+      "last_activity": "2025-05-26T19:58:27.716901",
+      "shared_session_group": "7128b0ae",
+      "player_name": "Thread0_S1"
+    },
+    "e5beb225": {
+      "session_id": "e5beb225",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T19:58:27.716901",
+      "last_activity": "2025-05-26T19:58:27.716901",
+      "shared_session_group": "e5beb225",
+      "player_name": "Thread2_S1"
+    },
+    "7a2f657e": {
+      "session_id": "7a2f657e",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T19:58:27.728588",
+      "last_activity": "2025-05-26T19:58:27.728588",
+      "shared_session_group": "7a2f657e",
+      "player_name": "Thread4_S1"
+    },
+    "24a8b46f": {
+      "session_id": "24a8b46f",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T19:58:27.745313",
+      "last_activity": "2025-05-26T19:58:27.745313",
+      "shared_session_group": "24a8b46f",
+      "player_name": "Thread1_S1"
+    },
+    "e844d809": {
+      "session_id": "e844d809",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T19:58:27.745835",
+      "last_activity": "2025-05-26T19:58:27.745835",
+      "shared_session_group": "e844d809",
+      "player_name": "Thread3_S1"
+    },
+    "e4006438": {
+      "session_id": "e4006438",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T19:58:29.735857",
+      "last_activity": "2025-05-26T19:58:29.735857",
+      "shared_session_group": "e4006438",
+      "player_name": "Thread2_S2"
+    },
+    "22301fe7": {
+      "session_id": "22301fe7",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T19:58:29.758066",
+      "last_activity": "2025-05-26T19:58:29.758066",
+      "shared_session_group": "22301fe7",
+      "player_name": "Thread0_S2"
+    },
+    "7f0dd76d": {
+      "session_id": "7f0dd76d",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T19:58:29.796353",
+      "last_activity": "2025-05-26T19:58:29.796353",
+      "shared_session_group": "7f0dd76d",
+      "player_name": "Thread1_S2"
+    },
+    "6805a997": {
+      "session_id": "6805a997",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T19:58:29.797349",
+      "last_activity": "2025-05-26T19:58:29.797349",
+      "shared_session_group": "6805a997",
+      "player_name": "Thread4_S2"
+    },
+    "8865595f": {
+      "session_id": "8865595f",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T19:58:29.806512",
+      "last_activity": "2025-05-26T19:58:29.806512",
+      "shared_session_group": "8865595f",
+      "player_name": "Thread3_S2"
+    },
+    "8ea985b3": {
+      "session_id": "8ea985b3",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:00:05.834985",
+      "last_activity": "2025-05-26T20:00:05.834985",
+      "shared_session_group": "8ea985b3",
+      "player_name": "SeqPlayer0"
+    },
+    "2c3db1fe": {
+      "session_id": "2c3db1fe",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:00:07.871158",
+      "last_activity": "2025-05-26T20:00:07.871158",
+      "shared_session_group": "2c3db1fe",
+      "player_name": "SeqPlayer1"
+    },
+    "5c355333": {
+      "session_id": "5c355333",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:00:09.924142",
+      "last_activity": "2025-05-26T20:00:09.924142",
+      "shared_session_group": "5c355333",
+      "player_name": "SeqPlayer2"
+    },
+    "ecb4d983": {
+      "session_id": "ecb4d983",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:00:11.979607",
+      "last_activity": "2025-05-26T20:00:11.979607",
+      "shared_session_group": "ecb4d983",
+      "player_name": "SeqPlayer3"
+    },
+    "250ece67": {
+      "session_id": "250ece67",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:00:14.004469",
+      "last_activity": "2025-05-26T20:00:14.004469",
+      "shared_session_group": "250ece67",
+      "player_name": "SeqPlayer4"
+    },
+    "7167d4ab": {
+      "session_id": "7167d4ab",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:00:16.047904",
+      "last_activity": "2025-05-26T20:00:16.047904",
+      "shared_session_group": "7167d4ab",
+      "player_name": "SeqPlayer5"
+    },
+    "65a1fc06": {
+      "session_id": "65a1fc06",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:00:18.069360",
+      "last_activity": "2025-05-26T20:00:18.069360",
+      "shared_session_group": "65a1fc06",
+      "player_name": "SeqPlayer6"
+    },
+    "80aa710e": {
+      "session_id": "80aa710e",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:00:20.125230",
+      "last_activity": "2025-05-26T20:00:20.125230",
+      "shared_session_group": "80aa710e",
+      "player_name": "SeqPlayer7"
+    },
+    "c75308cc": {
+      "session_id": "c75308cc",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:00:22.173828",
+      "last_activity": "2025-05-26T20:00:22.173828",
+      "shared_session_group": "c75308cc",
+      "player_name": "SeqPlayer8"
+    },
+    "f6e4bd4f": {
+      "session_id": "f6e4bd4f",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:00:24.211073",
+      "last_activity": "2025-05-26T20:00:24.211073",
+      "shared_session_group": "f6e4bd4f",
+      "player_name": "SeqPlayer9"
+    },
+    "d0b553b1": {
+      "session_id": "d0b553b1",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:00:26.240640",
+      "last_activity": "2025-05-26T20:00:26.240640",
+      "shared_session_group": "d0b553b1",
+      "player_name": "Thread0_S0"
+    },
+    "2feaf8c4": {
+      "session_id": "2feaf8c4",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:00:26.252283",
+      "last_activity": "2025-05-26T20:00:26.252283",
+      "shared_session_group": "2feaf8c4",
+      "player_name": "Thread1_S0"
+    },
+    "b8e20669": {
+      "session_id": "b8e20669",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:00:26.256130",
+      "last_activity": "2025-05-26T20:00:26.256130",
+      "shared_session_group": "b8e20669",
+      "player_name": "Thread2_S0"
+    },
+    "512d3dd9": {
+      "session_id": "512d3dd9",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:00:26.264034",
+      "last_activity": "2025-05-26T20:00:26.264034",
+      "shared_session_group": "512d3dd9",
+      "player_name": "Thread4_S0"
+    },
+    "4e98f489": {
+      "session_id": "4e98f489",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:00:26.264621",
+      "last_activity": "2025-05-26T20:00:26.264621",
+      "shared_session_group": "4e98f489",
+      "player_name": "Thread3_S0"
+    },
+    "88dcb55e": {
+      "session_id": "88dcb55e",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:00:28.277521",
+      "last_activity": "2025-05-26T20:00:28.277521",
+      "shared_session_group": "88dcb55e",
+      "player_name": "Thread0_S1"
+    },
+    "6471faaa": {
+      "session_id": "6471faaa",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:00:28.278524",
+      "last_activity": "2025-05-26T20:00:28.278524",
+      "shared_session_group": "6471faaa",
+      "player_name": "Thread4_S1"
+    },
+    "dddb3b72": {
+      "session_id": "dddb3b72",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:00:28.282629",
+      "last_activity": "2025-05-26T20:00:28.282629",
+      "shared_session_group": "dddb3b72",
+      "player_name": "Thread1_S1"
+    },
+    "e5e9b120": {
+      "session_id": "e5e9b120",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:00:28.282629",
+      "last_activity": "2025-05-26T20:00:28.282629",
+      "shared_session_group": "e5e9b120",
+      "player_name": "Thread3_S1"
+    },
+    "6e4ebfb5": {
+      "session_id": "6e4ebfb5",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:00:28.284307",
+      "last_activity": "2025-05-26T20:00:28.284307",
+      "shared_session_group": "6e4ebfb5",
+      "player_name": "Thread2_S1"
+    },
+    "4fc4123d": {
+      "session_id": "4fc4123d",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:00:30.310465",
+      "last_activity": "2025-05-26T20:00:30.310465",
+      "shared_session_group": "4fc4123d",
+      "player_name": "Thread0_S2"
+    },
+    "1c6d6feb": {
+      "session_id": "1c6d6feb",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:00:30.311470",
+      "last_activity": "2025-05-26T20:00:30.311470",
+      "shared_session_group": "1c6d6feb",
+      "player_name": "Thread3_S2"
+    },
+    "dfaad549": {
+      "session_id": "dfaad549",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:00:30.314510",
+      "last_activity": "2025-05-26T20:00:30.314510",
+      "shared_session_group": "dfaad549",
+      "player_name": "Thread4_S2"
+    },
+    "bdcd18c3": {
+      "session_id": "bdcd18c3",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:00:30.315537",
+      "last_activity": "2025-05-26T20:00:30.315537",
+      "shared_session_group": "bdcd18c3",
+      "player_name": "Thread1_S2"
+    },
+    "ff3df7c9": {
+      "session_id": "ff3df7c9",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:00:30.363376",
+      "last_activity": "2025-05-26T20:00:30.363376",
+      "shared_session_group": "ff3df7c9",
+      "player_name": "Thread2_S2"
+    },
+    "192ecb07": {
+      "session_id": "192ecb07",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:00:32.330349",
+      "last_activity": "2025-05-26T20:00:32.330349",
+      "shared_session_group": "192ecb07",
+      "player_name": "Thread0_S3"
+    },
+    "18a58c6b": {
+      "session_id": "18a58c6b",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:00:32.330660",
+      "last_activity": "2025-05-26T20:00:32.330660",
+      "shared_session_group": "18a58c6b",
+      "player_name": "Thread3_S3"
+    },
+    "6f47e19f": {
+      "session_id": "6f47e19f",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:00:32.343585",
+      "last_activity": "2025-05-26T20:00:32.343585",
+      "shared_session_group": "6f47e19f",
+      "player_name": "Thread1_S3"
+    },
+    "d93450e5": {
+      "session_id": "d93450e5",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:00:32.344585",
+      "last_activity": "2025-05-26T20:00:32.344585",
+      "shared_session_group": "d93450e5",
+      "player_name": "Thread4_S3"
+    },
+    "c69e9251": {
+      "session_id": "c69e9251",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:00:32.430606",
+      "last_activity": "2025-05-26T20:00:32.430606",
+      "shared_session_group": "c69e9251",
+      "player_name": "Thread2_S3"
+    },
+    "c90fd85c": {
+      "session_id": "c90fd85c",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:01:04.185442",
+      "last_activity": "2025-05-26T20:01:06.237275",
+      "shared_session_group": "c90fd85c",
+      "player_name": "TestPlayer"
+    },
+    "658b576b": {
+      "session_id": "658b576b",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:03:38.715421",
+      "last_activity": "2025-05-26T20:03:49.026899",
+      "shared_session_group": "658b576b",
+      "player_name": "Player_T9_S0"
+    },
+    "03b8e2db": {
+      "session_id": "03b8e2db",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:03:38.715421",
+      "last_activity": "2025-05-26T20:04:19.557949",
+      "shared_session_group": "03b8e2db",
+      "player_name": "Player_T2_S0"
+    },
+    "70838ad8": {
+      "session_id": "70838ad8",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:03:38.715421",
+      "last_activity": "2025-05-26T20:04:09.383677",
+      "shared_session_group": "70838ad8",
+      "player_name": "Player_T0_S0"
+    },
+    "85701fad": {
+      "session_id": "85701fad",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:03:38.723854",
+      "last_activity": "2025-05-26T20:04:50.211919",
+      "shared_session_group": "85701fad",
+      "player_name": "Player_T8_S0"
+    },
+    "62e79790": {
+      "session_id": "62e79790",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:03:38.726864",
+      "last_activity": "2025-05-26T20:04:29.757990",
+      "shared_session_group": "62e79790",
+      "player_name": "Player_T4_S0"
+    },
+    "5e672fad": {
+      "session_id": "5e672fad",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:03:38.727864",
+      "last_activity": "2025-05-26T20:05:10.607179",
+      "shared_session_group": "5e672fad",
+      "player_name": "Player_T7_S0"
+    },
+    "7714c724": {
+      "session_id": "7714c724",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:03:38.732362",
+      "last_activity": "2025-05-26T20:04:40.030743",
+      "shared_session_group": "7714c724",
+      "player_name": "Player_T1_S0"
+    },
+    "c02a75a4": {
+      "session_id": "c02a75a4",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:03:38.732362",
+      "last_activity": "2025-05-26T20:03:59.220019",
+      "shared_session_group": "c02a75a4",
+      "player_name": "Player_T5_S0"
+    },
+    "d2042036": {
+      "session_id": "d2042036",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:03:38.732362",
+      "last_activity": "2025-05-26T20:05:20.805560",
+      "shared_session_group": "d2042036",
+      "player_name": "Player_T6_S0"
+    },
+    "8d8a0a21": {
+      "session_id": "8d8a0a21",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:03:38.732362",
+      "last_activity": "2025-05-26T20:05:00.427822",
+      "shared_session_group": "8d8a0a21",
+      "player_name": "Player_T3_S0"
+    },
+    "d7eed589": {
+      "session_id": "d7eed589",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:03:40.760596",
+      "last_activity": "2025-05-26T20:04:11.409439",
+      "shared_session_group": "d7eed589",
+      "player_name": "Player_T0_S1"
+    },
+    "999dfc39": {
+      "session_id": "999dfc39",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:03:40.760596",
+      "last_activity": "2025-05-26T20:04:21.620738",
+      "shared_session_group": "999dfc39",
+      "player_name": "Player_T2_S1"
+    },
+    "6fc333de": {
+      "session_id": "6fc333de",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:03:40.760596",
+      "last_activity": "2025-05-26T20:03:51.071701",
+      "shared_session_group": "6fc333de",
+      "player_name": "Player_T9_S1"
+    },
+    "6b569a52": {
+      "session_id": "6b569a52",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:03:40.772849",
+      "last_activity": "2025-05-26T20:04:52.243938",
+      "shared_session_group": "6b569a52",
+      "player_name": "Player_T8_S1"
+    },
+    "a6eeecfd": {
+      "session_id": "a6eeecfd",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:03:40.787318",
+      "last_activity": "2025-05-26T20:04:01.250696",
+      "shared_session_group": "a6eeecfd",
+      "player_name": "Player_T5_S1"
+    },
+    "67f04566": {
+      "session_id": "67f04566",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:03:40.787318",
+      "last_activity": "2025-05-26T20:04:42.087868",
+      "shared_session_group": "67f04566",
+      "player_name": "Player_T1_S1"
+    },
+    "fbda0f46": {
+      "session_id": "fbda0f46",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:03:40.787318",
+      "last_activity": "2025-05-26T20:05:02.470380",
+      "shared_session_group": "fbda0f46",
+      "player_name": "Player_T3_S1"
+    },
+    "1dc58661": {
+      "session_id": "1dc58661",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:03:40.787318",
+      "last_activity": "2025-05-26T20:05:12.642974",
+      "shared_session_group": "1dc58661",
+      "player_name": "Player_T7_S1"
+    },
+    "5def8642": {
+      "session_id": "5def8642",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:03:40.787318",
+      "last_activity": "2025-05-26T20:04:31.808980",
+      "shared_session_group": "5def8642",
+      "player_name": "Player_T4_S1"
+    },
+    "57d0b789": {
+      "session_id": "57d0b789",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:03:40.787318",
+      "last_activity": "2025-05-26T20:05:22.835432",
+      "shared_session_group": "57d0b789",
+      "player_name": "Player_T6_S1"
+    },
+    "3ef4795f": {
+      "session_id": "3ef4795f",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:03:42.800515",
+      "last_activity": "2025-05-26T20:04:23.651025",
+      "shared_session_group": "3ef4795f",
+      "player_name": "Player_T2_S2"
+    },
+    "359102ef": {
+      "session_id": "359102ef",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:03:42.800515",
+      "last_activity": "2025-05-26T20:03:53.105210",
+      "shared_session_group": "359102ef",
+      "player_name": "Player_T9_S2"
+    },
+    "e3afcc49": {
+      "session_id": "e3afcc49",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:03:42.819508",
+      "last_activity": "2025-05-26T20:04:54.284358",
+      "shared_session_group": "e3afcc49",
+      "player_name": "Player_T8_S2"
+    },
+    "422082dc": {
+      "session_id": "422082dc",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:03:42.819508",
+      "last_activity": "2025-05-26T20:04:13.438801",
+      "shared_session_group": "422082dc",
+      "player_name": "Player_T0_S2"
+    },
+    "c850c7f6": {
+      "session_id": "c850c7f6",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:03:42.821554",
+      "last_activity": "2025-05-26T20:04:03.286988",
+      "shared_session_group": "c850c7f6",
+      "player_name": "Player_T5_S2"
+    },
+    "2296c3f6": {
+      "session_id": "2296c3f6",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:03:42.823565",
+      "last_activity": "2025-05-26T20:04:33.860374",
+      "shared_session_group": "2296c3f6",
+      "player_name": "Player_T4_S2"
+    },
+    "1faebb39": {
+      "session_id": "1faebb39",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:03:42.832287",
+      "last_activity": "2025-05-26T20:04:44.112614",
+      "shared_session_group": "1faebb39",
+      "player_name": "Player_T1_S2"
+    },
+    "39a70490": {
+      "session_id": "39a70490",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:03:42.832287",
+      "last_activity": "2025-05-26T20:05:04.512977",
+      "shared_session_group": "39a70490",
+      "player_name": "Player_T3_S2"
+    },
+    "387579fd": {
+      "session_id": "387579fd",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:03:42.849853",
+      "last_activity": "2025-05-26T20:05:24.865885",
+      "shared_session_group": "387579fd",
+      "player_name": "Player_T6_S2"
+    },
+    "575e367c": {
+      "session_id": "575e367c",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:03:42.849853",
+      "last_activity": "2025-05-26T20:05:14.676507",
+      "shared_session_group": "575e367c",
+      "player_name": "Player_T7_S2"
+    },
+    "ab59f637": {
+      "session_id": "ab59f637",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:03:44.831826",
+      "last_activity": "2025-05-26T20:03:55.163986",
+      "shared_session_group": "ab59f637",
+      "player_name": "Player_T9_S3"
+    },
+    "abe53c7f": {
+      "session_id": "abe53c7f",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:03:44.850612",
+      "last_activity": "2025-05-26T20:04:15.468944",
+      "shared_session_group": "abe53c7f",
+      "player_name": "Player_T0_S3"
+    },
+    "7bdc4337": {
+      "session_id": "7bdc4337",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:03:44.850612",
+      "last_activity": "2025-05-26T20:04:56.329228",
+      "shared_session_group": "7bdc4337",
+      "player_name": "Player_T8_S3"
+    },
+    "4dfb6540": {
+      "session_id": "4dfb6540",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:03:44.862754",
+      "last_activity": "2025-05-26T20:04:25.681427",
+      "shared_session_group": "4dfb6540",
+      "player_name": "Player_T2_S3"
+    },
+    "1f4701fb": {
+      "session_id": "1f4701fb",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:03:44.862754",
+      "last_activity": "2025-05-26T20:04:05.305150",
+      "shared_session_group": "1f4701fb",
+      "player_name": "Player_T5_S3"
+    },
+    "662db397": {
+      "session_id": "662db397",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:03:44.872783",
+      "last_activity": "2025-05-26T20:05:06.525875",
+      "shared_session_group": "662db397",
+      "player_name": "Player_T3_S3"
+    },
+    "0b7fd39f": {
+      "session_id": "0b7fd39f",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:03:44.874063",
+      "last_activity": "2025-05-26T20:04:46.136984",
+      "shared_session_group": "0b7fd39f",
+      "player_name": "Player_T1_S3"
+    },
+    "3aa6d9eb": {
+      "session_id": "3aa6d9eb",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:03:44.874063",
+      "last_activity": "2025-05-26T20:04:35.914696",
+      "shared_session_group": "3aa6d9eb",
+      "player_name": "Player_T4_S3"
+    },
+    "e6d38726": {
+      "session_id": "e6d38726",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:03:44.893209",
+      "last_activity": "2025-05-26T20:05:16.702089",
+      "shared_session_group": "e6d38726",
+      "player_name": "Player_T7_S3"
+    },
+    "fb9e2963": {
+      "session_id": "fb9e2963",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:03:44.922641",
+      "last_activity": "2025-05-26T20:05:26.913490",
+      "shared_session_group": "fb9e2963",
+      "player_name": "Player_T6_S3"
+    },
+    "9765c5b8": {
+      "session_id": "9765c5b8",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:03:46.856087",
+      "last_activity": "2025-05-26T20:03:57.194359",
+      "shared_session_group": "9765c5b8",
+      "player_name": "Player_T9_S4"
+    },
+    "b6eacb48": {
+      "session_id": "b6eacb48",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:03:46.908496",
+      "last_activity": "2025-05-26T20:04:07.354160",
+      "shared_session_group": "b6eacb48",
+      "player_name": "Player_T5_S4"
+    },
+    "b84a7f88": {
+      "session_id": "b84a7f88",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:03:46.910543",
+      "last_activity": "2025-05-26T20:04:17.505660",
+      "shared_session_group": "b84a7f88",
+      "player_name": "Player_T0_S4"
+    },
+    "86a4c4d1": {
+      "session_id": "86a4c4d1",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:03:46.910543",
+      "last_activity": "2025-05-26T20:04:27.711762",
+      "shared_session_group": "86a4c4d1",
+      "player_name": "Player_T2_S4"
+    },
+    "cac8fecf": {
+      "session_id": "cac8fecf",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:03:46.910543",
+      "last_activity": "2025-05-26T20:04:37.978873",
+      "shared_session_group": "cac8fecf",
+      "player_name": "Player_T4_S4"
+    },
+    "79c57085": {
+      "session_id": "79c57085",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:03:46.913810",
+      "last_activity": "2025-05-26T20:04:48.179318",
+      "shared_session_group": "79c57085",
+      "player_name": "Player_T1_S4"
+    },
+    "13cbb87c": {
+      "session_id": "13cbb87c",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:03:46.929603",
+      "last_activity": "2025-05-26T20:04:58.391390",
+      "shared_session_group": "13cbb87c",
+      "player_name": "Player_T8_S4"
+    },
+    "8d74e5ef": {
+      "session_id": "8d74e5ef",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:03:46.929603",
+      "last_activity": "2025-05-26T20:05:08.570424",
+      "shared_session_group": "8d74e5ef",
+      "player_name": "Player_T3_S4"
+    },
+    "1af02b57": {
+      "session_id": "1af02b57",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:03:46.953346",
+      "last_activity": "2025-05-26T20:05:18.755348",
+      "shared_session_group": "1af02b57",
+      "player_name": "Player_T7_S4"
+    },
+    "cf376c36": {
+      "session_id": "cf376c36",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:03:46.984547",
+      "last_activity": "2025-05-26T20:05:28.968115",
+      "shared_session_group": "cf376c36",
+      "player_name": "Player_T6_S4"
+    },
+    "201341ab": {
+      "session_id": "201341ab",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:06:14.940135",
+      "last_activity": "2025-05-26T20:06:14.940135",
+      "shared_session_group": "201341ab",
+      "player_name": "SeqPlayer0"
+    },
+    "cd585ca3": {
+      "session_id": "cd585ca3",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:06:17.026939",
+      "last_activity": "2025-05-26T20:06:17.026939",
+      "shared_session_group": "cd585ca3",
+      "player_name": "SeqPlayer1"
+    },
+    "82a2cf95": {
+      "session_id": "82a2cf95",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:06:19.044193",
+      "last_activity": "2025-05-26T20:06:19.044193",
+      "shared_session_group": "82a2cf95",
+      "player_name": "SeqPlayer2"
+    },
+    "7c1d2bc0": {
+      "session_id": "7c1d2bc0",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:06:21.086249",
+      "last_activity": "2025-05-26T20:06:21.086249",
+      "shared_session_group": "7c1d2bc0",
+      "player_name": "SeqPlayer3"
+    },
+    "26cafde9": {
+      "session_id": "26cafde9",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:06:23.141902",
+      "last_activity": "2025-05-26T20:06:23.141902",
+      "shared_session_group": "26cafde9",
+      "player_name": "SeqPlayer4"
+    },
+    "3e9aa2ce": {
+      "session_id": "3e9aa2ce",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:06:25.219980",
+      "last_activity": "2025-05-26T20:06:25.219980",
+      "shared_session_group": "3e9aa2ce",
+      "player_name": "SeqPlayer5"
+    },
+    "8d478ffe": {
+      "session_id": "8d478ffe",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:06:27.267993",
+      "last_activity": "2025-05-26T20:06:27.267993",
+      "shared_session_group": "8d478ffe",
+      "player_name": "SeqPlayer6"
+    },
+    "143189d9": {
+      "session_id": "143189d9",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:06:29.321920",
+      "last_activity": "2025-05-26T20:06:29.321920",
+      "shared_session_group": "143189d9",
+      "player_name": "SeqPlayer7"
+    },
+    "cdd945f9": {
+      "session_id": "cdd945f9",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:06:31.386818",
+      "last_activity": "2025-05-26T20:06:31.386818",
+      "shared_session_group": "cdd945f9",
+      "player_name": "SeqPlayer8"
+    },
+    "754f9221": {
+      "session_id": "754f9221",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:06:33.453883",
+      "last_activity": "2025-05-26T20:06:33.453883",
+      "shared_session_group": "754f9221",
+      "player_name": "SeqPlayer9"
+    },
+    "e4278f13": {
+      "session_id": "e4278f13",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:06:35.494158",
+      "last_activity": "2025-05-26T20:06:35.494158",
+      "shared_session_group": "e4278f13",
+      "player_name": "Thread1_S0"
+    },
+    "ad892f7f": {
+      "session_id": "ad892f7f",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:06:35.494158",
+      "last_activity": "2025-05-26T20:06:35.494158",
+      "shared_session_group": "ad892f7f",
+      "player_name": "Thread4_S0"
+    },
+    "67c9c521": {
+      "session_id": "67c9c521",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:06:35.503636",
+      "last_activity": "2025-05-26T20:06:35.503636",
+      "shared_session_group": "67c9c521",
+      "player_name": "Thread2_S0"
+    },
+    "cafb268c": {
+      "session_id": "cafb268c",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:06:35.503636",
+      "last_activity": "2025-05-26T20:06:35.503636",
+      "shared_session_group": "cafb268c",
+      "player_name": "Thread0_S0"
+    },
+    "14e7aac7": {
+      "session_id": "14e7aac7",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:06:35.506640",
+      "last_activity": "2025-05-26T20:06:35.506640",
+      "shared_session_group": "14e7aac7",
+      "player_name": "Thread3_S0"
+    },
+    "8a2e5076": {
+      "session_id": "8a2e5076",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:06:37.530188",
+      "last_activity": "2025-05-26T20:06:37.530188",
+      "shared_session_group": "8a2e5076",
+      "player_name": "Thread4_S1"
+    },
+    "7a3329eb": {
+      "session_id": "7a3329eb",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:06:37.530188",
+      "last_activity": "2025-05-26T20:06:37.530188",
+      "shared_session_group": "7a3329eb",
+      "player_name": "Thread1_S1"
+    },
+    "745b13b0": {
+      "session_id": "745b13b0",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:06:37.537737",
+      "last_activity": "2025-05-26T20:06:37.537737",
+      "shared_session_group": "745b13b0",
+      "player_name": "Thread0_S1"
+    },
+    "708e4c63": {
+      "session_id": "708e4c63",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:06:37.539419",
+      "last_activity": "2025-05-26T20:06:37.539419",
+      "shared_session_group": "708e4c63",
+      "player_name": "Thread3_S1"
+    },
+    "99e19055": {
+      "session_id": "99e19055",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:06:37.566938",
+      "last_activity": "2025-05-26T20:06:37.566938",
+      "shared_session_group": "99e19055",
+      "player_name": "Thread2_S1"
+    },
+    "201d5731": {
+      "session_id": "201d5731",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:06:39.558786",
+      "last_activity": "2025-05-26T20:06:39.558786",
+      "shared_session_group": "201d5731",
+      "player_name": "Thread4_S2"
+    },
+    "a7e99ca0": {
+      "session_id": "a7e99ca0",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:06:39.558786",
+      "last_activity": "2025-05-26T20:06:39.558786",
+      "shared_session_group": "a7e99ca0",
+      "player_name": "Thread0_S2"
+    },
+    "beb49795": {
+      "session_id": "beb49795",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:06:39.575000",
+      "last_activity": "2025-05-26T20:06:39.575000",
+      "shared_session_group": "beb49795",
+      "player_name": "Thread1_S2"
+    },
+    "045fe6fd": {
+      "session_id": "045fe6fd",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:06:39.593788",
+      "last_activity": "2025-05-26T20:06:39.593788",
+      "shared_session_group": "045fe6fd",
+      "player_name": "Thread3_S2"
+    },
+    "307a3e53": {
+      "session_id": "307a3e53",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:06:39.662329",
+      "last_activity": "2025-05-26T20:06:39.662329",
+      "shared_session_group": "307a3e53",
+      "player_name": "Thread2_S2"
+    },
+    "d89f0102": {
+      "session_id": "d89f0102",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:06:41.604427",
+      "last_activity": "2025-05-26T20:06:41.604427",
+      "shared_session_group": "d89f0102",
+      "player_name": "Thread0_S3"
+    },
+    "10dc53be": {
+      "session_id": "10dc53be",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:06:41.605565",
+      "last_activity": "2025-05-26T20:06:41.605565",
+      "shared_session_group": "10dc53be",
+      "player_name": "Thread1_S3"
+    },
+    "d98649ff": {
+      "session_id": "d98649ff",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:06:41.621270",
+      "last_activity": "2025-05-26T20:06:41.621270",
+      "shared_session_group": "d98649ff",
+      "player_name": "Thread4_S3"
+    },
+    "d459de8e": {
+      "session_id": "d459de8e",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:06:41.673375",
+      "last_activity": "2025-05-26T20:06:41.673375",
+      "shared_session_group": "d459de8e",
+      "player_name": "Thread3_S3"
+    },
+    "0de30570": {
+      "session_id": "0de30570",
+      "quiz_id": "223895b9",
+      "quiz_title": "Travel Dreams",
+      "questions": [
+        {
+          "option1": "Beach",
+          "option2": "Mountains"
+        },
+        {
+          "option1": "Paris",
+          "option2": "Tokyo"
+        },
+        {
+          "option1": "Plane",
+          "option2": "Train"
+        },
+        {
+          "option1": "Hotel",
+          "option2": "Camping"
+        },
+        {
+          "option1": "Adventure",
+          "option2": "Relaxation"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:06:41.725894",
+      "last_activity": "2025-05-26T20:06:41.725894",
+      "shared_session_group": "0de30570",
+      "player_name": "Thread2_S3"
+    },
+    "08f6e661": {
+      "session_id": "08f6e661",
+      "quiz_id": "d5208054",
+      "quiz_title": "Friend Personality Quiz",
+      "questions": [
+        {
+          "prompt": "Who is more likely to be the life of the party?",
+          "option1": "Player 1",
+          "option2": "Player 2"
+        },
+        {
+          "prompt": "Who would be more patient in a long line?",
+          "option1": "Player 1",
+          "option2": "Player 2"
+        },
+        {
+          "prompt": "Who is more likely to try exotic food?",
+          "option1": "Player 1",
+          "option2": "Player 2"
+        },
+        {
+          "prompt": "Who would wake up earlier on vacation?",
+          "option1": "Player 1",
+          "option2": "Player 2"
+        },
+        {
+          "prompt": "Who is more organized with their belongings?",
+          "option1": "Player 1",
+          "option2": "Player 2"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:38:24.759243",
+      "last_activity": "2025-05-26T20:38:46.955235",
+      "shared_session_group": "3dfc11e9",
+      "player_name": "Nacir"
+    },
+    "d5dfcbbd": {
+      "session_id": "d5dfcbbd",
+      "quiz_id": "53d201e8",
+      "quiz_title": "My quiz",
+      "questions": [
+        {
+          "option1": "Equations",
+          "option2": "Proofs",
+          "prompt": "Equations or geometric proofs?"
+        },
+        {
+          "option1": "Fascinating",
+          "option2": "Tedious",
+          "prompt": "Prime numbers: fascinating or tedious?"
+        },
+        {
+          "option1": "Beautiful",
+          "option2": "Brutal",
+          "prompt": "Calculus: beautiful or brutal?"
+        },
+        {
+          "option1": "Logic puzzles",
+          "option2": "Word problems",
+          "prompt": "Logic puzzles or word problems?"
+        },
+        {
+          "option1": "Elegant",
+          "option2": "Esoteric",
+          "prompt": "Abstract algebra: elegant or esoteric?"
+        },
+        {
+          "option1": "Real",
+          "option2": "Imaginary",
+          "prompt": "Real numbers or imaginary?"
+        },
+        {
+          "option1": "Visual",
+          "option2": "Conceptual",
+          "prompt": "Graph theory: visual or conceptual?"
+        },
+        {
+          "option1": "Prediction",
+          "option2": "Description",
+          "prompt": "Statistics: prediction or description?"
+        },
+        {
+          "option1": "Stories",
+          "option2": "Theorems",
+          "prompt": "Math history: stories or theorems?"
+        },
+        {
+          "option1": "Mental math",
+          "option2": "Calculator",
+          "prompt": "Mental math or calculator?"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T20:38:42.488901",
+      "last_activity": "2025-05-26T20:38:46.683290",
+      "shared_session_group": "d5dfcbbd",
+      "player_name": "Malena"
+    },
+    "b75d704b": {
+      "session_id": "b75d704b",
+      "quiz_id": "c86ca844",
+      "quiz_title": "Food Preferences",
+      "questions": [
+        {
+          "prompt": "What's your go-to comfort food?",
+          "option1": "Pizza",
+          "option2": "Burger"
+        },
+        {
+          "prompt": "What's your morning drink of choice?",
+          "option1": "Coffee",
+          "option2": "Tea"
+        },
+        {
+          "prompt": "Which dessert makes you happiest?",
+          "option1": "Ice Cream",
+          "option2": "Cake"
+        },
+        {
+          "prompt": "Which is your healthy snack choice?",
+          "option1": "Apple",
+          "option2": "Nuts"
+        },
+        {
+          "prompt": "What's your weekend drink?",
+          "option1": "Wine",
+          "option2": "Beer"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T21:12:07.520339",
+      "last_activity": "2025-05-26T21:18:24.232506",
+      "shared_session_group": "786c79ea",
+      "player_name": "Malena"
+    },
+    "9d2fec35": {
+      "session_id": "9d2fec35",
+      "quiz_id": "c86ca844",
+      "quiz_title": "Food Preferences",
+      "questions": [
+        {
+          "prompt": "What's your go-to comfort food?",
+          "option1": "Pizza",
+          "option2": "Burger"
+        },
+        {
+          "prompt": "What's your morning drink of choice?",
+          "option1": "Coffee",
+          "option2": "Tea"
+        },
+        {
+          "prompt": "Which dessert makes you happiest?",
+          "option1": "Ice Cream",
+          "option2": "Cake"
+        },
+        {
+          "prompt": "Which is your healthy snack choice?",
+          "option1": "Apple",
+          "option2": "Nuts"
+        },
+        {
+          "prompt": "What's your weekend drink?",
+          "option1": "Wine",
+          "option2": "Beer"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T21:12:07.520339",
+      "last_activity": "2025-05-26T21:14:22.257485",
+      "shared_session_group": "786c79ea",
+      "player_name": "Nacir"
+    },
+    "2f31aed0": {
+      "session_id": "2f31aed0",
+      "quiz_id": "5aed6ecf",
+      "quiz_title": "Food Preferences",
+      "questions": [
+        {
+          "prompt": "What's your go-to comfort food?",
+          "option1": "Pizza",
+          "option2": "Burger"
+        },
+        {
+          "prompt": "What's your morning drink of choice?",
+          "option1": "Coffee",
+          "option2": "Tea"
+        },
+        {
+          "prompt": "Which dessert makes you happiest?",
+          "option1": "Ice Cream",
+          "option2": "Cake"
+        },
+        {
+          "prompt": "Which is your healthy snack choice?",
+          "option1": "Apple",
+          "option2": "Nuts"
+        },
+        {
+          "prompt": "What's your weekend drink?",
+          "option1": "Wine",
+          "option2": "Beer"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T21:16:02.263875",
+      "last_activity": "2025-05-26T21:16:02.263875",
+      "shared_session_group": "2cce1714",
+      "player_name": "Nacir"
+    },
+    "7e6c879b": {
+      "session_id": "7e6c879b",
+      "quiz_id": "5aed6ecf",
+      "quiz_title": "Food Preferences",
+      "questions": [
+        {
+          "prompt": "What's your go-to comfort food?",
+          "option1": "Pizza",
+          "option2": "Burger"
+        },
+        {
+          "prompt": "What's your morning drink of choice?",
+          "option1": "Coffee",
+          "option2": "Tea"
+        },
+        {
+          "prompt": "Which dessert makes you happiest?",
+          "option1": "Ice Cream",
+          "option2": "Cake"
+        },
+        {
+          "prompt": "Which is your healthy snack choice?",
+          "option1": "Apple",
+          "option2": "Nuts"
+        },
+        {
+          "prompt": "What's your weekend drink?",
+          "option1": "Wine",
+          "option2": "Beer"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T21:16:02.263875",
+      "last_activity": "2025-05-26T21:16:04.289154",
+      "shared_session_group": "2cce1714",
+      "player_name": "Malena"
+    },
+    "c467111e": {
+      "session_id": "c467111e",
+      "quiz_id": "ba50f2e1",
+      "quiz_title": "Maths Stuff",
+      "questions": [
+        {
+          "correct_answer": "option2",
+          "option1": "1.61803",
+          "option2": "2.71828",
+          "prompt": "What is Euler's number?"
+        },
+        {
+          "correct_answer": "option2",
+          "option1": "Prime number sequence",
+          "option2": "Order of operations",
+          "prompt": "What does 'PEMDAS' represent?"
+        },
+        {
+          "correct_answer": "option1",
+          "option1": "3.14159",
+          "option2": "2.71828",
+          "prompt": "What is Pi approximately?"
+        },
+        {
+          "correct_answer": "option2",
+          "option1": "Divisible by one",
+          "option2": "Only by itself",
+          "prompt": "What is a prime number?"
+        },
+        {
+          "correct_answer": "option1",
+          "option1": "0, 1, 1, 2\u2026",
+          "option2": "1, 2, 3, 4\u2026",
+          "prompt": "What is the Fibonacci sequence?"
+        },
+        {
+          "correct_answer": "option1",
+          "option1": "Six",
+          "option2": "Eight",
+          "prompt": "What is a hexagon\u2019s sides?"
+        },
+        {
+          "correct_answer": "option1",
+          "option1": "Distance from zero",
+          "option2": "Positive number only",
+          "prompt": "What is absolute value?"
+        },
+        {
+          "correct_answer": "option1",
+          "option1": "Angle, circle based",
+          "option2": "Angle, degree based",
+          "prompt": "What is a radian measure?"
+        },
+        {
+          "correct_answer": "option1",
+          "option1": "Magnitude only",
+          "option2": "Magnitude & direction",
+          "prompt": "What is a scalar quantity?"
+        },
+        {
+          "correct_answer": "option2",
+          "option1": "a + b = c",
+          "option2": "a\u00b2 + b\u00b2 = c\u00b2",
+          "prompt": "What is the Pythagorean theorem?"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T21:17:54.267354",
+      "last_activity": "2025-05-26T21:17:58.386290",
+      "shared_session_group": "c467111e",
+      "player_name": "TestPlayer1"
+    },
+    "dd84a88b": {
+      "session_id": "dd84a88b",
+      "quiz_id": "ba50f2e1",
+      "quiz_title": "Maths Stuff",
+      "questions": [
+        {
+          "correct_answer": "option2",
+          "option1": "1.61803",
+          "option2": "2.71828",
+          "prompt": "What is Euler's number?"
+        },
+        {
+          "correct_answer": "option2",
+          "option1": "Prime number sequence",
+          "option2": "Order of operations",
+          "prompt": "What does 'PEMDAS' represent?"
+        },
+        {
+          "correct_answer": "option1",
+          "option1": "3.14159",
+          "option2": "2.71828",
+          "prompt": "What is Pi approximately?"
+        },
+        {
+          "correct_answer": "option2",
+          "option1": "Divisible by one",
+          "option2": "Only by itself",
+          "prompt": "What is a prime number?"
+        },
+        {
+          "correct_answer": "option1",
+          "option1": "0, 1, 1, 2\u2026",
+          "option2": "1, 2, 3, 4\u2026",
+          "prompt": "What is the Fibonacci sequence?"
+        },
+        {
+          "correct_answer": "option1",
+          "option1": "Six",
+          "option2": "Eight",
+          "prompt": "What is a hexagon\u2019s sides?"
+        },
+        {
+          "correct_answer": "option1",
+          "option1": "Distance from zero",
+          "option2": "Positive number only",
+          "prompt": "What is absolute value?"
+        },
+        {
+          "correct_answer": "option1",
+          "option1": "Angle, circle based",
+          "option2": "Angle, degree based",
+          "prompt": "What is a radian measure?"
+        },
+        {
+          "correct_answer": "option1",
+          "option1": "Magnitude only",
+          "option2": "Magnitude & direction",
+          "prompt": "What is a scalar quantity?"
+        },
+        {
+          "correct_answer": "option2",
+          "option1": "a + b = c",
+          "option2": "a\u00b2 + b\u00b2 = c\u00b2",
+          "prompt": "What is the Pythagorean theorem?"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T21:17:56.335244",
+      "last_activity": "2025-05-26T21:17:56.335244",
+      "shared_session_group": "c467111e",
+      "player_name": "TestPlayer2"
+    },
+    "c1269cea": {
+      "session_id": "c1269cea",
+      "quiz_id": "55d8d18e",
+      "quiz_title": "Tech Preferences",
+      "questions": [
+        {
+          "prompt": "What's your essential daily device?",
+          "option1": "Phone",
+          "option2": "Laptop"
+        },
+        {
+          "prompt": "Which smartphone ecosystem?",
+          "option1": "iPhone",
+          "option2": "Android"
+        },
+        {
+          "prompt": "What's your portable work device?",
+          "option1": "Tablet",
+          "option2": "Laptop"
+        },
+        {
+          "prompt": "Which operating system?",
+          "option1": "Mac",
+          "option2": "PC"
+        },
+        {
+          "prompt": "What's your computer mainly for?",
+          "option1": "Gaming",
+          "option2": "Work"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T21:18:00.432185",
+      "last_activity": "2025-05-26T21:18:00.432185",
+      "shared_session_group": "f22e49ab",
+      "player_name": "Player f22e"
+    },
+    "5fa8f754": {
+      "session_id": "5fa8f754",
+      "quiz_id": "d5208054",
+      "quiz_title": "Friend Personality Quiz",
+      "questions": [
+        {
+          "prompt": "Who is more likely to be the life of the party?",
+          "option1": "Player 1",
+          "option2": "Player 2"
+        },
+        {
+          "prompt": "Who would be more patient in a long line?",
+          "option1": "Player 1",
+          "option2": "Player 2"
+        },
+        {
+          "prompt": "Who is more likely to try exotic food?",
+          "option1": "Player 1",
+          "option2": "Player 2"
+        },
+        {
+          "prompt": "Who would wake up earlier on vacation?",
+          "option1": "Player 1",
+          "option2": "Player 2"
+        },
+        {
+          "prompt": "Who is more organized with their belongings?",
+          "option1": "Player 1",
+          "option2": "Player 2"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T21:19:24.058502",
+      "last_activity": "2025-05-26T21:19:54.599835",
+      "shared_session_group": "bbe0261b",
+      "player_name": "Malena"
+    },
+    "eea4fe3f": {
+      "session_id": "eea4fe3f",
+      "quiz_id": "d5208054",
+      "quiz_title": "Friend Personality Quiz",
+      "questions": [
+        {
+          "prompt": "Who is more likely to be the life of the party?",
+          "option1": "Player 1",
+          "option2": "Player 2"
+        },
+        {
+          "prompt": "Who would be more patient in a long line?",
+          "option1": "Player 1",
+          "option2": "Player 2"
+        },
+        {
+          "prompt": "Who is more likely to try exotic food?",
+          "option1": "Player 1",
+          "option2": "Player 2"
+        },
+        {
+          "prompt": "Who would wake up earlier on vacation?",
+          "option1": "Player 1",
+          "option2": "Player 2"
+        },
+        {
+          "prompt": "Who is more organized with their belongings?",
+          "option1": "Player 1",
+          "option2": "Player 2"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T21:19:24.058502",
+      "last_activity": "2025-05-26T21:19:28.542508",
+      "shared_session_group": "bbe0261b",
+      "player_name": "Nacir"
+    },
+    "afd96990": {
+      "session_id": "afd96990",
+      "quiz_id": "dcdc6735",
+      "quiz_title": "Personal Test",
+      "questions": [
+        {
+          "prompt": "Who is better at maths?",
+          "option1": "Player 1",
+          "option2": "Player 2"
+        },
+        {
+          "prompt": "Who is better in computers?",
+          "option1": "Player 1",
+          "option2": "Player 2"
+        },
+        {
+          "prompt": "Who is a better cook?",
+          "option1": "Player 1",
+          "option2": "Player 2"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T21:25:25.092227",
+      "last_activity": "2025-05-26T21:25:27.117565",
+      "shared_session_group": "f22e49ab",
+      "player_name": "Player f22e"
+    },
+    "40b3396a": {
+      "session_id": "40b3396a",
+      "quiz_id": "bbae6c0a",
+      "quiz_title": "Lifestyle Choices",
+      "questions": [
+        {
+          "prompt": "Which pet would you choose?",
+          "option1": "Cat",
+          "option2": "Dog"
+        },
+        {
+          "prompt": "What's your favorite season?",
+          "option1": "Summer",
+          "option2": "Winter"
+        },
+        {
+          "prompt": "How do you prefer to get around?",
+          "option1": "Car",
+          "option2": "Bike"
+        },
+        {
+          "prompt": "Where do you feel most at home?",
+          "option1": "City",
+          "option2": "Nature"
+        },
+        {
+          "prompt": "When are you most productive?",
+          "option1": "Morning",
+          "option2": "Night"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T21:31:03.264254",
+      "last_activity": "2025-05-26T21:31:09.369552",
+      "shared_session_group": "f22e49ab",
+      "player_name": "Player f22e"
+    },
+    "a7ab68ad": {
+      "session_id": "a7ab68ad",
+      "quiz_id": "47f63005",
+      "quiz_title": "Entertainment Choices",
+      "questions": [
+        {
+          "prompt": "How do you prefer to unwind?",
+          "option1": "Movie",
+          "option2": "Book"
+        },
+        {
+          "prompt": "What's your video streaming choice?",
+          "option1": "Netflix",
+          "option2": "YouTube"
+        },
+        {
+          "prompt": "What's your audio entertainment?",
+          "option1": "Music",
+          "option2": "Podcast"
+        },
+        {
+          "prompt": "What's your ideal Friday night?",
+          "option1": "Gaming",
+          "option2": "Movie"
+        },
+        {
+          "prompt": "Which sport do you enjoy watching?",
+          "option1": "Football",
+          "option2": "Basketball"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T21:31:11.417521",
+      "last_activity": "2025-05-26T21:31:13.460407",
+      "shared_session_group": "a7ab68ad",
+      "player_name": "TestPlayer"
+    },
+    "8e19baa0": {
+      "session_id": "8e19baa0",
+      "quiz_id": "041969d4",
+      "quiz_title": "Test Player Quiz",
+      "questions": [
+        {
+          "prompt": "Who wakes up earlier?",
+          "option1": "Player 1",
+          "option2": "Player 2"
+        },
+        {
+          "prompt": "Who is more organized?",
+          "option1": "Player 1",
+          "option2": "Player 2"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T21:35:54.111402",
+      "last_activity": "2025-05-26T21:36:11.940543",
+      "shared_session_group": "70c95447",
+      "player_name": "Malena"
+    },
+    "097ad5b9": {
+      "session_id": "097ad5b9",
+      "quiz_id": "338859f9",
+      "quiz_title": "Outfit",
+      "questions": [
+        {
+          "option1": "Jeans",
+          "option2": "Leggings",
+          "prompt": "Jeans or Leggings?"
+        },
+        {
+          "option1": "Polka Dots",
+          "option2": "Stripes",
+          "prompt": "Polka Dots or Stripes?"
+        },
+        {
+          "option1": "Pastel",
+          "option2": "Bright",
+          "prompt": "Pastel or Bright?"
+        },
+        {
+          "option1": "Dress",
+          "option2": "Shorts",
+          "prompt": "Dress or Shorts?"
+        },
+        {
+          "option1": "Slippers",
+          "option2": "Socks",
+          "prompt": "Slippers or Socks?"
+        },
+        {
+          "option1": "T-Shirt",
+          "option2": "Sweater",
+          "prompt": "T-Shirt or Sweater?"
+        },
+        {
+          "option1": "Sunglasses",
+          "option2": "Hat",
+          "prompt": "Sunglasses or Hat?"
+        },
+        {
+          "option1": "Boots",
+          "option2": "Sneakers",
+          "prompt": "Boots or Sneakers?"
+        },
+        {
+          "option1": "Scarf",
+          "option2": "Mittens",
+          "prompt": "Scarf or Mittens?"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T21:38:49.713374",
+      "last_activity": "2025-05-26T21:38:55.828440",
+      "shared_session_group": "f22e49ab",
+      "player_name": "Player f22e"
+    },
+    "251c2f4b": {
+      "session_id": "251c2f4b",
+      "quiz_id": "47f63005",
+      "quiz_title": "Entertainment Choices",
+      "questions": [
+        {
+          "prompt": "How do you prefer to unwind?",
+          "option1": "Movie",
+          "option2": "Book"
+        },
+        {
+          "prompt": "What's your video streaming choice?",
+          "option1": "Netflix",
+          "option2": "YouTube"
+        },
+        {
+          "prompt": "What's your audio entertainment?",
+          "option1": "Music",
+          "option2": "Podcast"
+        },
+        {
+          "prompt": "What's your ideal Friday night?",
+          "option1": "Gaming",
+          "option2": "Movie"
+        },
+        {
+          "prompt": "Which sport do you enjoy watching?",
+          "option1": "Football",
+          "option2": "Basketball"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T21:38:57.892992",
+      "last_activity": "2025-05-26T21:38:59.922124",
+      "shared_session_group": "251c2f4b",
+      "player_name": "TestPlayer"
+    },
+    "0e6c1f39": {
+      "session_id": "0e6c1f39",
+      "quiz_id": "dcdc6735",
+      "quiz_title": "Personal Test",
+      "questions": [
+        {
+          "prompt": "Who is better at maths?",
+          "option1": "Player 1",
+          "option2": "Player 2"
+        },
+        {
+          "prompt": "Who is better in computers?",
+          "option1": "Player 1",
+          "option2": "Player 2"
+        },
+        {
+          "prompt": "Who is a better cook?",
+          "option1": "Player 1",
+          "option2": "Player 2"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T21:39:59.160981",
+      "last_activity": "2025-05-26T21:43:14.590594",
+      "shared_session_group": "b8fb5611",
+      "player_name": "Malena"
+    },
+    "1273c806": {
+      "session_id": "1273c806",
+      "quiz_id": "f76cec27",
+      "quiz_title": "Historical Knowledge Challenge",
+      "questions": [
+        {
+          "prompt": "Who was the famous French Emperor?",
+          "option1": "Louis XIV",
+          "option2": "Napoleon Bonaparte",
+          "correct_answer": "option2"
+        },
+        {
+          "prompt": "Which city is the capital of Australia?",
+          "option1": "Sydney",
+          "option2": "Canberra",
+          "correct_answer": "option2"
+        },
+        {
+          "prompt": "What year did World War II end?",
+          "option1": "1945",
+          "option2": "1944",
+          "correct_answer": "option1"
+        },
+        {
+          "prompt": "Who painted the Mona Lisa?",
+          "option1": "Michelangelo",
+          "option2": "Leonardo da Vinci",
+          "correct_answer": "option2"
+        },
+        {
+          "prompt": "What is the largest planet in our solar system?",
+          "option1": "Saturn",
+          "option2": "Jupiter",
+          "correct_answer": "option2"
+        },
+        {
+          "prompt": "Which element has the chemical symbol \"O\"?",
+          "option1": "Oxygen",
+          "option2": "Gold",
+          "correct_answer": "option1"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T21:41:54.068970",
+      "last_activity": "2025-05-26T21:42:00.163544",
+      "shared_session_group": "f22e49ab",
+      "player_name": "Player f22e"
+    },
+    "e8435b4b": {
+      "session_id": "e8435b4b",
+      "quiz_id": "47f63005",
+      "quiz_title": "Entertainment Choices",
+      "questions": [
+        {
+          "prompt": "How do you prefer to unwind?",
+          "option1": "Movie",
+          "option2": "Book"
+        },
+        {
+          "prompt": "What's your video streaming choice?",
+          "option1": "Netflix",
+          "option2": "YouTube"
+        },
+        {
+          "prompt": "What's your audio entertainment?",
+          "option1": "Music",
+          "option2": "Podcast"
+        },
+        {
+          "prompt": "What's your ideal Friday night?",
+          "option1": "Gaming",
+          "option2": "Movie"
+        },
+        {
+          "prompt": "Which sport do you enjoy watching?",
+          "option1": "Football",
+          "option2": "Basketball"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T21:42:02.216015",
+      "last_activity": "2025-05-26T21:42:04.253181",
+      "shared_session_group": "e8435b4b",
+      "player_name": "TestPlayer"
+    },
+    "d7350920": {
+      "session_id": "d7350920",
+      "quiz_id": "063158bf",
+      "quiz_title": "Test Player Quiz",
+      "questions": [
+        {
+          "prompt": "Who wakes up earlier?",
+          "option1": "Player 1",
+          "option2": "Player 2"
+        },
+        {
+          "prompt": "Who is more organized?",
+          "option1": "Player 1",
+          "option2": "Player 2"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T21:42:32.875873",
+      "last_activity": "2025-05-26T21:42:33.771206",
+      "shared_session_group": "d7350920",
+      "player_name": "Malena"
+    },
+    "8dfee9f4": {
+      "session_id": "8dfee9f4",
+      "quiz_id": "ba50f2e1",
+      "quiz_title": "Maths Stuff",
+      "questions": [
+        {
+          "correct_answer": "option2",
+          "option1": "1.61803",
+          "option2": "2.71828",
+          "prompt": "What is Euler's number?"
+        },
+        {
+          "correct_answer": "option2",
+          "option1": "Prime number sequence",
+          "option2": "Order of operations",
+          "prompt": "What does 'PEMDAS' represent?"
+        },
+        {
+          "correct_answer": "option1",
+          "option1": "3.14159",
+          "option2": "2.71828",
+          "prompt": "What is Pi approximately?"
+        },
+        {
+          "correct_answer": "option2",
+          "option1": "Divisible by one",
+          "option2": "Only by itself",
+          "prompt": "What is a prime number?"
+        },
+        {
+          "correct_answer": "option1",
+          "option1": "0, 1, 1, 2\u2026",
+          "option2": "1, 2, 3, 4\u2026",
+          "prompt": "What is the Fibonacci sequence?"
+        },
+        {
+          "correct_answer": "option1",
+          "option1": "Six",
+          "option2": "Eight",
+          "prompt": "What is a hexagon\u2019s sides?"
+        },
+        {
+          "correct_answer": "option1",
+          "option1": "Distance from zero",
+          "option2": "Positive number only",
+          "prompt": "What is absolute value?"
+        },
+        {
+          "correct_answer": "option1",
+          "option1": "Angle, circle based",
+          "option2": "Angle, degree based",
+          "prompt": "What is a radian measure?"
+        },
+        {
+          "correct_answer": "option1",
+          "option1": "Magnitude only",
+          "option2": "Magnitude & direction",
+          "prompt": "What is a scalar quantity?"
+        },
+        {
+          "correct_answer": "option2",
+          "option1": "a + b = c",
+          "option2": "a\u00b2 + b\u00b2 = c\u00b2",
+          "prompt": "What is the Pythagorean theorem?"
+        }
+      ],
+      "current_question": 0,
+      "answers": [],
+      "started_at": "2025-05-26T21:42:48.912791",
+      "last_activity": "2025-05-26T21:42:53.108631",
+      "shared_session_group": "8dfee9f4",
+      "player_name": "Malena"
+    }
+  },
+  "player_ready_state": {
+    "bbe0261b": {
+      "ready_players": [
+        "5fa8f754"
+      ],
+      "timestamp": 1748287171.9437976
+    },
+    "a7ab68ad": {
+      "ready_players": [
+        "a7ab68ad"
+      ],
+      "timestamp": 1748287873.4604073
+    },
+    "251c2f4b": {
+      "ready_players": [
+        "251c2f4b"
+      ],
+      "timestamp": 1748288339.9221249
+    },
+    "e8435b4b": {
+      "ready_players": [
+        "e8435b4b"
+      ],
+      "timestamp": 1748288524.2531817
+    },
+    "6d78dcb3": {
+      "ready_players": [
+        "cf62385f",
+        "6d78dcb3"
+      ],
+      "timestamp": 1748288774.620985
+    }
+  },
+  "quiz_requests": {},
+  "group_next_quiz_choices": {
+    "play_another_f22e49ab": {
+      "quiz_id": "f76cec27",
+      "timestamp": 1748288514.055157,
+      "initiator": "f22e49ab"
+    },
+    "new_sessions_f22e49ab": {
+      "sessions": {
+        "f22e49ab": "1273c806",
+        "c1269cea": "1273c806",
+        "afd96990": "1273c806",
+        "40b3396a": "1273c806",
+        "097ad5b9": "1273c806"
+      },
+      "quiz_id": "f76cec27",
+      "quiz_title": "Historical Knowledge Challenge",
+      "timestamp": 1748288514.0689702,
+      "initiator": "f22e49ab"
+    }
+  },
+  "user_profiles": {
+    "6265b488-42b3-41d8-a162-33742426de00": "Nacir",
+    "2ef259a7-14fc-4fc2-8d55-1a8b6d24cd47": "Malena",
+    "38e7c438-8588-4a4d-a909-6626a49a97cf": "Nacir",
+    "6bbc4f48-2486-40ce-aa73-33373500f46b": "Malena",
+    "688d3fa0-8722-4579-8d87-497d744e1b80": "Nacir",
+    "6b9458c4-ca1a-4f2e-a5a6-9634bdbde2e7": "Malena",
+    "27820997-2d43-4a68-bdca-895e2cb7a6de": "Nacir",
+    "ee9dae03-1b62-4f88-8e97-c162180cd576": "Malena",
+    "11e86e72-25b4-4180-ba43-096eac953bfb": "TestPlayer1",
+    "d1774f8f-64ef-471e-9b06-2c6b7660c260": "TestPlayer2",
+    "49e4d39d-b2d1-4e24-b472-ea3afe52969c": "TestPlayer",
+    "8e9e220f-f68d-44b5-a8d9-d56ec282cba4": "TestPlayer",
+    "d19ee089-3c45-4d7e-8ac6-7c22e10ed4af": "TestPlayer"
+  }
+}

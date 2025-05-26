@@ -32,10 +32,9 @@
             <i class="fas fa-user" style="font-size: 4rem; margin-bottom: 1rem;"></i>
             <h2 id="game-mode-title" style="margin-bottom: 1rem;">Ready to Play</h2>
             <div style="margin-top: 1.5rem;">
-                <input type="text" 
-                       id="new-player-name-input" 
-                       placeholder="Enter your name..." 
-                       style="width: 100%; padding: 1rem; border: none; border-radius: 10px; text-align: center; font-size: 1.1rem; margin-bottom: 1rem;">
+                <div style="padding: 1rem; background: rgba(255,255,255,0.1); border-radius: 10px; margin-bottom: 1rem;">
+                    <i class="fas fa-user"></i> Playing as: <strong id="start-player-name">Anonymous</strong>
+                </div>
                 <button onclick="startNewGame()" class="btn" style="background: rgba(255,255,255,0.2); border: 2px solid white; color: white; font-size: 1.1rem; padding: 1rem 2rem;">
                     <i class="fas fa-rocket"></i> Start Game
                 </button>
@@ -53,10 +52,9 @@
             <i class="fas fa-users" style="font-size: 4rem; margin-bottom: 1rem;"></i>
             <h2 style="margin-bottom: 1rem;">Join Friends</h2>
             <div style="margin-top: 1.5rem;">
-                <input type="text" 
-                       id="player-name-input" 
-                       placeholder="Enter your name..." 
-                       style="width: 100%; padding: 1rem; border: none; border-radius: 10px; text-align: center; font-size: 1.1rem; margin-bottom: 1rem;">
+                <div style="padding: 1rem; background: rgba(255,255,255,0.1); border-radius: 10px; margin-bottom: 1rem;">
+                    <i class="fas fa-user"></i> Playing as: <strong id="join-player-name">Anonymous</strong>
+                </div>
                 <input type="text" 
                        id="session-id-input" 
                        placeholder="Enter game link or session ID..." 
@@ -105,6 +103,48 @@
     let quizzes = [];
     let selectedGameMode = '';
     
+    function getStoredPlayerName() {
+        try {
+            const storedData = localStorage.getItem('playerData');
+            if (storedData) {
+                const playerData = JSON.parse(storedData);
+                if (playerData.expires > Date.now() && playerData.name) {
+                    return playerData.name;
+                }
+            }
+            // Fallback to old storage method
+            const oldName = localStorage.getItem('playerName');
+            if (oldName) {
+                return oldName;
+            }
+        } catch (e) {
+            console.log('Could not restore player name');
+        }
+        return 'Anonymous';
+    }
+    
+    function updateStartPlayerName() {
+        const playerName = getStoredPlayerName();
+        const display = document.getElementById('start-player-name');
+        if (display) {
+            display.textContent = playerName;
+        }
+    }
+    
+    function updateJoinPlayerName() {
+        const playerName = getStoredPlayerName();
+        const display = document.getElementById('join-player-name');
+        if (display) {
+            display.textContent = playerName;
+        }
+    }
+    
+    // Update name displays when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+        updateStartPlayerName();
+        updateJoinPlayerName();
+    });
+    
     function selectGameMode(mode) {
         selectedGameMode = mode;
         
@@ -123,29 +163,8 @@
             title.textContent = 'Competition - Ready to Compete';
         }
         
-        // Pre-fill name if available
-        try {
-            const storedData = localStorage.getItem('playerData');
-            if (storedData) {
-                const playerData = JSON.parse(storedData);
-                if (playerData.expires > Date.now() && playerData.name) {
-                    document.getElementById('new-player-name-input').value = playerData.name;
-                }
-            } else {
-                const oldName = localStorage.getItem('playerName');
-                if (oldName) {
-                    document.getElementById('new-player-name-input').value = oldName;
-                }
-            }
-        } catch (e) {
-            console.log('Could not restore player name');
-        }
-        
-        // Focus on name input
-        document.getElementById('new-player-name-input').focus();
-        if (document.getElementById('new-player-name-input').value) {
-            document.getElementById('new-player-name-input').select();
-        }
+        // Update the displayed name
+        updateStartPlayerName();
     }
     
     function goBack() {
@@ -159,19 +178,12 @@
     }
     
     async function startNewGame() {
-        const playerName = document.getElementById('new-player-name-input').value.trim();
-        if (!playerName) {
-            showNotification('Please enter your name first!', 'error');
-            return;
-        }
+        const playerName = getStoredPlayerName();
         
         if (!selectedGameMode) {
             showNotification('Please select a game mode first!', 'error');
             return;
         }
-        
-        // Store player name for later use
-        localStorage.setItem('playerName', playerName);
         
         const modal = document.getElementById('quiz-modal');
         const quizList = document.getElementById('quiz-list');
@@ -241,34 +253,22 @@
     }
     
     function playQuiz(quizId) {
-        const playerName = localStorage.getItem('playerName');
+        const playerName = getStoredPlayerName();
         showNotification(`Starting quiz...`);
         
-        if (playerName) {
-            // Pass player name as URL parameter
-            window.location.href = `/play/${quizId}?player_name=${encodeURIComponent(playerName)}`;
-        } else {
-            window.location.href = `/play/${quizId}`;
-        }
+        // Pass player name as URL parameter
+        window.location.href = `/play/${quizId}?player_name=${encodeURIComponent(playerName)}`;
         closeModal();
     }
     
     async function joinGame() {
-        const playerName = document.getElementById('player-name-input').value.trim();
+        const playerName = getStoredPlayerName();
         const input = document.getElementById('session-id-input').value.trim();
-        
-        if (!playerName) {
-            showNotification('Please enter your name first!', 'error');
-            return;
-        }
         
         if (!input) {
             showNotification('Please enter a session ID or game link', 'error');
             return;
         }
-        
-        // Store player name for later use
-        localStorage.setItem('playerName', playerName);
         
         // Extract session ID from URL if it's a full link
         let sessionId = input;

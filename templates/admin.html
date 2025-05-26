@@ -409,9 +409,17 @@
             uploadStatus.style.display = 'none';
             
             if (result.success && result.questions.length > 0) {
-                questions = result.questions;
-                showAIForm(); // Use AI form instead of manual form
-                populateQuestionsFromImage();
+                showQuizForm(); // Show the form first
+                
+                // Directly populate questions to DOM without using global array
+                const container = document.getElementById('questions-container');
+                container.innerHTML = '';
+                
+                questions = result.questions; // Store for form submission
+                result.questions.forEach((question, index) => {
+                    addQuestionToDOM(index, question.option1, question.option2, question.prompt, question.correct_answer);
+                });
+                
                 showNotification(`Extracted ${result.questions.length} questions from image!`);
             } else {
                 showNotification('No questions found in the image. Try manual creation instead.', 'error');
@@ -456,7 +464,7 @@
         container.innerHTML = '';
         
         questions.forEach((question, index) => {
-            addQuestionToDOM(index, question.option1, question.option2, question.prompt);
+            addQuestionToDOM(index, question.option1, question.option2, question.prompt, question.correct_answer);
         });
     }
     

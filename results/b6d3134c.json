@@ -1,0 +1,84 @@
+{
+  "session_id": "b6d3134c",
+  "quiz_id": "d5208054",
+  "quiz_title": "Friend Personality Quiz",
+  "completed_at": "2025-05-26T23:14:24.945801",
+  "started_at": "2025-05-26T23:14:01.694992",
+  "total_questions": 5,
+  "answers": [
+    {
+      "question_index": 0,
+      "answer": "right",
+      "player_choice": "Your Friend",
+      "timestamp": "2025-05-26T23:14:10.808077"
+    },
+    {
+      "question_index": 1,
+      "answer": "right",
+      "player_choice": "Your Friend",
+      "timestamp": "2025-05-26T23:14:17.128491"
+    },
+    {
+      "question_index": 2,
+      "answer": "right",
+      "player_choice": "Your Friend",
+      "timestamp": "2025-05-26T23:14:20.116798"
+    },
+    {
+      "question_index": 3,
+      "answer": "right",
+      "player_choice": "Your Friend",
+      "timestamp": "2025-05-26T23:14:22.238404"
+    },
+    {
+      "question_index": 4,
+      "answer": "left",
+      "player_choice": "Nacir",
+      "timestamp": "2025-05-26T23:14:24.942184"
+    }
+  ],
+  "choices_summary": {
+    "question_0": {
+      "options": [
+        "Player 1",
+        "Player 2"
+      ],
+      "choice": "Player 2",
+      "choice_side": "right"
+    },
+    "question_1": {
+      "options": [
+        "Player 1",
+        "Player 2"
+      ],
+      "choice": "Player 2",
+      "choice_side": "right"
+    },
+    "question_2": {
+      "options": [
+        "Player 1",
+        "Player 2"
+      ],
+      "choice": "Player 2",
+      "choice_side": "right"
+    },
+    "question_3": {
+      "options": [
+        "Player 1",
+        "Player 2"
+      ],
+      "choice": "Player 2",
+      "choice_side": "right"
+    },
+    "question_4": {
+      "options": [
+        "Player 1",
+        "Player 2"
+      ],
+      "choice": "Player 1",
+      "choice_side": "left"
+    }
+  },
+  "shared_session_group": "35fa8a9c",
+  "player_name": "Nacir"
+}

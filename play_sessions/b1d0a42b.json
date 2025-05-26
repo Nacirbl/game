@@ -1,0 +1,63 @@
+{
+  "session_id": "b1d0a42b",
+  "quiz_id": "728cb0ba",
+  "quiz_title": "Performance Test Quiz c90e912f",
+  "questions": [
+    {
+      "prompt": "Question 1?",
+      "option1": "Option A1",
+      "option2": "Option B1"
+    },
+    {
+      "prompt": "Question 2?",
+      "option1": "Option A2",
+      "option2": "Option B2"
+    },
+    {
+      "prompt": "Question 3?",
+      "option1": "Option A3",
+      "option2": "Option B3"
+    },
+    {
+      "prompt": "Question 4?",
+      "option1": "Option A4",
+      "option2": "Option B4"
+    },
+    {
+      "prompt": "Question 5?",
+      "option1": "Option A5",
+      "option2": "Option B5"
+    }
+  ],
+  "current_question": 5,
+  "answers": [
+    {
+      "question_index": 0,
+      "answer": "left",
+      "timestamp": "2025-05-26T22:39:43.171825"
+    },
+    {
+      "question_index": 1,
+      "answer": "right",
+      "timestamp": "2025-05-26T22:39:45.303147"
+    },
+    {
+      "question_index": 2,
+      "answer": "left",
+      "timestamp": "2025-05-26T22:39:47.438104"
+    },
+    {
+      "question_index": 3,
+      "answer": "right",
+      "timestamp": "2025-05-26T22:39:49.585710"
+    },
+    {
+      "question_index": 4,
+      "answer": "left",
+      "timestamp": "2025-05-26T22:39:51.714565"
+    }
+  ],
+  "started_at": "2025-05-26T22:39:41.116929",
+  "shared_session_group": "b1d0a42b",
+  "player_name": "TestUser5"
+}

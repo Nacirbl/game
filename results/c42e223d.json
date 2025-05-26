@@ -1,0 +1,40 @@
+{
+  "session_id": "c42e223d",
+  "quiz_id": "33893d36",
+  "quiz_title": "Friendship Quiz",
+  "completed_at": "2025-05-26T21:17:02.951321",
+  "started_at": "2025-05-26T21:16:52.812853",
+  "total_questions": 2,
+  "answers": [
+    {
+      "question_index": 0,
+      "answer": "left",
+      "timestamp": "2025-05-26T21:16:58.917871"
+    },
+    {
+      "question_index": 1,
+      "answer": "left",
+      "timestamp": "2025-05-26T21:17:02.951321"
+    }
+  ],
+  "choices_summary": {
+    "question_0": {
+      "options": [
+        "Player 1",
+        "Player 2"
+      ],
+      "choice": "Player 1",
+      "choice_side": "left"
+    },
+    "question_1": {
+      "options": [
+        "Player 1",
+        "Player 2"
+      ],
+      "choice": "Player 1",
+      "choice_side": "left"
+    }
+  },
+  "shared_session_group": "c42e223d",
+  "player_name": "Nacir"
+}

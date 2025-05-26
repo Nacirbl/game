@@ -1,0 +1,40 @@
+{
+  "session_id": "e876463f",
+  "quiz_id": "3a42db9d",
+  "quiz_title": "Friendship Quiz",
+  "completed_at": "2025-05-26T21:16:00.192359",
+  "started_at": "2025-05-26T21:15:50.034278",
+  "total_questions": 2,
+  "answers": [
+    {
+      "question_index": 0,
+      "answer": "right",
+      "timestamp": "2025-05-26T21:15:56.119013"
+    },
+    {
+      "question_index": 1,
+      "answer": "right",
+      "timestamp": "2025-05-26T21:16:00.192359"
+    }
+  ],
+  "choices_summary": {
+    "question_0": {
+      "options": [
+        "Player 1",
+        "Player 2"
+      ],
+      "choice": "Player 2",
+      "choice_side": "right"
+    },
+    "question_1": {
+      "options": [
+        "Player 1",
+        "Player 2"
+      ],
+      "choice": "Player 2",
+      "choice_side": "right"
+    }
+  },
+  "shared_session_group": "2cce1714",
+  "player_name": "Malena"
+}

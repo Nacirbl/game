@@ -1,0 +1,40 @@
+{
+  "session_id": "eb51182d",
+  "quiz_id": "063158bf",
+  "quiz_title": "Test Player Quiz",
+  "completed_at": "2025-05-26T21:42:25.947024",
+  "started_at": "2025-05-26T21:42:17.795112",
+  "total_questions": 2,
+  "answers": [
+    {
+      "question_index": 0,
+      "answer": "right",
+      "timestamp": "2025-05-26T21:42:24.397336"
+    },
+    {
+      "question_index": 1,
+      "answer": "left",
+      "timestamp": "2025-05-26T21:42:25.947024"
+    }
+  ],
+  "choices_summary": {
+    "question_0": {
+      "options": [
+        "Player 1",
+        "Player 2"
+      ],
+      "choice": "Player 2",
+      "choice_side": "right"
+    },
+    "question_1": {
+      "options": [
+        "Player 1",
+        "Player 2"
+      ],
+      "choice": "Player 1",
+      "choice_side": "left"
+    }
+  },
+  "shared_session_group": "eb51182d",
+  "player_name": "Malena"
+}

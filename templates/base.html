@@ -563,6 +563,16 @@
                 height: 50px;
                 font-size: 1.2rem;
             }
+            
+            #player-name-widget {
+                top: 10px !important;
+                right: 10px !important;
+            }
+            
+            #player-name-widget > div {
+                padding: 0.4rem 0.8rem !important;
+                font-size: 0.9rem !important;
+            }
         }
         
         @keyframes slideInFromTop {
@@ -592,6 +602,15 @@
 </head>
 <body>
     <div class="container">
+        <!-- Player Name Widget -->
+        <div id="player-name-widget" style="position: absolute; top: 20px; right: 20px; z-index: 100;">
+            <div style="background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); border-radius: 25px; padding: 0.5rem 1rem; border: 1px solid rgba(255,255,255,0.2); cursor: pointer; transition: all 0.3s ease;" onclick="editPlayerName()">
+                <i class="fas fa-user" style="color: white; margin-right: 0.5rem;"></i>
+                <span id="player-name-display" style="color: white; font-weight: 500;">Anonymous</span>
+                <i class="fas fa-pencil-alt" style="color: rgba(255,255,255,0.7); margin-left: 0.5rem; font-size: 0.8rem;"></i>
+            </div>
+        </div>
+        
         <header class="header">
             {% block header %}
             <h1><i class="fas fa-balance-scale"></i> This or That</h1>
@@ -614,6 +633,71 @@
     <div id="notification" class="notification"></div>
     
     <script>
+        // Player name management
+        let currentPlayerName = 'Anonymous';
+        
+        function loadPlayerName() {
+            try {
+                const storedData = localStorage.getItem('playerData');
+                if (storedData) {
+                    const playerData = JSON.parse(storedData);
+                    if (playerData.expires > Date.now() && playerData.name) {
+                        currentPlayerName = playerData.name;
+                    }
+                } else {
+                    // Fallback to old storage method
+                    const oldName = localStorage.getItem('playerName');
+                    if (oldName) {
+                        currentPlayerName = oldName;
+                    }
+                }
+            } catch (e) {
+                console.log('Could not restore player name');
+            }
+            
+            updatePlayerNameDisplay();
+        }
+        
+        function updatePlayerNameDisplay() {
+            const display = document.getElementById('player-name-display');
+            if (display) {
+                display.textContent = currentPlayerName;
+            }
+        }
+        
+        function savePlayerName(name) {
+            currentPlayerName = name;
+            
+            // Store with expiration
+            const playerData = {
+                name: name,
+                timestamp: Date.now(),
+                expires: Date.now() + (30 * 24 * 60 * 60 * 1000) // 30 days
+            };
+            localStorage.setItem('playerData', JSON.stringify(playerData));
+            localStorage.setItem('playerName', name); // Keep for backwards compatibility
+            
+            updatePlayerNameDisplay();
+            
+            // Update other name displays on the page
+            const startDisplay = document.getElementById('start-player-name');
+            const joinDisplay = document.getElementById('join-player-name');
+            if (startDisplay) startDisplay.textContent = name;
+            if (joinDisplay) joinDisplay.textContent = name;
+        }
+        
+        function editPlayerName() {
+            const newName = prompt('Enter your name:', currentPlayerName);
+            if (newName && newName.trim() && newName.trim() !== currentPlayerName) {
+                const trimmedName = newName.trim().substring(0, 20); // Limit to 20 chars
+                savePlayerName(trimmedName);
+                showNotification(`Name changed to "${trimmedName}"`);
+            }
+        }
+        
+        // Load name on page load
+        document.addEventListener('DOMContentLoaded', loadPlayerName);
+        
         // Utility functions
         function showNotification(message, type = 'success') {
             const notification = document.getElementById('notification');

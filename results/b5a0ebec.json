@@ -1,0 +1,79 @@
+{
+  "session_id": "b5a0ebec",
+  "quiz_id": "47f63005",
+  "quiz_title": "Entertainment Choices",
+  "completed_at": "2025-05-26T22:27:57.147134",
+  "started_at": "2025-05-26T22:27:41.741132",
+  "total_questions": 5,
+  "answers": [
+    {
+      "question_index": 0,
+      "answer": "right",
+      "timestamp": "2025-05-26T22:27:49.179357"
+    },
+    {
+      "question_index": 1,
+      "answer": "left",
+      "timestamp": "2025-05-26T22:27:50.807349"
+    },
+    {
+      "question_index": 2,
+      "answer": "left",
+      "timestamp": "2025-05-26T22:27:52.631170"
+    },
+    {
+      "question_index": 3,
+      "answer": "left",
+      "timestamp": "2025-05-26T22:27:54.849287"
+    },
+    {
+      "question_index": 4,
+      "answer": "left",
+      "timestamp": "2025-05-26T22:27:57.147134"
+    }
+  ],
+  "choices_summary": {
+    "question_0": {
+      "options": [
+        "Movie",
+        "Book"
+      ],
+      "choice": "Book",
+      "choice_side": "right"
+    },
+    "question_1": {
+      "options": [
+        "Netflix",
+        "YouTube"
+      ],
+      "choice": "Netflix",
+      "choice_side": "left"
+    },
+    "question_2": {
+      "options": [
+        "Music",
+        "Podcast"
+      ],
+      "choice": "Music",
+      "choice_side": "left"
+    },
+    "question_3": {
+      "options": [
+        "Gaming",
+        "Movie"
+      ],
+      "choice": "Gaming",
+      "choice_side": "left"
+    },
+    "question_4": {
+      "options": [
+        "Football",
+        "Basketball"
+      ],
+      "choice": "Football",
+      "choice_side": "left"
+    }
+  },
+  "shared_session_group": "1da90c71",
+  "player_name": "Malena"
+}

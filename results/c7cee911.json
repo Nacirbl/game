@@ -1,0 +1,40 @@
+{
+  "session_id": "c7cee911",
+  "quiz_id": "041969d4",
+  "quiz_title": "Test Player Quiz",
+  "completed_at": "2025-05-26T21:11:42.405465",
+  "started_at": "2025-05-26T21:11:28.222781",
+  "total_questions": 2,
+  "answers": [
+    {
+      "question_index": 0,
+      "answer": "right",
+      "timestamp": "2025-05-26T21:11:37.476255"
+    },
+    {
+      "question_index": 1,
+      "answer": "right",
+      "timestamp": "2025-05-26T21:11:42.405465"
+    }
+  ],
+  "choices_summary": {
+    "question_0": {
+      "options": [
+        "Player 1",
+        "Player 2"
+      ],
+      "choice": "Player 2",
+      "choice_side": "right"
+    },
+    "question_1": {
+      "options": [
+        "Player 1",
+        "Player 2"
+      ],
+      "choice": "Player 2",
+      "choice_side": "right"
+    }
+  },
+  "shared_session_group": "786c79ea",
+  "player_name": "Nacir"
+}

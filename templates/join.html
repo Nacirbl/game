@@ -12,23 +12,21 @@
     <div style="background: linear-gradient(45deg, #667eea, #764ba2); padding: 2rem; border-radius: 20px; margin-bottom: 2rem;">
         <i class="fas fa-user-friends" style="font-size: 3rem; color: white; margin-bottom: 1rem;"></i>
         <h2 style="color: white; margin-bottom: 0.5rem;">Join Your Friend!</h2>
-        <p style="color: rgba(255,255,255,0.9); margin: 0;">Enter your name to start playing together</p>
+        <p style="color: rgba(255,255,255,0.9); margin: 0;">Ready to start playing together</p>
     </div>
     
-    <form id="join-form">
-        <div class="input-group">
-            <label for="player-name">
-                <i class="fas fa-user"></i> Your Name
-            </label>
-            <input type="text" id="player-name" placeholder="Enter your name" required maxlength="20">
+    <div style="margin-bottom: 2rem;">
+        <div style="padding: 1.5rem; background: rgba(102, 126, 234, 0.1); border-radius: 15px; border: 2px solid rgba(102, 126, 234, 0.2);">
+            <i class="fas fa-user" style="color: var(--primary-color); margin-right: 0.5rem;"></i>
+            <strong>Playing as:</strong> <span id="join-player-name-display">Anonymous</span>
         </div>
-        
-        <div style="margin-top: 2rem;">
-            <button type="submit" class="btn" style="font-size: 1.2rem; padding: 1rem 2rem; width: 100%;">
-                <i class="fas fa-play"></i> Join Quiz
-            </button>
-        </div>
-    </form>
+    </div>
+    
+    <div style="margin-top: 2rem;">
+        <button onclick="joinQuiz()" class="btn" style="font-size: 1.2rem; padding: 1rem 2rem; width: 100%;">
+            <i class="fas fa-play"></i> Join Quiz
+        </button>
+    </div>
     
     <div style="margin-top: 1.5rem; padding: 1rem; background: #f8f9fa; border-radius: 15px; font-size: 0.9rem; color: var(--text-light);">
         <i class="fas fa-info-circle"></i> 
@@ -51,23 +49,36 @@
 <script>
     const sessionId = '{{ session_id }}';
     
-    document.getElementById('join-form').addEventListener('submit', async function(e) {
-        e.preventDefault();
-        
-        const playerName = document.getElementById('player-name').value.trim();
-        if (!playerName) {
-            showNotification('Please enter your name', 'error');
-            return;
+    function getStoredPlayerName() {
+        try {
+            const storedData = localStorage.getItem('playerData');
+            if (storedData) {
+                const playerData = JSON.parse(storedData);
+                if (playerData.expires > Date.now() && playerData.name) {
+                    return playerData.name;
+                }
+            }
+            // Fallback to old storage method
+            const oldName = localStorage.getItem('playerName');
+            if (oldName) {
+                return oldName;
+            }
+        } catch (e) {
+            console.log('Could not restore player name');
         }
-        
-        // Store name in localStorage with expiration
-        const playerData = {
-            name: playerName,
-            timestamp: Date.now(),
-            expires: Date.now() + (24 * 60 * 60 * 1000) // 24 hours
-        };
-        localStorage.setItem('playerData', JSON.stringify(playerData));
-        localStorage.setItem('playerName', playerName); // Keep for backwards compatibility
+        return 'Anonymous';
+    }
+    
+    function updateJoinPlayerNameDisplay() {
+        const playerName = getStoredPlayerName();
+        const display = document.getElementById('join-player-name-display');
+        if (display) {
+            display.textContent = playerName;
+        }
+    }
+    
+    async function joinQuiz() {
+        const playerName = getStoredPlayerName();
         
         // Show loading status
         document.getElementById('join-status').style.display = 'flex';
@@ -107,33 +118,11 @@
             document.getElementById('join-status').style.display = 'none';
             showNotification('Failed to join quiz. Please try again.', 'error');
         }
+    }
+    
+    // Update name display when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+        updateJoinPlayerNameDisplay();
     });
-    
-    // Check for persistent player name and pre-fill
-    try {
-        const storedData = localStorage.getItem('playerData');
-        if (storedData) {
-            const playerData = JSON.parse(storedData);
-            if (playerData.expires > Date.now() && playerData.name) {
-                document.getElementById('player-name').value = playerData.name;
-            }
-        } else {
-            // Fallback to old storage method
-            const oldName = localStorage.getItem('playerName');
-            if (oldName) {
-                document.getElementById('player-name').value = oldName;
-            }
-        }
-    } catch (e) {
-        console.log('Could not restore player name');
-    }
-    
-    // Auto-focus name input
-    document.getElementById('player-name').focus();
-    
-    // If name is pre-filled, select it for easy editing
-    if (document.getElementById('player-name').value) {
-        document.getElementById('player-name').select();
-    }
 </script>
 {% endblock %} 
