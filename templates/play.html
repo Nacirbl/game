@@ -416,13 +416,16 @@
                 <p>Loading results...</p> <!-- Updated message -->
             </div>
         </div>
+        <button id="share-results-btn" class="btn" style="display:none; margin: 1.5rem auto 0 auto; background: linear-gradient(45deg, #42a5f5, #4caf50); color: white;">
+            <i class="fas fa-share-alt"></i> Share Results
+        </button>
         
         <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 2rem;">
             <button onclick="playAnotherQuiz()" class="btn" style="background: var(--primary-color); font-size: 1.1rem; padding: 0.8rem 1.5rem;">
                 <i class="fas fa-dice"></i> Play Another Quiz
             </button>
-            <button onclick="shareSession()" class="btn btn-secondary">
-                <i class="fas fa-share-alt"></i> Invite More
+            <button onclick="refreshResults()" class="btn btn-secondary">
+                <i class="fas fa-sync-alt"></i> Refresh Results
             </button>
             <a href="/" class="btn btn-secondary">
                 <i class="fas fa-home"></i> Home
@@ -443,6 +446,7 @@
 
 {% block extra_js %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.1/socket.io.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 <script>
     const socket = io();
 
@@ -1056,6 +1060,7 @@
                         <div style="opacity: 0.9;">${compMsg}</div></div>`;
             }
             resultsContainer.innerHTML = `<div style="margin: 1rem 0;">${headerHTML}<div style="text-align: left;"><h4 style="margin-bottom: 1rem; text-align: center;">${isCompetition ? '🎯 Answer Breakdown' : '📊 Choice Comparison'}</h4>${comparisonHTML}</div></div>`;
+            showShareResultsButton();
         } catch (error) {
             console.error('Error loading completion results:', error);
             if(document.getElementById('completion-results')) document.getElementById('completion-results').innerHTML = `<div class="card"><p>Error loading results. Please try again.</p></div>`;
@@ -1507,5 +1512,44 @@
     }
 
     document.addEventListener('DOMContentLoaded', initializePage);
+
+    // After results are loaded and displayed, show the share button
+    function showShareResultsButton() {
+        const btn = document.getElementById('share-results-btn');
+        if (btn) btn.style.display = 'block';
+    }
+
+    // Share Results logic
+    document.getElementById('share-results-btn').addEventListener('click', async function() {
+        const container = document.getElementById('completion-results');
+        if (!container) return;
+        try {
+            const canvas = await html2canvas(container, { backgroundColor: '#fff', scale: 2 });
+            canvas.toBlob(async function(blob) {
+                if (!blob) return alert('Could not capture results for sharing.');
+                const file = new File([blob], 'quiz-results.png', {type: 'image/png'});
+                if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                    await navigator.share({
+                        files: [file],
+                        title: 'Quiz Results',
+                        text: 'Check out my quiz results!'
+                    });
+                } else {
+                    alert('Sharing images is not supported on this device.');
+                }
+            }, 'image/png');
+        } catch (err) {
+            alert('Could not capture results for sharing.');
+        }
+    });
+
+    // Add the refreshResults function to call loadCompletionResults
+    function refreshResults() {
+        const resultsContainer = document.getElementById('completion-results');
+        if (resultsContainer) {
+            resultsContainer.innerHTML = '<div class="loading"><div class="spinner"></div><p>Refreshing results...</p></div>';
+        }
+        setTimeout(loadCompletionResults, 300);
+    }
 </script>
 {% endblock %} 

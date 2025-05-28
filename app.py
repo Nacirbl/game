@@ -1171,6 +1171,34 @@ def api_health():
         'active_sessions': len(session_manager.memory_cache)
     })
 
+@app.route('/api/suggest_quiz_name', methods=['POST'])
+def api_suggest_quiz_name():
+    """Suggest a quiz name using LLM"""
+    data = request.get_json()
+    context = data.get('context', '').strip()
+    quiz_type = data.get('quiz_type', 'thisorthat')
+    if not context:
+        return jsonify({'success': False, 'error': 'No context provided'}), 400
+    
+    prompt = f"""Suggest a catchy, short quiz name for a quiz about: {context}\nReturn ONLY the quiz name as a string, no extra text."""
+    try:
+        result = llm_client.call([
+            {"role": "user", "content": prompt}
+        ], max_tokens=20, temperature=0.8)
+        if result:
+            # Clean up the result: remove quotes, extra whitespace, etc.
+            name = result.strip().strip('"')
+            # Remove any leading/trailing punctuation or markdown
+            name = name.strip('`').strip()
+            # If the LLM returns a line like Quiz Name: ...
+            if ':' in name:
+                name = name.split(':', 1)[-1].strip()
+            return jsonify({'success': True, 'suggested_name': name})
+        else:
+            return jsonify({'success': False, 'error': 'No name generated'}), 500
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)}), 500
+
 # --- SocketIO Event Handlers ---
 @socketio.on('connect')
 def handle_connect():

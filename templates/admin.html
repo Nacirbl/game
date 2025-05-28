@@ -76,6 +76,12 @@
             <textarea id="quiz-description" rows="3" placeholder="Describe what your quiz is about..."></textarea>
         </div>
         
+        <div style="text-align: center; margin: 2rem 0 2rem 0;">
+            <button type="submit" class="btn" style="font-size: 1.2rem; padding: 1.2rem 3rem;">
+                <i class="fas fa-rocket"></i> Create Quiz
+            </button>
+        </div>
+        
         <!-- Quiz Type Selection -->
         <div class="input-group">
             <label for="quiz-type">
@@ -130,7 +136,6 @@
         <div id="questions-container">
             <!-- Questions will be added here -->
         </div>
-        
         <div style="text-align: center; margin-top: 3rem;">
             <button type="submit" class="btn" style="font-size: 1.2rem; padding: 1.2rem 3rem;">
                 <i class="fas fa-rocket"></i> Create Quiz
@@ -420,6 +425,25 @@
                     console.log(`[handleImageUpload] Calling addQuestionToDOM for index: ${index}, question:`, JSON.parse(JSON.stringify(question)));
                     addQuestionToDOM(index, question.option1, question.option2, question.prompt, question.correct_answer);
                 });
+                
+                // Suggest a quiz name if the title is empty
+                const quizTitleInput = document.getElementById('quiz-title');
+                if (quizTitleInput && !quizTitleInput.value.trim() && questions.length > 0) {
+                    let context = questions[0].prompt || questions[0].option1 || '';
+                    const quizType = document.getElementById('quiz-type').value;
+                    fetch('/api/suggest_quiz_name', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ context: context, quiz_type: quizType })
+                    })
+                    .then(resp => resp.json())
+                    .then(data => {
+                        if (data.success && data.suggested_name) {
+                            quizTitleInput.value = data.suggested_name;
+                            showNotification('AI suggested a quiz name: ' + data.suggested_name);
+                        }
+                    });
+                }
                 
                 showNotification(`Extracted ${result.questions.length} questions from image!`);
             } else {
@@ -915,6 +939,24 @@
             refreshQuestionsDisplay();
             
             showNotification(`Added ${addedCount} questions to your quiz!`);
+            // Autofill quiz title if empty, using first generated question
+            const quizTitleInput = document.getElementById('quiz-title');
+            if (quizTitleInput && !quizTitleInput.value.trim() && currentGeneratedQuestions.length > 0) {
+                let context = currentGeneratedQuestions[0].prompt || currentGeneratedQuestions[0].option1 || '';
+                const quizType = document.getElementById('quiz-type').value;
+                fetch('/api/suggest_quiz_name', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ context: context, quiz_type: quizType })
+                })
+                .then(resp => resp.json())
+                .then(data => {
+                    if (data.success && data.suggested_name) {
+                        quizTitleInput.value = data.suggested_name;
+                        showNotification('AI suggested a quiz name: ' + data.suggested_name);
+                    }
+                });
+            }
         }
         
         // Close the modal
@@ -961,7 +1003,7 @@
     document.getElementById('create-quiz-form').addEventListener('submit', async function(e) {
         e.preventDefault();
         
-        const title = document.getElementById('quiz-title').value;
+        let title = document.getElementById('quiz-title').value;
         const description = document.getElementById('quiz-description').value;
         const quizType = document.getElementById('quiz-type').value;
         
@@ -975,6 +1017,31 @@
         if (validQuestions.length === 0) {
             showNotification('Please fill in all question prompts and options', 'error');
             return;
+        }
+
+        // If title is empty, suggest a quiz name using AI
+        if (!title.trim()) {
+            let context = '';
+            if (validQuestions.length > 0) {
+                context = validQuestions[0].prompt || validQuestions[0].option1 || '';
+            }
+            try {
+                const resp = await fetch('/api/suggest_quiz_name', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ context: context, quiz_type: quizType })
+                });
+                const data = await resp.json();
+                if (data.success && data.suggested_name) {
+                    title = data.suggested_name;
+                    document.getElementById('quiz-title').value = title;
+                    showNotification('AI suggested a quiz name: ' + title);
+                } else {
+                    title = 'Untitled Quiz';
+                }
+            } catch (err) {
+                title = 'Untitled Quiz';
+            }
         }
         
         try {
