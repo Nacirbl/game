@@ -67,23 +67,11 @@
         border-radius: 15px;
         text-align: center;
         font-weight: 600;
-        font-size: clamp(1rem, 2.5vw, 1.3rem);
+        font-size: 1.1rem;
         color: var(--text-dark);
         z-index: 5;
         box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         backdrop-filter: blur(10px);
-        word-break: break-word;
-        overflow-wrap: break-word;
-        max-height: 6.5em;
-        overflow: hidden;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        line-height: 1.2;
-        transition: font-size 0.2s;
-    }
-    .question-prompt.shrink {
-        font-size: 0.95rem !important;
     }
     
     .options-container {
@@ -228,21 +216,7 @@
         }
         
         .option-text {
-            font-size: clamp(1rem, 2vw, 1.15rem);
-            font-weight: 500;
-            text-align: center;
-            word-break: break-word;
-            overflow-wrap: break-word;
-            max-height: 3.5em;
-            overflow: hidden;
-            line-height: 1.2;
-            transition: font-size 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .option-text.shrink {
-            font-size: 0.9rem !important;
+            font-size: 0.9rem;
         }
     }
     
@@ -1533,41 +1507,5 @@
     }
 
     document.addEventListener('DOMContentLoaded', initializePage);
-
-    // Add this after the rest of your JS, before </script>
-    function autoShrinkText(el, maxHeight, minFontSize) {
-        if (!el) return;
-        let fontSize = parseFloat(window.getComputedStyle(el).fontSize);
-        while (el.scrollHeight > maxHeight && fontSize > minFontSize) {
-            fontSize -= 1;
-            el.style.fontSize = fontSize + 'px';
-        }
-        if (el.scrollHeight > maxHeight) {
-            el.classList.add('shrink');
-        }
-    }
-
-    function fitCardTexts() {
-        // Question prompt
-        const promptEl = document.querySelector('#current-card .question-prompt');
-        if (promptEl) {
-            promptEl.style.fontSize = '';
-            promptEl.classList.remove('shrink');
-            autoShrinkText(promptEl, 90, 12); // 90px max height, 12px min font size
-        }
-        // Option texts
-        const optionEls = document.querySelectorAll('#current-card .option-text');
-        optionEls.forEach(el => {
-            el.style.fontSize = '';
-            el.classList.remove('shrink');
-            autoShrinkText(el, 45, 11); // 45px max height, 11px min font size
-        });
-    }
-    // Patch: Call fitCardTexts at the end of initializeCurrentCard
-    const _origInitializeCurrentCard = window.initializeCurrentCard;
-    window.initializeCurrentCard = function() {
-        if (_origInitializeCurrentCard) _origInitializeCurrentCard();
-        fitCardTexts();
-    };
 </script>
 {% endblock %} 
