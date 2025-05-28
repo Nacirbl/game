@@ -5,7 +5,6 @@ uuid
 Pillow
 pytesseract
 requests
-concurrent.futures
 diskcache>=5.4.0
 Flask-SocketIO>=5.0
 python-socketio>=5.0
