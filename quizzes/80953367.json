@@ -1,0 +1,19 @@
+{
+  "title": "Quiz",
+  "description": "",
+  "type": "thisorthat",
+  "questions": [
+    {
+      "option1": "Player 1",
+      "option2": "Player 2",
+      "prompt": "Who'd declare love first?"
+    },
+    {
+      "option1": "Player 1",
+      "option2": "Player 2",
+      "prompt": "Who'd weaponize silence most effectively?"
+    }
+  ],
+  "id": "80953367",
+  "created_at": "2025-05-28T15:32:23.595567"
+}

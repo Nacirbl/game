@@ -84,39 +84,36 @@
         document.getElementById('join-status').style.display = 'flex';
         
         try {
-            // Get the original session data to find the quiz_id
-            const sessionResponse = await fetch(`/api/session/${sessionId}`);
-            const sessionData = await sessionResponse.json();
-            
-            if (!sessionData.quiz_id) {
-                throw new Error('Invalid session');
-            }
-            
-            // Create a new session for this player that's linked to the original
-            const response = await fetch('/api/create-session', {
+            // The sessionId is the ID of the session the player wants to join.
+            // We directly use this to call /api/join-session.
+            const response = await fetch('/api/join-session', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    quiz_id: sessionData.quiz_id,
-                    shared_session_group: sessionData.shared_session_group || sessionId,
+                    session_id: sessionId, // This is the session_id from the join URL
                     player_name: playerName
                 })
             });
             
+            if (!response.ok) {
+                const errorText = await response.text();
+                throw new Error(`Failed to join session: ${response.status} ${errorText}`);
+            }
+            
             const result = await response.json();
             
-            if (result.success) {
-                // Redirect to the new session
-                window.location.href = `/session/${result.session_id}`;
+            if (result.success && result.join_url) {
+                // Redirect to the play page for the session they joined
+                window.location.href = result.join_url;
             } else {
-                throw new Error(result.error || 'Failed to join session');
+                throw new Error(result.error || 'Failed to join session. Invalid response from server.');
             }
         } catch (error) {
             console.error('Error joining session:', error);
             document.getElementById('join-status').style.display = 'none';
-            showNotification('Failed to join quiz. Please try again.', 'error');
+            showNotification(error.message || 'Failed to join quiz. Please try again.', 'error');
         }
     }
     

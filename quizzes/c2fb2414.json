@@ -1,0 +1,69 @@
+{
+  "title": "Great Quiz",
+  "description": "",
+  "type": "competition",
+  "questions": [
+    {
+      "correct_answer": "option2",
+      "option1": "12:00 PM",
+      "option2": "11:30 AM",
+      "prompt": "A train leaves New York at 8:00 AM traveling at 60 mph towards Chicago. Another train leaves Chicago at 9:00 AM traveling at 80 mph towards New York. If the distance between New York and Chicago is 780 miles, at what time will the trains meet?"
+    },
+    {
+      "correct_answer": "option2",
+      "option1": "Some Bloops are Ploops.",
+      "option2": "All Bloops are Ploops.",
+      "prompt": "If all Bloops are Gloops, and some Gloops are Ploops, which statement MUST be true?"
+    },
+    {
+      "correct_answer": "option1",
+      "option1": "8",
+      "option2": "12",
+      "prompt": "A farmer has chickens and cows. There are 20 heads and 56 legs. How many cows does the farmer have?"
+    },
+    {
+      "correct_answer": "option2",
+      "option1": "40",
+      "option2": "42",
+      "prompt": "What number logically follows in this sequence: 2, 6, 12, 20, 30, ?"
+    },
+    {
+      "correct_answer": "option1",
+      "option1": "A > C",
+      "option2": "C > A",
+      "prompt": "If A > B and B > C, then which of the following is true?"
+    },
+    {
+      "correct_answer": "option1",
+      "option1": "Light one rope at both ends and the other rope at one end simultaneously. When the first rope burns out, light the second rope's other end.",
+      "option2": "Burn one rope completely, then burn the second rope for half an hour.",
+      "prompt": "You have two ropes. Each rope takes exactly one hour to burn completely, but they don't burn at a constant rate. How can you measure 45 minutes using only these two ropes and a lighter?"
+    },
+    {
+      "correct_answer": "option2",
+      "option1": "$0.10",
+      "option2": "$0.05",
+      "prompt": "A bat and a ball cost $1.10 in total. The bat costs $1.00 more than the ball. How much does the ball cost?"
+    },
+    {
+      "correct_answer": "option1",
+      "option1": "The Norwegian",
+      "option2": "The German",
+      "prompt": "There are five houses in a row, each painted a different color. In each house lives a person of a different nationality. These five owners drink a certain type of beverage, smoke a certain brand of cigar, and keep a certain pet. Given a complex set of clues (omitted for brevity), if the Brit lives in the red house, who owns the zebra?"
+    },
+    {
+      "correct_answer": "option2",
+      "option1": "Square",
+      "option2": "Triangle",
+      "prompt": "Which shape comes next in the following sequence: Circle, Square, Triangle, Circle, Square, ?"
+    },
+    {
+      "correct_answer": "option1",
+      "option1": "SILENT",
+      "option2": "LISTEN",
+      "prompt": "If you rearrange the letters 'LISTEN', you can spell a synonym for 'SILENT'. What is it?"
+    }
+  ],
+  "id": "c2fb2414",
+  "created_at": "2025-05-28T15:45:04.407909"
+}

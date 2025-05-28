@@ -1,0 +1,19 @@
+{
+  "title": "Oops",
+  "description": "",
+  "type": "thisorthat",
+  "questions": [
+    {
+      "prompt": "Who is dumber?",
+      "option1": "Player 1",
+      "option2": "Player 2"
+    },
+    {
+      "prompt": "Who is happier?",
+      "option1": "Player 1",
+      "option2": "Player 2"
+    }
+  ],
+  "id": "5a515a80",
+  "created_at": "2025-05-28T14:43:28.283955"
+}

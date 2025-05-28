@@ -1,0 +1,42 @@
+{
+  "session_id": "9b79729e",
+  "quiz_id": "5a515a80",
+  "quiz_title": "Oops",
+  "completed_at": "2025-05-28T14:49:04.316199",
+  "started_at": "2025-05-28T14:48:43.008264",
+  "total_questions": 2,
+  "answers": [
+    {
+      "question_index": 0,
+      "answer": "right",
+      "timestamp": "2025-05-28T14:48:56.876426",
+      "player_choice": "Lena"
+    },
+    {
+      "question_index": 1,
+      "answer": "left",
+      "timestamp": "2025-05-28T14:48:59.142713",
+      "player_choice": "Nacir"
+    }
+  ],
+  "choices_summary": {
+    "question_0": {
+      "options": [
+        "Player 1",
+        "Player 2"
+      ],
+      "choice": "Player 2",
+      "choice_side": "right"
+    },
+    "question_1": {
+      "options": [
+        "Player 1",
+        "Player 2"
+      ],
+      "choice": "Player 1",
+      "choice_side": "left"
+    }
+  },
+  "shared_session_group": "9b79729e",
+  "player_name": "Nacir"
+}

@@ -1,0 +1,69 @@
+{
+  "title": "Science",
+  "description": "",
+  "type": "competition",
+  "questions": [
+    {
+      "correct_answer": "option1",
+      "option1": "Au",
+      "option2": "Ag",
+      "prompt": "What is the chemical symbol for gold?"
+    },
+    {
+      "correct_answer": "option1",
+      "option1": "Mars",
+      "option2": "Venus",
+      "prompt": "Which planet is known as the 'Red Planet'?"
+    },
+    {
+      "correct_answer": "option2",
+      "option1": "Nucleus",
+      "option2": "Mitochondria",
+      "prompt": "What is the powerhouse of the cell?"
+    },
+    {
+      "correct_answer": "option2",
+      "option1": "150,000 kilometers per second",
+      "option2": "300,000 kilometers per second",
+      "prompt": "What is the speed of light in a vacuum, approximately?"
+    },
+    {
+      "correct_answer": "option1",
+      "option1": "Photosynthesis",
+      "option2": "Respiration",
+      "prompt": "What is the process by which plants make their own food?"
+    },
+    {
+      "correct_answer": "option2",
+      "option1": "Molecule",
+      "option2": "Atom",
+      "prompt": "What is the smallest unit of matter?"
+    },
+    {
+      "correct_answer": "option1",
+      "option1": "Skin",
+      "option2": "Liver",
+      "prompt": "What is the largest organ in the human body?"
+    },
+    {
+      "correct_answer": "option1",
+      "option1": "H2O",
+      "option2": "CO2",
+      "prompt": "What is the chemical formula for water?"
+    },
+    {
+      "correct_answer": "option2",
+      "option1": "Isaac Newton",
+      "option2": "Albert Einstein",
+      "prompt": "Who developed the theory of general relativity?"
+    },
+    {
+      "correct_answer": "option1",
+      "option1": "Paleontology",
+      "option2": "Geology",
+      "prompt": "What is the study of fossils called?"
+    }
+  ],
+  "id": "b9ae4940",
+  "created_at": "2025-05-28T15:29:05.049103"
+}

@@ -1,0 +1,27 @@
+{
+  "session_id": "0447f1f1",
+  "quiz_id": "d4e385f7",
+  "quiz_title": "Sample",
+  "completed_at": "2025-05-28T02:23:48.098614",
+  "started_at": "2025-05-28T02:23:33.753060",
+  "total_questions": 1,
+  "answers": [
+    {
+      "question_index": 0,
+      "answer": "right",
+      "timestamp": "2025-05-28T02:23:48.096606"
+    }
+  ],
+  "choices_summary": {
+    "question_0": {
+      "options": [
+        "Blankets",
+        "Fireplaces"
+      ],
+      "choice": "Fireplaces",
+      "choice_side": "right"
+    }
+  },
+  "shared_session_group": "0447f1f1",
+  "player_name": "Ali"
+}

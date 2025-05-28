@@ -153,13 +153,10 @@
         </div>
         
         <div class="admin-buttons" style="display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap;">
-            <button onclick="copyQuizLink()" class="btn">
-                <i class="fas fa-copy"></i> Copy Link
+            <button onclick="testQuiz()" class="btn" style="background: #4caf50; color: white;">
+                <i class="fas fa-play"></i> Play Quiz
             </button>
-            <button onclick="playNewQuiz()" class="btn btn-secondary">
-                <i class="fas fa-play"></i> Test Quiz
-            </button>
-            <a href="/" class="btn" style="background: #6c757d;">
+            <a href="/" class="btn" style="background: #6c757d; color: white;">
                 <i class="fas fa-home"></i> Home
             </a>
         </div>
@@ -408,21 +405,33 @@
             const result = await response.json();
             uploadStatus.style.display = 'none';
             
-            if (result.success && result.questions.length > 0) {
-                showQuizForm(); // Show the form first
+            console.log("[handleImageUpload] API Result:", JSON.parse(JSON.stringify(result))); // Log the full API result
+
+            if (result.success && result.questions && result.questions.length > 0) { // Added check for result.questions existence
+                showQuizForm(); 
                 
-                // Directly populate questions to DOM without using global array
                 const container = document.getElementById('questions-container');
-                container.innerHTML = '';
+                container.innerHTML = ''; 
                 
-                questions = result.questions; // Store for form submission
+                questions = result.questions; 
+                console.log("[handleImageUpload] Questions to render:", JSON.parse(JSON.stringify(questions))); // Log questions to be rendered
+
                 result.questions.forEach((question, index) => {
+                    console.log(`[handleImageUpload] Calling addQuestionToDOM for index: ${index}, question:`, JSON.parse(JSON.stringify(question)));
                     addQuestionToDOM(index, question.option1, question.option2, question.prompt, question.correct_answer);
                 });
                 
                 showNotification(`Extracted ${result.questions.length} questions from image!`);
             } else {
-                showNotification('No questions found in the image. Try manual creation instead.', 'error');
+                let errorMessage = 'No questions found in the image. Try manual creation instead.';
+                if (result.success && (!result.questions || result.questions.length === 0)) {
+                    errorMessage = 'Image processed, but AI could not extract any questions.';
+                }
+                if (!result.success && result.error) {
+                    errorMessage = result.error;
+                }
+                showNotification(errorMessage, 'error');
+                console.warn("[handleImageUpload] Failed to get questions from image:", result.error || "No questions array or empty.");
             }
         } catch (error) {
             uploadStatus.style.display = 'none';
@@ -1017,13 +1026,113 @@
                 </div>
             </div>
             
+            <div style="background: linear-gradient(45deg, rgba(76, 175, 80, 0.1), rgba(139, 195, 74, 0.1)); padding: 1rem; border-radius: 10px; margin-bottom: 1rem; border: 1px solid #4caf50;">
+                <div style="display: flex; align-items: center; margin-bottom: 0.5rem;">
+                    <i class="fas fa-play" style="color: #4caf50; margin-right: 0.5rem;"></i>
+                    <strong style="color: #4caf50;">Ready to Play!</strong>
+                </div>
+                <p style="color: var(--text-light); font-size: 0.9rem; margin: 0;">
+                    Click "Play Quiz" to start this quiz from the main screen, where you can invite friends.
+                </p>
+            </div>
+            
             <p style="color: var(--text-light); font-size: 0.9rem;">
                 <i class="fas fa-info-circle"></i> 
-                Share the Quiz ID with friends so they can play your quiz!
+                Remember the Quiz ID if you want to find it later!
             </p>
         `;
         
+        // Update buttons in the modal
+        const buttonsContainer = modal.querySelector('.admin-buttons');
+        if (buttonsContainer) {
+            buttonsContainer.innerHTML = `
+                <button onclick="testQuiz()" class="btn" style="background: #4caf50; color: white;">
+                    <i class="fas fa-play"></i> Play Quiz
+                </button>
+                <a href="/" class="btn" style="background: #6c757d; color: white;">
+                    <i class="fas fa-home"></i> Home
+                </a>
+            `;
+        }
+        
         modal.style.display = 'flex';
+    }
+    
+    function copyToClipboard(text) {
+        if (navigator.clipboard) {
+            navigator.clipboard.writeText(text).then(() => {
+                showNotification('Link copied to clipboard!');
+            }).catch(() => {
+                fallbackCopyToClipboard(text);
+            });
+        } else {
+            fallbackCopyToClipboard(text);
+        }
+    }
+    
+    function fallbackCopyToClipboard(text) {
+        const textArea = document.createElement('textarea');
+        textArea.value = text;
+        textArea.style.position = 'fixed';
+        textArea.style.left = '-9999px';
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        
+        try {
+            document.execCommand('copy');
+            showNotification('Link copied to clipboard!');
+        } catch (err) {
+            console.log('Fallback copy failed:', err);
+            showNotification('Unable to copy. Please copy manually: ' + text, 'error');
+        }
+        
+        document.body.removeChild(textArea);
+    }
+    
+    function showNotification(message, type = 'success') {
+        // Create notification element
+        const notification = document.createElement('div');
+        notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 10000;
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            color: white;
+            font-weight: 500;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            max-width: 350px;
+            word-wrap: break-word;
+        `;
+        
+        if (type === 'success') {
+            notification.style.background = 'linear-gradient(45deg, #4caf50, #8bc34a)';
+            notification.innerHTML = `<i class="fas fa-check-circle" style="margin-right: 0.5rem;"></i>${message}`;
+        } else {
+            notification.style.background = 'linear-gradient(45deg, #f44336, #ff5722)';
+            notification.innerHTML = `<i class="fas fa-exclamation-triangle" style="margin-right: 0.5rem;"></i>${message}`;
+        }
+        
+        document.body.appendChild(notification);
+        
+        // Animate in
+        setTimeout(() => {
+            notification.style.transform = 'translateX(0)';
+        }, 100);
+        
+        // Animate out and remove
+        setTimeout(() => {
+            notification.style.transform = 'translateX(100%)';
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+            }, 300);
+        }, 3000);
     }
     
     function copyQuizLink() {
@@ -1037,22 +1146,32 @@
                 url: shareUrl
             }).catch(err => {
                 console.log('Share failed:', err);
-                copyToClipboard(shareText);
+                copyToClipboard(shareUrl);
             });
         } else {
-            copyToClipboard(shareText);
+            copyToClipboard(shareUrl);
+        }
+    }
+    
+    function testQuiz() {
+        // Redirect to the main page with the quiz ID to preselect
+        if (createdQuizId) {
+            window.open(`${window.location.origin}/?preselect_quiz_id=${createdQuizId}`, '_blank');
+        } else {
+            showNotification('Quiz ID not available for testing.', 'error');
         }
     }
     
     function playNewQuiz() {
+        // Open normal quiz mode in same tab
         window.location.href = `/play/${createdQuizId}`;
     }
     
-    // Close modal when clicking outside
+    // Close modal when clicking outside (for success-modal)
     document.getElementById('success-modal').addEventListener('click', function(e) {
         if (e.target === this) {
             this.style.display = 'none';
         }
     });
 </script>
-{% endblock %} 
+{% endblock %}

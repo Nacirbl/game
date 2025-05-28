@@ -1,0 +1,40 @@
+{
+  "session_id": "c9ac11d5",
+  "quiz_id": "80953367",
+  "quiz_title": "Quiz",
+  "completed_at": "2025-05-28T17:16:48.828881",
+  "started_at": "2025-05-28T17:16:33.951438",
+  "total_questions": 2,
+  "answers": [
+    {
+      "question_index": 0,
+      "answer": "left",
+      "timestamp": "2025-05-28T17:16:45.057425"
+    },
+    {
+      "question_index": 1,
+      "answer": "right",
+      "timestamp": "2025-05-28T17:16:47.981192"
+    }
+  ],
+  "choices_summary": {
+    "question_0": {
+      "options": [
+        "Player 1",
+        "Player 2"
+      ],
+      "choice": "Player 1",
+      "choice_side": "left"
+    },
+    "question_1": {
+      "options": [
+        "Player 1",
+        "Player 2"
+      ],
+      "choice": "Player 2",
+      "choice_side": "right"
+    }
+  },
+  "shared_session_group": "c9ac11d5",
+  "player_name": "Nasser"
+}

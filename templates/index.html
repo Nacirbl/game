@@ -139,68 +139,91 @@
         }
     }
     
-    // Update name displays when page loads
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', async function() {
         updateStartPlayerName();
         updateJoinPlayerName();
+
+        const preselectQuizIdFromUrl = '{{ preselect_quiz_id or "" }}';
+        if (preselectQuizIdFromUrl) {
+            console.log("Preselecting quiz from URL:", preselectQuizIdFromUrl);
+            // We need to determine the game mode of this quiz to correctly set `selectedGameMode`
+            // Then, we can directly call playQuiz, or a modified startNewGame that uses this info.
+            try {
+                // Fetch all quizzes to find the type of the preselected one
+                const response = await fetch('/api/quizzes');
+                const allQuizzesForPreselect = await response.json();
+                const quizToPreselect = allQuizzesForPreselect.find(q => q.id === preselectQuizIdFromUrl);
+
+                if (quizToPreselect) {
+                    // Set the game mode based on the preselected quiz
+                    selectedGameMode = quizToPreselect.type === 'competition' ? 'competition' : 'thisorthat';
+                    console.log(`Determined game mode for preselected quiz ${preselectQuizIdFromUrl} is ${selectedGameMode}`);
+                    
+                    // Now directly play this quiz (which uses selectedGameMode indirectly via its own session setup logic)
+                    // The player name is already handled by playQuiz using getStoredPlayerName
+                    // We bypass the player-setup screen and quiz modal directly.
+                    playQuiz(preselectQuizIdFromUrl);
+                } else {
+                    showNotification(`Quiz ID ${preselectQuizIdFromUrl} not found. Please select a quiz manually.`, 'error');
+                    // Fallback to normal page load if preselected quiz not found
+                }
+            } catch (error) {
+                console.error("Error during preselection:", error);
+                showNotification('Error finding preselected quiz. Please select manually.', 'error');
+            }
+        }
     });
     
     function selectGameMode(mode) {
         selectedGameMode = mode;
+        const modeSelectionDiv = document.querySelector('.card > div[style*="flex-direction: column"][style*="gap: 1.5rem"]'); // More specific selector for game mode buttons container
+        const playerSetupDiv = document.getElementById('player-setup');
         
-        // Hide mode selection and show player setup
-        const modeSelection = document.querySelector('.card > div:nth-child(2)');
-        const playerSetup = document.getElementById('player-setup');
+        if(modeSelectionDiv) modeSelectionDiv.style.display = 'none';
+        if(playerSetupDiv) playerSetupDiv.style.display = 'block';
         
-        modeSelection.style.display = 'none';
-        playerSetup.style.display = 'block';
-        
-        // Update title based on mode
         const title = document.getElementById('game-mode-title');
-        if (mode === 'thisorthat') {
-            title.textContent = 'This or That - Ready to Play';
-        } else {
-            title.textContent = 'Competition - Ready to Compete';
+        if (title) {
+            if (mode === 'thisorthat') {
+                title.textContent = 'This or That - Ready to Play';
+            } else {
+                title.textContent = 'Competition - Ready to Compete';
+            }
         }
-        
-        // Update the displayed name
         updateStartPlayerName();
     }
     
     function goBack() {
-        // Show mode selection and hide player setup
-        const modeSelection = document.querySelector('.card > div:nth-child(2)');
-        const playerSetup = document.getElementById('player-setup');
-        
-        modeSelection.style.display = 'flex';
-        playerSetup.style.display = 'none';
+        const modeSelectionDiv = document.querySelector('.card > div[style*="flex-direction: column"][style*="gap: 1.5rem"]');
+        const playerSetupDiv = document.getElementById('player-setup');
+        if(modeSelectionDiv) modeSelectionDiv.style.display = 'flex'; // Assuming it was flex
+        if(playerSetupDiv) playerSetupDiv.style.display = 'none';
         selectedGameMode = '';
     }
     
-    async function startNewGame() {
+    async function startNewGame() { // This function is now primarily for when user clicks "Start Game" after selecting mode manually
         const playerName = getStoredPlayerName();
-        
         if (!selectedGameMode) {
-            showNotification('Please select a game mode first!', 'error');
+            showNotification('Error: Game mode not selected. Please go back and pick a mode.', 'error');
+            // Attempt to show mode selection if hidden
+            goBack(); 
             return;
         }
         
         const modal = document.getElementById('quiz-modal');
         const quizList = document.getElementById('quiz-list');
-        
-        // Show the modal
+        quizList.innerHTML = '<div class="loading"><div class="spinner"></div></div>';
         modal.style.display = 'block';
         
         try {
             const response = await fetch('/api/quizzes');
             const allQuizzes = await response.json();
             
-            // Filter quizzes by game mode
             quizzes = allQuizzes.filter(quiz => {
                 if (selectedGameMode === 'competition') {
                     return quiz.type === 'competition';
-                } else {
-                    return quiz.type !== 'competition'; // Default to this or that
+                } else { 
+                    return quiz.type !== 'competition';
                 }
             });
             
@@ -241,7 +264,7 @@
             }).join('');
             
         } catch (error) {
-            console.error('Error loading quizzes:', error);
+            console.error('Error loading quizzes for modal:', error);
             quizList.innerHTML = `
                 <div style="text-align: center; padding: 3rem; color: var(--primary-color);">
                     <i class="fas fa-exclamation-triangle" style="font-size: 3rem; margin-bottom: 1rem;"></i>
@@ -251,14 +274,18 @@
             `;
         }
     }
-    
+
     function playQuiz(quizId) {
         const playerName = getStoredPlayerName();
-        showNotification(`Starting quiz...`);
-        
-        // Pass player name as URL parameter
+        // selectedGameMode should be set if we reached here either via preselection or manual selection
+        if (!selectedGameMode) {
+            // This is a fallback, ideally selectedGameMode is always set before playQuiz is callable
+            console.warn("playQuiz called without selectedGameMode. This might lead to issues if quiz type matters for session start.");
+            // Attempt to infer from quizId if possible, or default
+        }
+        showNotification(`Starting "${selectedGameMode}" quiz...`);
         window.location.href = `/play/${quizId}?player_name=${encodeURIComponent(playerName)}`;
-        closeModal();
+        closeModal(); 
     }
     
     async function joinGame() {

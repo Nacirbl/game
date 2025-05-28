@@ -1,0 +1,141 @@
+{
+  "session_id": "300b69a6",
+  "quiz_id": "ee4b2451",
+  "quiz_title": "Great Quiz",
+  "completed_at": "2025-05-28T00:46:48.469880",
+  "started_at": "2025-05-28T00:43:03.214096",
+  "total_questions": 9,
+  "answers": [
+    {
+      "question_index": 0,
+      "answer": "left",
+      "timestamp": "2025-05-28T00:43:11.263163"
+    },
+    {
+      "question_index": 1,
+      "answer": "right",
+      "timestamp": "2025-05-28T00:43:13.224426"
+    },
+    {
+      "question_index": 2,
+      "answer": "left",
+      "timestamp": "2025-05-28T00:43:14.092819"
+    },
+    {
+      "question_index": 3,
+      "answer": "left",
+      "timestamp": "2025-05-28T00:43:17.493621"
+    },
+    {
+      "question_index": 4,
+      "answer": "right",
+      "timestamp": "2025-05-28T00:43:20.559323"
+    },
+    {
+      "question_index": 5,
+      "answer": "right",
+      "timestamp": "2025-05-28T00:43:23.710158"
+    },
+    {
+      "question_index": 6,
+      "answer": "right",
+      "timestamp": "2025-05-28T00:43:32.784674"
+    },
+    {
+      "question_index": 7,
+      "answer": "right",
+      "timestamp": "2025-05-28T00:43:53.398212"
+    },
+    {
+      "question_index": 8,
+      "answer": "left",
+      "timestamp": "2025-05-28T00:44:03.464351"
+    },
+    {
+      "question_index": 9,
+      "answer": "left",
+      "timestamp": "2025-05-28T00:44:28.926250"
+    },
+    {
+      "question_index": 10,
+      "answer": "left",
+      "timestamp": "2025-05-28T00:46:48.461336"
+    }
+  ],
+  "choices_summary": {
+    "question_0": {
+      "options": [
+        "Jeans",
+        "Leggings"
+      ],
+      "choice": "Jeans",
+      "choice_side": "left"
+    },
+    "question_1": {
+      "options": [
+        "Polka Dots",
+        "Stripes"
+      ],
+      "choice": "Stripes",
+      "choice_side": "right"
+    },
+    "question_2": {
+      "options": [
+        "Pastel",
+        "Bright"
+      ],
+      "choice": "Pastel",
+      "choice_side": "left"
+    },
+    "question_3": {
+      "options": [
+        "Dress",
+        "Shorts"
+      ],
+      "choice": "Dress",
+      "choice_side": "left"
+    },
+    "question_4": {
+      "options": [
+        "Slippers",
+        "Socks"
+      ],
+      "choice": "Socks",
+      "choice_side": "right"
+    },
+    "question_5": {
+      "options": [
+        "T-Shirt",
+        "Sweater"
+      ],
+      "choice": "Sweater",
+      "choice_side": "right"
+    },
+    "question_6": {
+      "options": [
+        "Sunglasses",
+        "Hat"
+      ],
+      "choice": "Hat",
+      "choice_side": "right"
+    },
+    "question_7": {
+      "options": [
+        "Boots",
+        "Sneakers"
+      ],
+      "choice": "Sneakers",
+      "choice_side": "right"
+    },
+    "question_8": {
+      "options": [
+        "Scarf",
+        "Mittens"
+      ],
+      "choice": "Scarf",
+      "choice_side": "left"
+    }
+  },
+  "shared_session_group": "b43903af",
+  "player_name": "All II"
+}

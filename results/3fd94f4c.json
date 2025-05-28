@@ -1,0 +1,131 @@
+{
+  "session_id": "3fd94f4c",
+  "quiz_id": "ee4b2451",
+  "quiz_title": "Great Quiz",
+  "completed_at": "2025-05-28T18:28:05.958486",
+  "started_at": "2025-05-28T18:27:23.754530",
+  "total_questions": 9,
+  "answers": [
+    {
+      "question_index": 0,
+      "answer": "left",
+      "timestamp": "2025-05-28T18:27:39.998579"
+    },
+    {
+      "question_index": 1,
+      "answer": "right",
+      "timestamp": "2025-05-28T18:27:41.343474"
+    },
+    {
+      "question_index": 2,
+      "answer": "left",
+      "timestamp": "2025-05-28T18:27:42.778710"
+    },
+    {
+      "question_index": 3,
+      "answer": "right",
+      "timestamp": "2025-05-28T18:27:44.774735"
+    },
+    {
+      "question_index": 4,
+      "answer": "left",
+      "timestamp": "2025-05-28T18:27:46.156020"
+    },
+    {
+      "question_index": 5,
+      "answer": "right",
+      "timestamp": "2025-05-28T18:27:47.620067"
+    },
+    {
+      "question_index": 6,
+      "answer": "left",
+      "timestamp": "2025-05-28T18:28:00.026899"
+    },
+    {
+      "question_index": 7,
+      "answer": "left",
+      "timestamp": "2025-05-28T18:28:02.366543"
+    },
+    {
+      "question_index": 8,
+      "answer": "left",
+      "timestamp": "2025-05-28T18:28:04.877876"
+    }
+  ],
+  "choices_summary": {
+    "question_0": {
+      "options": [
+        "Jeans",
+        "Leggings"
+      ],
+      "choice": "Jeans",
+      "choice_side": "left"
+    },
+    "question_1": {
+      "options": [
+        "Polka Dots",
+        "Stripes"
+      ],
+      "choice": "Stripes",
+      "choice_side": "right"
+    },
+    "question_2": {
+      "options": [
+        "Pastel",
+        "Bright"
+      ],
+      "choice": "Pastel",
+      "choice_side": "left"
+    },
+    "question_3": {
+      "options": [
+        "Dress",
+        "Shorts"
+      ],
+      "choice": "Shorts",
+      "choice_side": "right"
+    },
+    "question_4": {
+      "options": [
+        "Slippers",
+        "Socks"
+      ],
+      "choice": "Slippers",
+      "choice_side": "left"
+    },
+    "question_5": {
+      "options": [
+        "T-Shirt",
+        "Sweater"
+      ],
+      "choice": "Sweater",
+      "choice_side": "right"
+    },
+    "question_6": {
+      "options": [
+        "Sunglasses",
+        "Hat"
+      ],
+      "choice": "Sunglasses",
+      "choice_side": "left"
+    },
+    "question_7": {
+      "options": [
+        "Boots",
+        "Sneakers"
+      ],
+      "choice": "Boots",
+      "choice_side": "left"
+    },
+    "question_8": {
+      "options": [
+        "Scarf",
+        "Mittens"
+      ],
+      "choice": "Scarf",
+      "choice_side": "left"
+    }
+  },
+  "shared_session_group": "3fd94f4c",
+  "player_name": "Nasser"
+}

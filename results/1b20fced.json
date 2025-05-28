@@ -1,0 +1,27 @@
+{
+  "session_id": "1b20fced",
+  "quiz_id": "d4e385f7",
+  "quiz_title": "Sample",
+  "completed_at": "2025-05-28T13:32:32.608195",
+  "started_at": "2025-05-28T13:32:20.482006",
+  "total_questions": 1,
+  "answers": [
+    {
+      "question_index": 0,
+      "answer": "right",
+      "timestamp": "2025-05-28T13:32:32.014788"
+    }
+  ],
+  "choices_summary": {
+    "question_0": {
+      "options": [
+        "Blankets",
+        "Fireplaces"
+      ],
+      "choice": "Fireplaces",
+      "choice_side": "right"
+    }
+  },
+  "shared_session_group": "1b20fced",
+  "player_name": "Nacir"
+}
