@@ -20,6 +20,7 @@ from functools import lru_cache
 import diskcache
 import gevent # Add gevent import
 from gevent.timeout import Timeout # For timeouts with gevent
+import random
 
 from config import config
 from session_manager import OptimizedSessionManager
@@ -1019,26 +1020,36 @@ pending_quiz_requests = {}
 
 @app.route('/api/request-new-quiz', methods=['POST'])
 def api_request_new_quiz():
-    """Create a new session for the same quiz for 'Play Another Quiz'."""
+    """Create a new session for a random quiz for 'Play Another Quiz'."""
     data = request.get_json()
     quiz_id = data.get('quiz_id')
     requester_player_name = data.get('player_name') # Renamed for clarity
     original_session_id_group = data.get('shared_session_group') # Client should send this
 
-    if not quiz_id:
-        return jsonify({'success': False, 'error': 'Quiz ID required'}), 400
-    quiz_data = load_quiz(quiz_id)
+    # Get all available quiz ids
+    quiz_files = [f for f in os.listdir('quizzes') if f.endswith('.json')]
+    all_quiz_ids = [f[:-5] for f in quiz_files]
+    # Remove current quiz_id from the list
+    other_quiz_ids = [qid for qid in all_quiz_ids if qid != quiz_id]
+
+    # Pick a random quiz id different from the current one, if possible
+    if other_quiz_ids:
+        chosen_quiz_id = random.choice(other_quiz_ids)
+    else:
+        chosen_quiz_id = quiz_id
+
+    quiz_data = load_quiz(chosen_quiz_id)
     if not quiz_data:
         return jsonify({'success': False, 'error': 'Quiz not found'}), 404
 
     # Create a new session for the requester
-    new_session_id = session_manager.create_session(quiz_id, quiz_data, original_session_id_group, requester_player_name)
+    new_session_id = session_manager.create_session(chosen_quiz_id, quiz_data, original_session_id_group, requester_player_name)
     join_url = url_for('play_session', session_id=new_session_id, _external=True)
     
     # Store a pending request. Keyed by the original session group ID for easier lookup by other players.
     if original_session_id_group:
         pending_quiz_requests[original_session_id_group] = {
-            'quiz_id': quiz_id,
+            'quiz_id': chosen_quiz_id,
             'quiz_title': quiz_data.get('title', 'New Quiz'),
             'requester_name': requester_player_name,
             'new_session_id_for_requester': new_session_id, # The session the requester is now in
