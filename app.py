@@ -1403,6 +1403,20 @@ def handle_player_all_answers(data):
     else:
         logger.error(f"Session {session_id} not found for player_all_answers")
 
+@socketio.on('question_reaction')
+def handle_question_reaction(data):
+    session_id = data.get('session_id')
+    question_idx = data.get('question_idx')
+    reaction = data.get('reaction')
+    from_player = data.get('from')
+    if session_id is not None and question_idx is not None and reaction:
+        # Broadcast to all in the session except the sender
+        socketio.emit('question_reaction', {
+            'question_idx': question_idx,
+            'reaction': reaction,
+            'from': from_player
+        }, room=session_id, include_self=False)
+
 if __name__ == '__main__':
     # Use gevent for better performance in production
     if os.environ.get('FLASK_ENV') == 'production':

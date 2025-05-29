@@ -173,9 +173,32 @@
    /* ───────────────────────────────────────────────────────────────────
       UI mode helpers
       ───────────────────────────────────────────────────────────────── */
+   function isSessionCreator() {
+     // The creator is the one whose name matches sess.player_name
+     return playerName === (sess.player_name || '');
+   }
+   
    function showWaiting() {
      if (isInterGamePeriod) return;
-     $('#waiting-container').style.display   = 'block';
+     // If not the session creator, show loading instead of waiting-for-friend
+     if (!isSessionCreator()) {
+       $('#waiting-container').style.display   = 'none';
+       // Show a loading spinner or message in the results area
+       let loadingDiv = document.getElementById('invite-loading');
+       if (!loadingDiv) {
+         loadingDiv = document.createElement('div');
+         loadingDiv.id = 'invite-loading';
+         loadingDiv.style = 'text-align:center;padding:3rem;';
+         loadingDiv.innerHTML = '<div class="spinner" style="margin-bottom:1.5rem;"></div><div style="font-size:1.2em;">Loading…</div>';
+         document.getElementById('game-container').prepend(loadingDiv);
+       }
+       return;
+     } else {
+       // Remove loading if present
+       const loadingDiv = document.getElementById('invite-loading');
+       if (loadingDiv) loadingDiv.remove();
+       $('#waiting-container').style.display   = 'block';
+     }
      $('#ready-container').style.display     = 'none';
      $('#card-stack').style.display          = 'none';
      $('#action-buttons-container').style.display = 'none';
@@ -183,6 +206,9 @@
    }
    function showReady(playerNames=[]) {
      if (isInterGamePeriod) return;
+     // Remove loading if present
+     const loadingDiv = document.getElementById('invite-loading');
+     if (loadingDiv) loadingDiv.remove();
      $('#waiting-container').style.display   = 'none';
      $('#ready-container').style.display     = 'block';
      $('#card-stack').style.display          = 'none';
@@ -320,7 +346,6 @@
            window.playerMapping||{}
      );
    
-     /* header */
      let headerHTML='';
      if(isCompetition){
        const {myScore,otherScore}=results;
@@ -342,17 +367,39 @@
          </div>`;
      }
    
-     // Per-question breakdown with avatars and improved colors
+     // Store reactions per question
+     if (!window._questionReactions) window._questionReactions = {};
+     const reactions = window._questionReactions;
+   
+     // Helper to render reaction display (for local user, not overlay)
+     function renderReactions(idx) {
+       const r = reactions[idx] || {};
+       if (!r.emoji) return '';
+       return `<span class="reaction-display" style="margin-left:8px;font-size:1.3em;vertical-align:middle;">${r.emoji}</span>`;
+     }
+   
+     // Helper to render emoji buttons
+     function emojiButtons(idx) {
+       return `
+         <button class="emoji-btn" data-emoji="clap" data-idx="${idx}" title="Applause" style="background:none;border:none;cursor:pointer;font-size:1.5em;margin:0 0 8px 0;">👏</button>
+         <button class="emoji-btn" data-emoji="haha" data-idx="${idx}" title="Haha" style="background:none;border:none;cursor:pointer;font-size:1.5em;margin:0 0 8px 0;">😂</button>
+         <button class="emoji-btn" data-emoji="bruh" data-idx="${idx}" title="Bruh" style="background:none;border:none;cursor:pointer;font-size:1.5em;margin:0 0 8px 0;">😑</button>
+       `;
+     }
+   
+     // Helper to render share button
+     function shareButton(idx) {
+       return `<button class="share-question-btn" data-idx="${idx}" title="Share this result" style="background:none;border:none;cursor:pointer;font-size:1.3em;margin-left:8px;"><i class="fas fa-share-alt"></i></button>`;
+     }
+   
      let items = '';
      const getPlayerColor = (name) => {
-       // Assign consistent colors for each player
        if (name === playerName) return '#2196f3';
        const others = Object.values(window.playerMapping||{}).filter(n=>n!==playerName);
-       if (others.length) return '#e53935'; // strong red for second player
+       if (others.length) return '#e53935';
        return '#888';
      };
      const getStatusBadge = (status) => {
-       // Return a badge for each status
        const otherPlayer = Object.values(window.playerMapping||{}).find(n=>n!==playerName) || 'Friend';
        const map = {
          'both_correct': {text:'Both Correct', color:'#4caf50'},
@@ -368,23 +415,25 @@
        return `<span style="display:inline-block;background:${s.color};color:${badgeTextColor};padding:2px 10px;border-radius:12px;font-size:0.92em;margin-left:8px;vertical-align:middle;">${s.text}</span>`;
      };
    
-     // Get all player names for this session
      const allPlayers = Object.values(window.playerMapping||{});
      const otherPlayer = allPlayers.find(n=>n!==playerName) || 'Friend';
      const myColor = getPlayerColor(playerName);
      const otherColor = getPlayerColor(otherPlayer);
    
-     if ((quizType === 'player' || isCompetition) && window.playerMapping) {
-       items = results.comparison.map((r, idx) => {
-         const q = r.question;
-         const prompt = q.prompt || `${q.option1} or ${q.option2}?`;
-         // Figure out who answered what
-         let myAns = myAnswers[idx]?.playerChoice || (myAnswers[idx]?.choice === 'left' ? q.option1 : q.option2) || '';
-         let otherAns = otherPlayerAnswers[idx]?.playerChoice || (otherPlayerAnswers[idx]?.choice === 'left' ? q.option1 : q.option2) || '';
-         // If the answer is Player 1/2, map to real name
-         if (myAns === 'Player 1' || myAns === 'Player 2') myAns = window.playerMapping[myAns] || myAns;
-         if (otherAns === 'Player 1' || otherAns === 'Player 2') otherAns = window.playerMapping[otherAns] || otherAns;
-         return `<div class="result-item status-${r.status}" style="margin-bottom:1.2em;box-shadow:0 2px 10px rgba(66,165,245,0.07);border:2px solid ${getStatusBadge(r.status).match(/background:([^;]+)/)?.[1]||'#bbb'};background:#fff;">
+     items = results.comparison.map((r, idx) => {
+       const q = r.question;
+       const prompt = q.prompt || `${q.option1} or ${q.option2}?`;
+       let myAns = r.myDisplayedChoice || '';
+       let otherAns = r.otherDisplayedChoice || '';
+       // Map Player 1/2 to real names if needed
+       if (myAns === 'Player 1' || myAns === 'Player 2') myAns = window.playerMapping && window.playerMapping[myAns] || myAns;
+       if (otherAns === 'Player 1' || otherAns === 'Player 2') otherAns = window.playerMapping && window.playerMapping[otherAns] || otherAns;
+       return `<div class="result-item status-${r.status}" data-question-idx="${idx}" style="margin-bottom:1.2em;box-shadow:0 2px 10px rgba(66,165,245,0.07);border:2px solid ${getStatusBadge(r.status).match(/background:([^;]+)/)?.[1]||'#bbb'};background:#fff;display:flex;align-items:stretch;position:relative;">
+         <div class="emoji-reactions" style="display:flex;flex-direction:column;justify-content:center;align-items:center;padding:0 8px 0 0;min-width:40px;">
+           ${emojiButtons(idx)}
+           ${renderReactions(idx)}
+         </div>
+         <div style="flex:1;">
            <div class="prompt" style="font-size:1.08em;font-weight:600;margin-bottom:0.5em;">${prompt} ${getStatusBadge(r.status)}</div>
            <div style="display:flex;gap:1.5em;justify-content:center;align-items:center;margin-top:0.5em;">
              <div style="background:${myColor}10;padding:8px 16px;border-radius:10px;min-width:140px;text-align:center;display:flex;flex-direction:column;align-items:center;border:2px solid ${myColor};">
@@ -398,35 +447,58 @@
                <span style="font-size:1.08em;font-weight:500;margin-top:2px;">${otherAns}</span>
              </div>
            </div>
-         </div>`;
-       }).join('');
-     } else {
-       // For classic thisorthat (not player mode), show both players' choices if available
-       items = results.comparison.map((r, idx) => {
-         const q = r.question;
-         const txt = q.prompt || `${q.option1} or ${q.option2}?`;
-         let myAns = myAnswers[idx]?.choice === 'left' ? q.option1 : (myAnswers[idx]?.choice === 'right' ? q.option2 : '');
-         let otherAns = otherPlayerAnswers[idx]?.choice === 'left' ? q.option1 : (otherPlayerAnswers[idx]?.choice === 'right' ? q.option2 : '');
-         return `<div class="result-item status-${r.status}" style="margin-bottom:1.2em;box-shadow:0 2px 10px rgba(66,165,245,0.07);border:2px solid ${getStatusBadge(r.status).match(/background:([^;]+)/)?.[1]||'#bbb'};background:#fff;">
-           <div class="prompt" style="font-size:1.08em;font-weight:600;margin-bottom:0.5em;">${txt} ${getStatusBadge(r.status)}</div>
-           <div style="display:flex;gap:1.5em;justify-content:center;align-items:center;margin-top:0.5em;">
-             <div style="background:${myColor}10;padding:8px 16px;border-radius:10px;min-width:140px;text-align:center;display:flex;flex-direction:column;align-items:center;border:2px solid ${myColor};">
-               ${getAvatarHtml(playerName, myColor)}
-               <span style="color:${myColor};font-weight:bold;">${playerName}</span>
-               <span style="font-size:1.08em;font-weight:500;margin-top:2px;">${myAns}</span>
-             </div>
-             <div style="background:${otherColor}10;padding:8px 16px;border-radius:10px;min-width:140px;text-align:center;display:flex;flex-direction:column;align-items:center;border:2px solid ${otherColor};">
-               ${getAvatarHtml(otherPlayer, otherColor)}
-               <span style="color:${otherColor};font-weight:bold;">${otherPlayer}</span>
-               <span style="font-size:1.08em;font-weight:500;margin-top:2px;">${otherAns}</span>
-             </div>
-           </div>
-         </div>`;
-       }).join('');
-     }
+         </div>
+         <div class="share-question" style="display:flex;align-items:center;justify-content:center;padding:0 0 0 8px;min-width:40px;">
+           ${shareButton(idx)}
+         </div>
+       </div>`;
+     }).join('');
    
      container.innerHTML = headerHTML + items;
      $('#share-results-btn').style.display='block';
+   
+     // Add event listeners for emoji buttons
+     container.querySelectorAll('.emoji-btn').forEach(btn => {
+       btn.onclick = function() {
+         const idx = parseInt(this.getAttribute('data-idx'));
+         const emojiType = this.getAttribute('data-emoji');
+         // Send type and username
+         socket.emit('question_reaction', {
+           session_id: sessionId,
+           question_idx: idx,
+           reaction: emojiType,
+           from: playerName
+         });
+       };
+     });
+   
+     // Add event listeners for share buttons
+     container.querySelectorAll('.share-question-btn').forEach(btn => {
+       btn.onclick = async function() {
+         const idx = parseInt(this.getAttribute('data-idx'));
+         const resultItem = container.querySelector(`.result-item[data-question-idx='${idx}']`);
+         if (!resultItem) return;
+         try {
+           const canvas = await html2canvas(resultItem, {backgroundColor:'#fff', scale:2});
+           const blob = await new Promise(res => canvas.toBlob(res, 'image/png'));
+           const fileName = `quiz_result_q${idx+1}_${sessionId.slice(0,4)}.png`;
+           if (navigator.canShare && navigator.canShare({ files: [new File([blob],fileName,{type:'image/png'})] })) {
+             await navigator.share({
+               title : `Quiz result – ${quizTitle} (Q${idx+1})`,
+               files : [new File([blob],fileName,{type:'image/png'})]
+             });
+           } else {
+             const a = document.createElement('a');
+             a.href = URL.createObjectURL(blob);
+             a.download = fileName;
+             a.click();
+             URL.revokeObjectURL(a.href);
+           }
+         } catch (e) {
+           showNotification('Could not share image','error');
+         }
+       };
+     });
    }
    window.showResults = showResults;
    
@@ -666,4 +738,55 @@
    
    window.toggleSessionInfo = toggleSessionInfo;
    window.shareSession      = shareSession;
+   
+   // Listen for question reaction events from the other player
+   socket.on('question_reaction', data => {
+     // data: {question_idx, reaction, from}
+     const idx = data && typeof data.question_idx === 'number' ? data.question_idx : null;
+     const reaction = data && data.reaction;
+     const from = data && data.from || '';
+     if (idx === null || !reaction) return;
+
+     // Find the result item
+     const resultItem = document.querySelector(`.result-item[data-question-idx='${idx}']`);
+     if (!resultItem) return;
+
+     // Determine overlay message and emoji
+     let msg = '';
+     let emoji = '';
+     if (reaction === 'clap') {
+       emoji = '👏';
+       msg = `${from || 'Your friend'} applauds your answer.`;
+     } else if (reaction === 'haha') {
+       emoji = '😂';
+       msg = `${from || 'Your friend'} laughs at this.`;
+     } else if (reaction === 'bruh') {
+       emoji = '😑';
+       msg = `${from || 'Your friend'} is like bruuuuuuuuuuuuuuh...`;
+     }
+
+     // Create overlay
+     const overlay = document.createElement('div');
+     overlay.className = 'reaction-overlay';
+     overlay.style.position = 'absolute';
+     overlay.style.top = 0;
+     overlay.style.left = 0;
+     overlay.style.width = '100%';
+     overlay.style.height = '100%';
+     overlay.style.display = 'flex';
+     overlay.style.alignItems = 'center';
+     overlay.style.justifyContent = 'center';
+     overlay.style.background = 'rgba(255,255,255,0.7)';
+     overlay.style.zIndex = 10;
+     overlay.style.fontSize = '2em';
+     overlay.style.fontWeight = 'bold';
+     overlay.style.color = '#222';
+     overlay.innerHTML = `<span style="margin-right:0.5em;">${emoji}</span> <span>${msg}</span>`;
+     resultItem.appendChild(overlay);
+     setTimeout(() => {
+       overlay.style.transition = 'opacity 0.7s';
+       overlay.style.opacity = 0;
+       setTimeout(() => overlay.remove(), 700);
+     }, 1200);
+   });
    
