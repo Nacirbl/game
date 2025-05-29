@@ -540,7 +540,7 @@ def api_submit_answer(session_id):
             return jsonify({'success': False, 'error': 'Session not found'}), 404
         
         # Clear session cache
-        cache.delete_memoized(api_get_session, session_id)
+        cache.delete_memoized(api_get_session, session_id=session_id)
         
         return jsonify(result)
     except Exception as e:
@@ -697,106 +697,62 @@ def api_get_results(session_id):
     except FileNotFoundError:
         return jsonify({'error': 'Results not found'}), 404
 
-@app.route('/api/multiplayer-results/<session_id>')
-def api_get_multiplayer_results(session_id):
-    """Get multiplayer results for comparison"""
-    try:
-        # Get main session
-        main_session = session_manager.get_session(session_id)
-        if not main_session:
-            # Try loading from results
-            with open(f'results/{session_id}.json', 'r') as f:
-                main_result = json.load(f)
-                main_session = {
-                    'session_id': session_id,
-                    'quiz_id': main_result['quiz_id'],
-                    'quiz_title': main_result['quiz_title'],
-                    'players': main_result.get('players', []),
-                    'player_answers': main_result.get('player_answers', {}),
-                    'current_question': main_result['total_questions']
-                }
-        
-        # Load quiz data
-        quiz_id = main_session['quiz_id']
-        quiz_data = load_quiz(quiz_id)
-        
-        player_answers_data = main_session.get('player_answers', {})
-        logger.info(f"[api_get_multiplayer_results] For session {session_id}, player_answers being sent: {json.dumps(player_answers_data, indent=2)}") # Detailed log
-        logger.info(f"[api_get_multiplayer_results] For session {session_id}, quiz questions count: {len(quiz_data['questions'] if quiz_data else [])}")
-
-        player_completion_status = main_session.get('player_completion_status', {})
-        session_players = main_session.get('players', [])
-        
-        all_players_completed = False
-        if not session_players: # No players in session, so not all completed
-            all_players_completed = False
-        elif len(session_players) == 1: # Single player mode
-            # Considered complete if the single player is in completion_status and is True
-            all_players_completed = player_completion_status.get(session_players[0], False)
-        else: # Multiplayer mode (2 or more players)
-            # All listed players must be in completion_status and be True
-            all_players_completed = all(player_completion_status.get(p_name, False) for p_name in session_players)
-
-        logger.info(f"[api_get_multiplayer_results] Session {session_id}: Players: {session_players}, Completion Status: {player_completion_status}, All Completed: {all_players_completed}")
-
-        return jsonify({
-            'session_id': session_id,
-            'quiz_id': quiz_id,
-            'quiz_title': main_session.get('quiz_title', 'Quiz'),
-            'quiz_type': quiz_data.get('type', 'thisorthat') if quiz_data else 'thisorthat',
-            'questions': quiz_data['questions'] if quiz_data else [],
-            'players': session_players, # Use the retrieved list
-            'player_answers': player_answers_data, # Use the logged variable
-            'player_completion_status': player_completion_status,
-            'all_players_completed': all_players_completed
-        })
-        
-    except Exception as e:
-        logger.error(f"Multiplayer results error: {e}")
-        return jsonify({'error': str(e)}), 500
-
 @app.route('/api/join-session', methods=['POST'])
 def api_join_session():
     """Join an existing multiplayer session"""
     data = request.get_json()
     session_id = data.get('session_id')
-    player_name = data.get('player_name')
+    player_name_joining = data.get('player_name') # Name of the player attempting to join
     
+    if not session_id or not player_name_joining:
+        return jsonify({'success': False, 'error': 'Session ID and player name are required.'}), 400
+
     session_data = session_manager.get_session(session_id)
     if not session_data:
         return jsonify({'success': False, 'error': 'Session not found'}), 404
     
-    if 'players' not in session_data:
-        session_data['players'] = [session_data.get('player_name', 'Player 1')] # Creator is P1
+    # Initialize players list if it doesn't exist.
+    # The creator of the session (session_data['player_name']) is always the first intended player.
+    creator_name = session_data.get('player_name') # This is P1 as per session creation
     
-    current_players_in_session = session_data['players']
-    actual_player_key_in_session = player_name # Default to the name provided
+    if 'players' not in session_data or not session_data['players']:
+        session_data['players'] = [creator_name] if creator_name else []
+    
+    current_players_list = session_data['players']
+    actual_player_name_in_session = player_name_joining # Default name for this joiner
 
-    if player_name and player_name not in current_players_in_session:
-        if len(current_players_in_session) < 2:
-            current_players_in_session.append(player_name)
-            # actual_player_key_in_session is already player_name
-        else:
-            # Session full, or player_name already exists but is not the one being added.
-            # This case should ideally be handled by client not allowing join or server returning error.
-            # For now, if they are not in the list and list is full, they can't "become" a player.
-            # If the goal is to replace 'Your Friend' or similar, logic would be different.
-            # For now, we assume the first two unique names fill the slots.
-            pass 
-    elif player_name and player_name == current_players_in_session[0] and len(current_players_in_session) == 1:
-        # This handles if P1 (e.g. "Lena") tries to join again with the same name "Lena"
-        # They should become "Lena 2" if "Lena" is already P1.
-        actual_player_key_in_session = player_name + ' 2'
-        if len(current_players_in_session) < 2:
-            current_players_in_session.append(actual_player_key_in_session)
-    # If player_name is already in current_players_in_session and is not the P1-rejoin case,
-    # actual_player_key_in_session remains player_name, which is fine (they are rejoining as themselves).
+    # Debugging logs
+    logger.info(f"[api_join_session] Attempting to join: PNJ='{player_name_joining}', Creator='{creator_name}', CurrentList='{current_players_list}'")
 
-    session_data['players'] = current_players_in_session
+    if player_name_joining not in current_players_list:
+        # New player trying to join
+        if len(current_players_list) == 0: # Should ideally not happen if creator_name was set
+            current_players_list.append(player_name_joining)
+            if not creator_name: session_data['player_name'] = player_name_joining # First actual player becomes main
+        elif len(current_players_list) == 1:
+            # This is the second player slot.
+            if player_name_joining == current_players_list[0]: # P2 joining with same name as P1
+                actual_player_name_in_session = player_name_joining + " 2"
+                current_players_list.append(actual_player_name_in_session)
+                logger.info(f"[api_join_session] Name collision: P1='{current_players_list[0]}', P2 joining as '{player_name_joining}', assigned '{actual_player_name_in_session}'")
+            else: # P2 joining with a different name
+                current_players_list.append(player_name_joining)
+        else: # len(current_players_list) >= 2
+            logger.warning(f"[api_join_session] Session {session_id} is full. Player '{player_name_joining}' cannot join. Players: {current_players_list}")
+            return jsonify({'success': False, 'error': 'Session is full. Cannot join.'}), 400
+    else: 
+        # Player is re-joining (name already in list).
+        # actual_player_name_in_session is already player_name_joining, which is correct.
+        logger.info(f"[api_join_session] Player '{player_name_joining}' is rejoining session {session_id}.")
+        pass
+
+
+    session_data['players'] = current_players_list
+    logger.info(f"[api_join_session] Updated players list for session {session_id}: {session_data['players']}")
 
     if 'player_answers' not in session_data:
         session_data['player_answers'] = {}
-    # Ensure all listed players have an entry, especially the new actual_player_key_in_session
+    # Ensure all listed players have an entry, especially the new actual_player_name_in_session
     for p_name_init in session_data['players']:
         if p_name_init not in session_data['player_answers']:
             session_data['player_answers'][p_name_init] = []
@@ -806,22 +762,29 @@ def api_join_session():
     
     session_manager.update_session(session_id, session_data)
     
+    # Clear relevant caches
     cache.delete_memoized(api_get_session, session_id=session_id)
-    try: cache.delete_memoized(api_game_state, session_id=session_id)
+    try: cache.delete_memoized(api_game_state, session_id=session_id) # Use keyword arg
     except KeyError: pass
-    try: cache.delete_memoized(api_player_mapping, session_id=session_id)
+    try: cache.delete_memoized(api_player_mapping, session_id=session_id) # Use keyword arg
     except KeyError: pass
 
+    # Emit updates
     updated_game_state = get_game_state_data(session_id)
     if updated_game_state:
         socketio.emit('game_state_updated', updated_game_state, room=session_id)
-        socketio.emit('player_mapping_updated', get_player_mapping_data(session_id), room=session_id)
+    
+    # Crucially, emit the player mapping update *after* 'players' list is finalized.
+    player_mapping_data = get_player_mapping_data(session_id)
+    if player_mapping_data:
+        socketio.emit('player_mapping_updated', player_mapping_data, room=session_id)
 
-    join_url = url_for('play_session', session_id=session_id, pn=actual_player_key_in_session, _external=True)
+
+    join_url = url_for('play_session', session_id=session_id, pn=actual_player_name_in_session, _external=True)
     return jsonify({'success': True, 
                     'session_id': session_id, 
                     'join_url': join_url,
-                    'actual_player_name_in_session': actual_player_key_in_session
+                    'actual_player_name_in_session': actual_player_name_in_session # This is key for client
                    })
 
 # Helper function to get game state (to avoid duplicating logic from api_game_state)
@@ -863,29 +826,34 @@ def get_game_state_data(session_id):
 # Helper function to get player mapping
 def get_player_mapping_data(session_id):
     session_data = session_manager.get_session(session_id)
-    logger.info(f"[get_player_mapping_data] For session_id: {session_id}") # Log entry
+    logger.info(f"[get_player_mapping_data] For session_id: {session_id}")
     if not session_data:
         logger.warning(f"[get_player_mapping_data] No session_data found for {session_id}. Returning default mapping.")
+        # Ensure a basic mapping structure is always returned
         return {'player_mapping': {'Player 1': 'Player 1', 'Player 2': 'Your Friend'}, 'has_friend': False}
     
-    # Log the critical parts of session_data used for mapping
-    logger.info(f"[get_player_mapping_data] session_data['player_name'] (creator): {session_data.get('player_name')}")
-    logger.info(f"[get_player_mapping_data] session_data['players'] list: {session_data.get('players')}")
+    players_in_session = session_data.get('players', [])
+    creator_name = session_data.get('player_name') # Original P1
+    
+    logger.info(f"[get_player_mapping_data] Creator: '{creator_name}', Players in session list: {players_in_session}")
 
-    players = session_data.get('players', [])
     mapping = {}
-    if len(players) > 0:
-        mapping['Player 1'] = players[0]
-    else:
-        # This case means the 'players' list was empty. Fallback to session's original player_name if it exists.
-        mapping['Player 1'] = session_data.get('player_name', 'Player 1') 
-    
-    if len(players) > 1:
-        mapping['Player 2'] = players[1]
-    else:
+    has_friend_status = False
+
+    if players_in_session: # Check if list is not empty
+        # Player 1 in mapping is always the first player in the list
+        mapping['Player 1'] = players_in_session[0]
+        if len(players_in_session) > 1:
+            # Player 2 is the second player in the list
+            mapping['Player 2'] = players_in_session[1]
+            has_friend_status = True
+        else:
+            # Only one player in the list
+            mapping['Player 2'] = 'Your Friend' # Fallback if only one player
+    else: # Fallback if players_in_session is empty (should be rare after join logic)
+        mapping['Player 1'] = creator_name if creator_name else 'Player 1'
         mapping['Player 2'] = 'Your Friend'
-    
-    has_friend_status = len(players) > 1
+        
     logger.info(f"[get_player_mapping_data] Generated mapping: {mapping}, has_friend: {has_friend_status}")
     return {'player_mapping': mapping, 'has_friend': has_friend_status}
 
@@ -1015,56 +983,61 @@ def api_session_status(session_id):
     })
 
 # --- Multiplayer Play Another Quiz Request State ---
-# Store pending quiz requests in memory (keyed by session_id)
-pending_quiz_requests = {}
+# Store pending quiz requests in memory (keyed by original_session_group_id)
+# Value: { 'quiz_id', 'quiz_title', 'requester_name', 'new_session_id_for_requester', 'timestamp' }
+pending_play_again_requests = {}
 
 @app.route('/api/request-new-quiz', methods=['POST'])
 def api_request_new_quiz():
     """Create a new session for a random quiz for 'Play Another Quiz'."""
     data = request.get_json()
-    quiz_id = data.get('quiz_id')
-    requester_player_name = data.get('player_name') # Renamed for clarity
-    original_session_id_group = data.get('shared_session_group') # Client should send this
+    current_quiz_id = data.get('quiz_id') # The quiz they just finished
+    requester_player_name = data.get('player_name')
+    original_session_group_id = data.get('shared_session_group') 
+
+    if not requester_player_name or not original_session_group_id:
+        return jsonify({'success': False, 'error': 'Player name and original session group ID are required.'}), 400
 
     # Get all available quiz ids
     quiz_files = [f for f in os.listdir('quizzes') if f.endswith('.json')]
     all_quiz_ids = [f[:-5] for f in quiz_files]
-    # Remove current quiz_id from the list
-    other_quiz_ids = [qid for qid in all_quiz_ids if qid != quiz_id]
+    other_quiz_ids = [qid for qid in all_quiz_ids if qid != current_quiz_id]
 
-    # Pick a random quiz id different from the current one, if possible
-    if other_quiz_ids:
-        chosen_quiz_id = random.choice(other_quiz_ids)
-    else:
-        chosen_quiz_id = quiz_id
+    if not other_quiz_ids and not all_quiz_ids: # No quizzes available at all
+        return jsonify({'success': False, 'error': 'No quizzes available to start a new game.'}), 404
+    
+    chosen_quiz_id = random.choice(other_quiz_ids) if other_quiz_ids else random.choice(all_quiz_ids)
 
     quiz_data = load_quiz(chosen_quiz_id)
     if not quiz_data:
-        return jsonify({'success': False, 'error': 'Quiz not found'}), 404
+        return jsonify({'success': False, 'error': f'Could not load chosen quiz: {chosen_quiz_id}'}), 404
 
-    # Create a new session for the requester
-    new_session_id = session_manager.create_session(chosen_quiz_id, quiz_data, original_session_id_group, requester_player_name)
-    join_url = url_for('play_session', session_id=new_session_id, _external=True)
+    # Create a new session for the requester, inheriting the original_session_group_id
+    # This new session_id will be where the requester waits.
+    new_session_id_for_requester = session_manager.create_session(chosen_quiz_id, quiz_data, original_session_group_id, requester_player_name)
     
-    # Store a pending request. Keyed by the original session group ID for easier lookup by other players.
-    if original_session_id_group:
-        pending_quiz_requests[original_session_id_group] = {
-            'quiz_id': chosen_quiz_id,
-            'quiz_title': quiz_data.get('title', 'New Quiz'),
-            'requester_name': requester_player_name,
-            'new_session_id_for_requester': new_session_id, # The session the requester is now in
-            'timestamp': time.time()
-        }
-        # Notify other players in the original session group's room about the new quiz offer
-        socketio.emit('play_again_invite', {
-            'requester_name': requester_player_name,
-            'new_session_id_to_join': new_session_id, # This is the session others should join
-            'quiz_title': quiz_data.get('title', 'New Quiz')
-        }, room=original_session_id_group) # Emit to the old session room
+    # Store a pending request. Keyed by the original session group ID.
+    pending_play_again_requests[original_session_group_id] = {
+        'quiz_id': chosen_quiz_id,
+        'quiz_title': quiz_data.get('title', 'New Quiz'),
+        'requester_name': requester_player_name,
+        'new_session_id_for_requester': new_session_id_for_requester, 
+        'timestamp': time.time()
+    }
+    logger.info(f"Pending play again request stored for group '{original_session_group_id}': {pending_play_again_requests[original_session_group_id]}")
     
-    return jsonify({'success': True, 'session_id': new_session_id, 'join_url': join_url})
+    # Notify other players in the original session group's room about the new quiz offer
+    # They will be invited to join the 'new_session_id_for_requester'
+    socketio.emit('play_again_invite', {
+        'requester_name': requester_player_name,
+        'new_session_id_to_join': new_session_id_for_requester, # This is the session others should join
+        'quiz_title': quiz_data.get('title', 'New Quiz')
+    }, room=original_session_group_id) 
+    logger.info(f"Emitted 'play_again_invite' to room '{original_session_group_id}' for new session {new_session_id_for_requester}")
+    
+    return jsonify({'success': True, 'session_id': new_session_id_for_requester})
 
-@app.route('/api/pending-quiz-request/<session_id>')
+@app.route('/api/pending-quiz-request/<session_id>') # This might be deprecated by direct socket emits
 def api_pending_quiz_request(session_id):
     """Return info about any pending quiz request for the group. (Kept for fallback or initial load)"""
     session_data = session_manager.get_session(session_id)
@@ -1073,7 +1046,7 @@ def api_pending_quiz_request(session_id):
 
     group_id = session_data.get('shared_session_group', session_id)
     
-    request_details = pending_quiz_requests.get(group_id)
+    request_details = pending_play_again_requests.get(group_id)
     if request_details and time.time() - request_details['timestamp'] < 120: # 2 min expiry
          # Don't show to the requester if they somehow poll this for their new session
         if request_details['new_session_id_for_requester'] != session_id :
@@ -1093,74 +1066,119 @@ def api_accept_quiz_request():
     # current_session_id = data.get('current_session_id') # Less relevant now
     new_session_id_to_join = data.get('new_session_id') # This is the session created by the requester
     player_name_accepting = data.get('player_name')
-    original_session_id_group = data.get('shared_session_group') # Client should send this
+    original_session_group_id = data.get('shared_session_group') 
+
+    if not new_session_id_to_join or not player_name_accepting or not original_session_group_id:
+        return jsonify({'success': False, 'error': 'Missing required parameters for accepting quiz request.'}), 400
+
+    # Check if the request is still valid in pending_play_again_requests
+    pending_request = pending_play_again_requests.get(original_session_group_id)
+    if not pending_request or pending_request['new_session_id_for_requester'] != new_session_id_to_join:
+        logger.warning(f"No valid pending play again request found for group '{original_session_group_id}' and new session '{new_session_id_to_join}'. Current pending: {pending_request}")
+        return jsonify({'success': False, 'error': 'Quiz invitation is no longer valid or has expired.'}), 404
     
+    # If time.time() - pending_request['timestamp'] > 120: # Check expiry (optional, client might timeout first)
+    #     del pending_play_again_requests[original_session_group_id]
+    #     return jsonify({'success': False, 'error': 'Quiz invitation has expired.'}), 404
+
     new_session_data = session_manager.get_session(new_session_id_to_join)
     if not new_session_data:
-        return jsonify({'success': False, 'error': 'New session not found or expired'}), 404
-    
-    original_requester_name = new_session_data.get('player_name') # Player who started this new_session_id
-
-    current_players_list = new_session_data.get('players')
-    if not isinstance(current_players_list, list):
-        logger.warning(f"[api_accept_quiz_request] new_session_data['players'] was not a list (was {type(current_players_list)}). Initializing for session {new_session_id_to_join}.")
-        current_players_list = []
-
-    # Ensure original requester is player 0 (idempotent)
-    if original_requester_name:
-        if original_requester_name in current_players_list:
-            if current_players_list[0] != original_requester_name:
-                current_players_list.pop(current_players_list.index(original_requester_name))
-                current_players_list.insert(0, original_requester_name)
-        else:
-            current_players_list.insert(0, original_requester_name)
-    
-    # Remove any potential duplicates beyond the first occurrence of original_requester_name or others
-    # This simplified version just ensures requester is at pos 0 if present, then appends acceptor if distinct and space allows.
-    # A more robust deduplication might be needed if names can be non-unique beyond P1/P2 logic.
-    
-    # Add the accepting player if they are distinct from original_requester and there's space
-    if player_name_accepting and player_name_accepting != original_requester_name:
-        if player_name_accepting not in current_players_list:
-            if len(current_players_list) < 2:
-                current_players_list.append(player_name_accepting)
-            else:
-                logger.info(f"[api_accept_quiz_request] Session {new_session_id_to_join} is full. {player_name_accepting} cannot join.")
-                return jsonify({'success': False, 'error': 'New quiz session is already full.'}), 400
-        # If player_name_accepting is already in current_players_list (and not original_requester_name), they are already P2.
-    
-    # Ensure list does not exceed 2 players after manipulations
-    new_session_data['players'] = current_players_list[:2] 
-
-    if 'player_answers' not in new_session_data:
-        new_session_data['player_answers'] = {}
-    if player_name_accepting not in new_session_data['player_answers']:
-        new_session_data['player_answers'][player_name_accepting] = []
-    
-    # Mark both players as not ready yet in the new session
-    if 'players_ready' not in new_session_data: new_session_data['players_ready'] = {}
-    for p in new_session_data['players']:
-        new_session_data['players_ready'][p] = False
+        return jsonify({'success': False, 'error': f'New session {new_session_id_to_join} not found or expired'}), 404
 
     session_manager.update_session(new_session_id_to_join, new_session_data)
     
     # Clear the pending request after acceptance from this group
-    if original_session_id_group and original_session_id_group in pending_quiz_requests:
-        # Verify it's the same quiz being accepted, though group_id is primary key here
-        if pending_quiz_requests[original_session_id_group]['new_session_id_for_requester'] == new_session_id_to_join:
-            del pending_quiz_requests[original_session_id_group]
-            socketio.emit('play_again_invite_closed', {'message': 'Play again invite has been accepted or expired.'}, room=original_session_id_group)
-
+    if original_session_group_id and original_session_group_id in pending_play_again_requests:
+        # Verify it's the same quiz being accepted
+        if pending_play_again_requests[original_session_group_id]['new_session_id_for_requester'] == new_session_id_to_join:
+            del pending_play_again_requests[original_session_group_id]
+            logger.info(f"Cleared pending play again request for group '{original_session_group_id}' after acceptance.")
+            # Notify others in the original group that this specific invite is now closed
+            socketio.emit('play_again_invite_closed', {
+                'message': 'Quiz invitation has been accepted.',
+                'closed_session_id_for_invitee': new_session_id_to_join 
+            }, room=original_session_group_id)
 
     join_url = url_for('play_session', session_id=new_session_id_to_join, pn=player_name_accepting, _external=True)
     
-    # Notify the new session (specifically the requester) that someone joined
-    updated_game_state = get_game_state_data(new_session_id_to_join)
-    if updated_game_state:
-        socketio.emit('game_state_updated', updated_game_state, room=new_session_id_to_join)
+    # Notify the new session (specifically the requester in that new session) that someone joined
+    # The requester should be in the room `new_session_id_to_join`
+    socketio.emit('new_game_accepted_and_joined', {
+        'message': f'{player_name_accepting} accepted and joined!',
+        'new_session_id': new_session_id_to_join,
+        'joined_player_name': player_name_accepting
+    }, room=new_session_id_to_join)
+    logger.info(f"Emitted 'new_game_accepted_and_joined' to room '{new_session_id_to_join}'")
+
+    # Also update game state for the new session (now that two players might be there)
+    updated_game_state_new_session = get_game_state_data(new_session_id_to_join)
+    if updated_game_state_new_session:
+        socketio.emit('game_state_updated', updated_game_state_new_session, room=new_session_id_to_join)
         socketio.emit('player_mapping_updated', get_player_mapping_data(new_session_id_to_join), room=new_session_id_to_join)
 
     return jsonify({'success': True, 'session_id': new_session_id_to_join, 'join_url': join_url})
+
+@app.route('/api/decline-play-again', methods=['POST'])
+def api_decline_play_again():
+    data = request.get_json()
+    declined_session_id = data.get('declined_session_id') # This is the new_session_id_for_requester that was offered
+    original_session_group_id = data.get('original_session_group')
+    # player_name_declining = data.get('player_name') # Optional, for logging
+
+    if not declined_session_id or not original_session_group_id:
+        return jsonify({'success': False, 'error': 'Missing parameters for declining quiz request.'}), 400
+
+    logger.info(f"Received decline for new quiz session '{declined_session_id}' from group '{original_session_group_id}'")
+
+    pending_request = pending_play_again_requests.get(original_session_group_id)
+    if pending_request and pending_request['new_session_id_for_requester'] == declined_session_id:
+        # Notify the requester (who is in the room `declined_session_id`)
+        socketio.emit('play_again_declined', {
+            'message': 'The other player declined the new quiz invitation.',
+            'declined_session_id': declined_session_id
+        }, room=declined_session_id)
+        logger.info(f"Emitted 'play_again_declined' to room '{declined_session_id}'")
+        
+        # Clear the pending request as it's been actioned (declined)
+        del pending_play_again_requests[original_session_group_id]
+        logger.info(f"Cleared pending play again request for group '{original_session_group_id}' after decline.")
+
+        # Notify others in the original group that this specific invite is now closed
+        socketio.emit('play_again_invite_closed', {
+            'message': 'Quiz invitation has been declined.',
+            'closed_session_id_for_invitee': declined_session_id
+        }, room=original_session_group_id)
+        return jsonify({'success': True, 'message': 'Decline processed.'})
+    else:
+        logger.warning(f"No matching pending play again request to decline for session '{declined_session_id}' in group '{original_session_group_id}'. Request might have been accepted or cancelled.")
+        return jsonify({'success': False, 'error': 'No matching invite to decline or it was already actioned.'}), 404
+
+@app.route('/api/cancel-play-again-request', methods=['POST'])
+def api_cancel_play_again_request():
+    data = request.get_json()
+    cancelling_session_id = data.get('cancelling_session_id') # This is the new_session_id_for_requester
+    original_session_group_id = data.get('original_session_group')
+    # player_name_cancelling = data.get('player_name') # Optional, for logging
+
+    if not cancelling_session_id or not original_session_group_id:
+        return jsonify({'success': False, 'error': 'Missing parameters for cancelling quiz request.'}), 400
+
+    logger.info(f"Received cancellation for new quiz session '{cancelling_session_id}' by requester from group '{original_session_group_id}'")
+
+    pending_request = pending_play_again_requests.get(original_session_group_id)
+    if pending_request and pending_request['new_session_id_for_requester'] == cancelling_session_id:
+        del pending_play_again_requests[original_session_group_id]
+        logger.info(f"Cleared pending play again request for group '{original_session_group_id}' due to cancellation by requester.")
+
+        # Notify others in the original group that this specific invite is now closed
+        socketio.emit('play_again_invite_closed', {
+            'message': 'Quiz invitation has been cancelled by the sender.',
+            'closed_session_id_for_invitee': cancelling_session_id 
+        }, room=original_session_group_id)
+        return jsonify({'success': True, 'message': 'Request cancelled.'})
+    else:
+        logger.warning(f"No matching pending play again request to cancel for session '{cancelling_session_id}' in group '{original_session_group_id}'. Request might have been actioned already.")
+        return jsonify({'success': False, 'error': 'No matching invite to cancel or it was already actioned.'}), 404
 
 @app.route('/api/health')
 def api_health():
@@ -1199,6 +1217,52 @@ def api_suggest_quiz_name():
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)}), 500
 
+@app.route('/api/multiplayer-results/<session_id>')
+def api_get_multiplayer_results(session_id):
+    """Get multiplayer results for comparison"""
+    try:
+        # Get main session
+        main_session = session_manager.get_session(session_id)
+        if not main_session:
+            # Try loading from results
+            with open(f'results/{session_id}.json', 'r') as f:
+                main_result = json.load(f)
+                main_session = {
+                    'session_id': session_id,
+                    'quiz_id': main_result['quiz_id'],
+                    'quiz_title': main_result['quiz_title'],
+                    'players': main_result.get('players', []),
+                    'player_answers': main_result.get('player_answers', {}),
+                    'current_question': main_result['total_questions']
+                }
+        
+        # Load quiz data
+        quiz_id = main_session['quiz_id']
+        quiz_data = load_quiz(quiz_id)
+        
+        player_answers_data = main_session.get('player_answers', {})
+        player_completion_status = main_session.get('player_completion_status', {})
+        session_players = main_session.get('players', [])
+        
+        # The front-end now handles completion logic via isQuizComplete in quiz_logic.js
+        # We'll just pass the raw data and let the client handle it
+        logger.info(f"[api_get_multiplayer_results] For session {session_id}, sending player data for {len(session_players)} players")
+
+        return jsonify({
+            'session_id': session_id,
+            'quiz_id': quiz_id,
+            'quiz_title': main_session.get('quiz_title', 'Quiz'),
+            'quiz_type': quiz_data.get('type', 'thisorthat') if quiz_data else 'thisorthat',
+            'questions': quiz_data['questions'] if quiz_data else [],
+            'players': session_players,
+            'player_answers': player_answers_data,
+            'player_completion_status': player_completion_status
+        })
+        
+    except Exception as e:
+        logger.error(f"Multiplayer results error: {e}")
+        return jsonify({'error': str(e)}), 500
+
 # --- SocketIO Event Handlers ---
 @socketio.on('connect')
 def handle_connect():
@@ -1226,25 +1290,31 @@ def handle_join_session_room(data):
         
         current_session_data = session_manager.get_session(session_id)
         if current_session_data:
+            # Ensure the player is in the session's players list
+            if 'players' not in current_session_data:
+                current_session_data['players'] = []
+            if player_name and player_name not in current_session_data['players']:
+                current_session_data['players'].append(player_name)
+                session_manager.update_session(session_id, current_session_data)
+                logger.info(f"[DEBUG] Added player '{player_name}' to session {session_id} players list.")
+            logger.info(f"[DEBUG] Session {session_id} players list after join: {current_session_data.get('players')}")
             shared_group_id = current_session_data.get('shared_session_group')
             if shared_group_id and shared_group_id != session_id: # Also join shared group if different
                 join_room(shared_group_id)
                 logger.info(f"Client {sid} (Player: {player_name}) also joined shared_group_room {shared_group_id}")
             
-            # Upon joining a room, immediately send them the current state for that session.
+            # Upon joining a room, immediately send the current state for that session.
             # This is crucial for re-connections or late joins.
             updated_game_state = get_game_state_data(session_id)
+            logger.info(f"[DEBUG] Emitting game_state_updated to ALL in session {session_id}: {updated_game_state}")
             if updated_game_state:
-                logger.info(f"Emitting initial game_state_updated to {sid} for session {session_id}: {updated_game_state}")
-                emit('game_state_updated', updated_game_state, room=sid) # Send to joining client only
+                socketio.emit('game_state_updated', updated_game_state, room=session_id)  # Send to all clients in the room
                 
                 player_mapping = get_player_mapping_data(session_id)
                 logger.info(f"Emitting initial player_mapping_updated to {sid} for session {session_id}: {player_mapping}")
                 emit('player_mapping_updated', player_mapping, room=sid) # Send to joining client only
             
             # Notify others in the specific session room (not the shared group) that a user connected.
-            # Avoid emitting if the player_name is generic like 'Anonymous' or if it's a reconnect without full player context yet.
-            # The client sends player_name derived from sessionData.player_name which should be specific.
             if player_name and player_name != 'Anonymous':
                  socketio.emit('user_activity', {'message': f"{player_name} connected."}, room=session_id, include_self=False)
         else:
@@ -1261,6 +1331,96 @@ def handle_leave_session_room(data):
         logger.info(f"Client {request.sid} (Player: {player_name}) left room {session_id}")
         # Optionally, notify other players
         socketio.emit('user_activity', {'message': f"{player_name} left the session."}, room=session_id, include_self=False)
+
+# SocketIO event for receiving player answers
+@socketio.on('player_answer')
+def handle_player_answer(data):
+    session_id = data.get('session_id')
+    player_name = data.get('player_name')
+    question_index = data.get('question_index')
+    answer = data.get('answer')
+    player_choice = data.get('player_choice')
+    
+    logger.info(f"Received answer from {player_name} for session {session_id}, question {question_index}")
+    
+    # Update session data with the answer
+    session_data = session_manager.get_session(session_id)
+    if session_data:
+        if 'player_answers' not in session_data:
+            session_data['player_answers'] = {}
+        if player_name not in session_data['player_answers']:
+            session_data['player_answers'][player_name] = []
+        
+        # Ensure the answers list is long enough
+        while len(session_data['player_answers'][player_name]) <= question_index:
+            session_data['player_answers'][player_name].append(None)
+        
+        session_data['player_answers'][player_name][question_index] = {
+            'answer': answer,
+            'player_choice': player_choice
+        }
+        
+        session_manager.update_session(session_id, session_data)
+        cache.delete_memoized(api_get_session, session_id=session_id)
+        
+        logger.info(f"Broadcasting answer from {player_name} to session {session_id}")
+        # Broadcast the answer to all clients in the session
+        socketio.emit('player_answer', {
+            'player_name': player_name,
+            'question_index': question_index,
+            'answer': answer,
+            'player_choice': player_choice
+        }, room=session_id)
+    else:
+        logger.error(f"Session {session_id} not found for player answer")
+
+# SocketIO event for receiving all answers at once (more efficient)
+@socketio.on('player_all_answers')
+def handle_player_all_answers(data):
+    """Handle receiving all answers at once from a player (optimized for quiz_logic.js)"""
+    session_id = data.get('session_id')
+    player_name = data.get('player_name')
+    answers = data.get('answers')
+    
+    if not session_id or not player_name or not answers:
+        logger.error(f"Missing required data for player_all_answers event: {data}")
+        return
+    
+    logger.info(f"Received all answers from {player_name} for session {session_id}, count: {len(answers)}")
+    
+    # Update session data with all answers
+    session_data = session_manager.get_session(session_id)
+    if session_data:
+        if 'player_answers' not in session_data:
+            session_data['player_answers'] = {}
+        
+        # Store all answers for this player
+        session_data['player_answers'][player_name] = answers
+        
+        # Mark player as completed - aligned with client-side isQuizComplete logic
+        if 'player_completion_status' not in session_data:
+            session_data['player_completion_status'] = {}
+        
+        # Set completion status to true if we have answers for all questions
+        # This mirrors the isQuizComplete function in quiz_logic.js
+        questions_count = len(session_data.get('questions', []))
+        session_data['player_completion_status'][player_name] = (
+            len(answers) >= questions_count and 
+            all(answer and 'choice' in answer for answer in answers[:questions_count])
+        )
+        
+        session_manager.update_session(session_id, session_data)
+        cache.delete_memoized(api_get_session, session_id=session_id)
+        
+        logger.info(f"Stored all answers for {player_name} in session {session_id}. Completion status: {session_data['player_completion_status'][player_name]}")
+        
+        # Broadcast all answers to other clients in the session
+        socketio.emit('player_all_answers', {
+            'player_name': player_name,
+            'answers': answers
+        }, room=session_id)
+    else:
+        logger.error(f"Session {session_id} not found for player_all_answers")
 
 if __name__ == '__main__':
     # Use gevent for better performance in production
