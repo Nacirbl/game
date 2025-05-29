@@ -1,0 +1,59 @@
+{
+  "title": "Fantasy Realms",
+  "description": "",
+  "type": "thisorthat",
+  "questions": [
+    {
+      "option1": "Mountains",
+      "option2": "Beach",
+      "prompt": "Would you rather go on a hiking trip in the mountains or relax on a sunny beach?"
+    },
+    {
+      "option1": "Safari",
+      "option2": "Scuba Diving",
+      "prompt": "Would you prefer a wild safari adventure or scuba diving in coral reefs?"
+    },
+    {
+      "option1": "Skydiving",
+      "option2": "Bungee Jumping",
+      "prompt": "Which adrenaline rush would you choose: skydiving or bungee jumping?"
+    },
+    {
+      "option1": "Solo Trip",
+      "option2": "Group Tour",
+      "prompt": "Would you rather travel alone with your partner or join a group tour?"
+    },
+    {
+      "option1": "RV",
+      "option2": "Backpack",
+      "prompt": "Would you prefer exploring the country in an RV or backpacking across Europe?"
+    },
+    {
+      "option1": "Hot Air Balloon",
+      "option2": "Helicopter Ride",
+      "prompt": "Would you choose a romantic hot air balloon ride or an exciting helicopter ride?"
+    },
+    {
+      "option1": "Northern Lights",
+      "option2": "Tropical Sunset",
+      "prompt": "Which would you rather witness: the Northern Lights or a tropical sunset?"
+    },
+    {
+      "option1": "Jungle Trek",
+      "option2": "Desert Safari",
+      "prompt": "Which adventure sounds more exciting: jungle trek or desert safari?"
+    },
+    {
+      "option1": "Island Hopping",
+      "option2": "Road Trip",
+      "prompt": "Would you prefer island hopping or a cross-country road trip?"
+    },
+    {
+      "option1": "Ancient Ruins",
+      "option2": "Futuristic City",
+      "prompt": "Would you rather explore ancient ruins or a futuristic city?"
+    }
+  ],
+  "id": "5588a681",
+  "created_at": "2025-05-29T17:38:23.379237"
+}

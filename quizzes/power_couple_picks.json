@@ -1,0 +1,59 @@
+{
+  "title": "Power Couple Picks",
+  "description": "",
+  "type": "thisorthat",
+  "questions": [
+    {
+      "option1": "Dinner Out",
+      "option2": "Home-cooked Meal",
+      "prompt": "Would you rather go out for dinner or cook a romantic meal at home?"
+    },
+    {
+      "option1": "Movie Night",
+      "option2": "Board Game Night",
+      "prompt": "Would you prefer a cozy movie night or an exciting board game night?"
+    },
+    {
+      "option1": "Dancing",
+      "option2": "Stargazing",
+      "prompt": "Would you enjoy a night of dancing or a night of stargazing more?"
+    },
+    {
+      "option1": "Surprise Gift",
+      "option2": "Love Letter",
+      "prompt": "Would you prefer to receive a surprise gift or a heartfelt love letter?"
+    },
+    {
+      "option1": "Late Night Drive",
+      "option2": "Midnight Picnic",
+      "prompt": "Would you rather go on a late-night drive or have a midnight picnic?"
+    },
+    {
+      "option1": "Spa Date",
+      "option2": "Adventure Park",
+      "prompt": "Would you enjoy a relaxing spa date or a thrilling adventure park outing?"
+    },
+    {
+      "option1": "Painting Together",
+      "option2": "Singing Karaoke",
+      "prompt": "Would you rather paint together or sing karaoke together?"
+    },
+    {
+      "option1": "Couple Photoshoot",
+      "option2": "Memory Scrapbook",
+      "prompt": "Would you prefer a couple photoshoot or making a scrapbook together?"
+    },
+    {
+      "option1": "Watching Sunrise",
+      "option2": "Watching Sunset",
+      "prompt": "Which would you rather experience together: sunrise or sunset?"
+    },
+    {
+      "option1": "Wine Tasting",
+      "option2": "Dessert Tasting",
+      "prompt": "Would you rather go wine tasting or dessert tasting together?"
+    }
+  ],
+  "id": "7a6a2e9d",
+  "created_at": "2025-05-29T17:40:28.107588"
+}

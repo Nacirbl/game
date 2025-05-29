@@ -33,7 +33,7 @@
             <h2 id="game-mode-title" style="margin-bottom: 1rem;">Ready to Play</h2>
             <div style="margin-top: 1.5rem;">
                 <div style="padding: 1rem; background: rgba(255,255,255,0.1); border-radius: 10px; margin-bottom: 1rem;">
-                    <i class="fas fa-user"></i> Playing as: <strong id="start-player-name">Anonymous</strong>
+                    <i class="fas fa-user"></i> Playing as: <input id="start-player-name" type="text" maxlength="20" style="border:none;background:rgba(255,255,255,0.2);color:white;font-weight:bold;padding:0.2em 0.5em;border-radius:6px;width:140px;text-align:center;" value="Anonymous" autocomplete="off">
                 </div>
                 <button onclick="startNewGame()" class="btn" style="background: rgba(255,255,255,0.2); border: 2px solid white; color: white; font-size: 1.1rem; padding: 1rem 2rem;">
                     <i class="fas fa-rocket"></i> Start Game
@@ -47,29 +47,11 @@
     
     <div style="display: flex; flex-direction: column; gap: 2rem; margin: 2rem 0;">
         
-        <!-- Join Game -->
-        <div style="background: linear-gradient(45deg, #4caf50, #8bc34a); padding: 3rem 2rem; border-radius: 20px; color: white;">
-            <i class="fas fa-users" style="font-size: 4rem; margin-bottom: 1rem;"></i>
-            <h2 style="margin-bottom: 1rem;">Join Friends</h2>
-            <div style="margin-top: 1.5rem;">
-                <div style="padding: 1rem; background: rgba(255,255,255,0.1); border-radius: 10px; margin-bottom: 1rem;">
-                    <i class="fas fa-user"></i> Playing as: <strong id="join-player-name">Anonymous</strong>
-                </div>
-                <input type="text" 
-                       id="session-id-input" 
-                       placeholder="Enter game link or session ID..." 
-                       style="width: 100%; padding: 1rem; border: none; border-radius: 10px; text-align: center; font-size: 1.1rem; margin-bottom: 1rem;">
-                <button onclick="joinGame()" class="btn" style="background: rgba(255,255,255,0.2); border: 2px solid white; color: white; font-size: 1.1rem; padding: 1rem 2rem;">
-                    <i class="fas fa-sign-in-alt"></i> Join Game
-                </button>
-            </div>
-        </div>
-        
     </div>
     
     <!-- Admin Link -->
     <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid #eee;">
-        <a href="/admin" style="color: var(--text-light); text-decoration: none; font-size: 0.9rem;">
+        <a href="#" onclick="showAdminTokenModal()" style="color: var(--text-light); text-decoration: none; font-size: 0.9rem;">
             <i class="fas fa-cog"></i> Create Quiz (Admin)
         </a>
     </div>
@@ -95,6 +77,17 @@
             </button>
         </div>
     </div>
+</div>
+
+<!-- Admin Token Modal -->
+<div id="admin-token-modal" style="display:none;position:fixed;z-index:10000;left:0;top:0;width:100vw;height:100vh;background:rgba(0,0,0,0.5);align-items:center;justify-content:center;">
+  <div style="background:#fff;border-radius:12px;max-width:350px;margin:auto;padding:32px 24px;text-align:center;box-shadow:0 2px 16px rgba(0,0,0,0.2);">
+    <h3 style="margin-bottom:1.2em;">Enter Admin Token</h3>
+    <input id="admin-token-input" type="password" maxlength="64" style="width:90%;padding:0.7em 1em;border-radius:8px;border:1px solid #ccc;font-size:1.1em;margin-bottom:1em;" autocomplete="off">
+    <div id="admin-token-error" style="color:#e53935;font-size:0.98em;margin-bottom:1em;display:none;"></div>
+    <button onclick="submitAdminToken()" class="btn btn-primary" style="width:100%;margin-bottom:0.5em;">Submit</button>
+    <button onclick="closeAdminTokenModal()" class="btn btn-secondary" style="width:100%;background:#eee;color:#333;">Cancel</button>
+  </div>
 </div>
 {% endblock %}
 
@@ -125,9 +118,9 @@
     
     function updateStartPlayerName() {
         const playerName = getStoredPlayerName();
-        const display = document.getElementById('start-player-name');
-        if (display) {
-            display.textContent = playerName;
+        const input = document.getElementById('start-player-name');
+        if (input) {
+            input.value = playerName;
         }
     }
     
@@ -202,7 +195,13 @@
     }
     
     async function startNewGame() { // This function is now primarily for when user clicks "Start Game" after selecting mode manually
-        const playerName = getStoredPlayerName();
+        const playerName = document.getElementById('start-player-name').value.trim() || 'Anonymous';
+        // Save to localStorage for future sessions
+        try {
+            const expires = Date.now() + 1000*60*60*24*30; // 30 days
+            localStorage.setItem('playerData', JSON.stringify({name: playerName, expires}));
+        } catch {}
+        
         if (!selectedGameMode) {
             showNotification('Error: Game mode not selected. Please go back and pick a mode.', 'error');
             // Attempt to show mode selection if hidden
@@ -370,5 +369,43 @@
             joinGame();
         }
     });
+
+    function showAdminTokenModal() {
+        document.getElementById('admin-token-modal').style.display = 'flex';
+        document.getElementById('admin-token-input').value = '';
+        document.getElementById('admin-token-error').style.display = 'none';
+    }
+    
+    function closeAdminTokenModal() {
+        document.getElementById('admin-token-modal').style.display = 'none';
+    }
+    
+    function submitAdminToken() {
+        const token = document.getElementById('admin-token-input').value.trim();
+        const errorDiv = document.getElementById('admin-token-error');
+        if (!token) {
+            errorDiv.textContent = 'Please enter the admin token.';
+            errorDiv.style.display = 'block';
+            return;
+        }
+        fetch('/api/validate-admin-token', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ token })
+        })
+        .then(r => r.json())
+        .then(j => {
+            if (j.success) {
+                window.location.href = '/admin?token=' + encodeURIComponent(token);
+            } else {
+                errorDiv.textContent = 'Invalid admin token.';
+                errorDiv.style.display = 'block';
+            }
+        })
+        .catch(() => {
+            errorDiv.textContent = 'Error validating token.';
+            errorDiv.style.display = 'block';
+        });
+    }
 </script>
 {% endblock %} 

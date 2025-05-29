@@ -1,0 +1,59 @@
+{
+  "title": "Home or Away",
+  "description": "",
+  "type": "thisorthat",
+  "questions": [
+    {
+      "option1": "Camping",
+      "option2": "Luxury Cabin",
+      "prompt": "Would you rather camp under the stars or stay in a luxury cabin in the woods?"
+    },
+    {
+      "option1": "Rainforest",
+      "option2": "Savanna",
+      "prompt": "Would you choose to explore a dense rainforest or a vast savanna?"
+    },
+    {
+      "option1": "Bear Encounter",
+      "option2": "Shark Encounter",
+      "prompt": "Which encounter would you rather face: a bear in the woods or a shark while snorkeling?"
+    },
+    {
+      "option1": "Nature Sounds",
+      "option2": "City Buzz",
+      "prompt": "Do you find the sounds of nature or the buzz of the city more soothing?"
+    },
+    {
+      "option1": "Kayak",
+      "option2": "Climb",
+      "prompt": "Would you rather go kayaking down a river or climbing up a mountain?"
+    },
+    {
+      "option1": "Bonfire",
+      "option2": "Hot Tub",
+      "prompt": "Would you prefer a cozy bonfire or a warm hot tub under the stars?"
+    },
+    {
+      "option1": "Sunrise Hike",
+      "option2": "Night Hike",
+      "prompt": "Would you rather go on a sunrise hike or a moonlit walk?"
+    },
+    {
+      "option1": "Forest Picnic",
+      "option2": "Beach BBQ",
+      "prompt": "Would you enjoy a picnic in the forest or a BBQ by the beach?"
+    },
+    {
+      "option1": "River Rafting",
+      "option2": "Desert Dune Ride",
+      "prompt": "Would you prefer river rafting or riding dunes in a desert?"
+    },
+    {
+      "option1": "National Park",
+      "option2": "Nature Reserve",
+      "prompt": "Would you rather explore a national park or a protected nature reserve?"
+    }
+  ],
+  "id": "cd19411d",
+  "created_at": "2025-05-29T17:38:23.380712"
+}

@@ -1,33 +1,37 @@
 {% extends "base.html" %}
 
-{% block title %}Playing Quiz - {{ session.quiz_title }}{% endblock %}
+{% block title %}Playing Quiz – {{ session.quiz_title }}{% endblock %}
 
 {% block header %}
 <h1><i class="fas fa-play-circle"></i> {{ session.quiz_title }}</h1>
 
-<!-- Multiplayer Session Info -->
-<div id="session-info" style="background: rgba(255,255,255,0.15); padding: 0.8rem; border-radius: 15px; margin-bottom: 1rem; text-align: center; transition: all 0.3s ease;">
-    <div id="session-summary" style="cursor: pointer;" onclick="window.toggleSessionInfo()">
-        <i class="fas fa-users"></i> <span id="session-status">{{ session.player_name or ('Player ' + session.session_id[:4]) }} is playing</span>
-        <i id="toggle-icon" class="fas fa-chevron-down" style="margin-left: 0.5rem; font-size: 0.8rem;"></i>
+<!-- Multiplayer session info -->
+<div id="session-info"
+     style="background:rgba(255,255,255,.15);padding:.8rem;border-radius:15px;margin-bottom:1rem;text-align:center;">
+  <div id="session-summary" style="cursor:pointer" onclick="window.toggleSessionInfo()">
+    <i class="fas fa-users"></i>
+    <span id="session-status">
+      <input id="player-name-widget" type="text" maxlength="20" value="{{ session.player_name or ('Player ' + session.session_id[:4]) }}" style="border:none;background:rgba(255,255,255,0.15);color:#333;font-weight:bold;padding:0.1em 0.5em;border-radius:8px;width:auto;min-width:80px;text-align:center;font-size:1em;outline:none;" autocomplete="off"> is playing
+    </span>
+    <i id="toggle-icon" class="fas fa-chevron-down" style="margin-left:.5rem;font-size:.8rem;"></i>
+  </div>
+
+  <div id="session-details" style="display:none;margin-top:1rem;">
+    <div style="font-family:monospace;font-size:1rem;font-weight:bold;letter-spacing:1px;background:rgba(255,255,255,.2);padding:.5rem;border-radius:8px;margin-bottom:.5rem;">
+      {{ session.session_id }}
     </div>
-    
-    <div id="session-details" style="margin-top: 1rem; display: none;">
-        <div style="font-family: monospace; font-size: 1rem; font-weight: bold; letter-spacing: 1px; background: rgba(255,255,255,0.2); padding: 0.5rem; border-radius: 8px; margin-bottom: 0.5rem;">
-            {{ session.session_id }}
-        </div>
-        <button onclick="window.shareSession()" style="background: none; border: 1px solid rgba(255,255,255,0.5); color: white; padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.8rem; cursor: pointer;">
-            <i class="fas fa-share-alt"></i> Share Link
-        </button>
-    </div>
+    <button onclick="window.shareSession()"
+            style="background:none;border:1px solid rgba(255,255,255,.5);color:#fff;padding:.3rem .8rem;border-radius:15px;font-size:.8rem;cursor:pointer;">
+      <i class="fas fa-share-alt"></i> Share Link
+    </button>
+  </div>
 </div>
 
 <div class="question-counter">
-    Question <span id="current-question">{{ session.current_question + 1 }}</span> of <span id="total-questions">{{ session.questions|length }}</span>
+  Question <span id="current-question">{{ session.current_question + 1 }}</span>
+  of <span id="total-questions">{{ session.questions|length }}</span>
 </div>
-<div class="progress-bar">
-    <div class="progress-fill" id="progress-fill" style="width: 0%;"></div>
-</div>
+<div class="progress-bar"><div id="progress-fill" class="progress-fill" style="width:0%"></div></div>
 {% endblock %}
 
 {% block extra_css %}
@@ -357,148 +361,106 @@
 {% endblock %}
 
 {% block content %}
-<div id="game-container" style="display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 60vh;">
-    
-    <!-- Waiting for Player State -->
-    <div id="waiting-container" style="display: block; text-align: center; max-width: 500px;">
-        <div class="card" style="padding: 3rem; background: linear-gradient(45deg, #667eea, #764ba2); color: white; margin-bottom: 2rem;">
-            <div style="font-size: 4rem; margin-bottom: 1rem;">⏳</div>
-            <h2 style="margin-bottom: 1rem;">Waiting for Friend</h2>
-            <p id="waiting-message" style="font-size: 1.1rem; opacity: 0.9; margin-bottom: 1.5rem;">
-                Share your game link and wait for your friend to join before starting!
-            </p>
-            <div id="waiting-session-details" style="background: rgba(255,255,255,0.2); padding: 1rem; border-radius: 10px; margin-bottom: 1rem;">
-                <div style="font-family: monospace; font-size: 1.1rem; font-weight: bold; letter-spacing: 1px; margin-bottom: 0.5rem;">
-                    {{ session.session_id }}
-                </div>
-                <button onclick="window.shareSession()" class="btn" style="background: rgba(255,255,255,0.2); border: 2px solid white; color: white;">
-                    <i class="fas fa-share-alt"></i> Share Game Link
-                </button>
-            </div>
-            <div style="opacity: 0.8;">
-                <i class="fas fa-info-circle"></i> Both players must be ready before the quiz can begin
-            </div>
-        </div>
-    </div>
-    
-    <!-- Ready to Start State -->
-    <div id="ready-container" style="display: none; text-align: center; max-width: 500px;">
-        <div class="card" style="padding: 3rem; background: linear-gradient(45deg, #4caf50, #8bc34a); color: white; margin-bottom: 2rem;">
-            <div style="font-size: 4rem; margin-bottom: 1rem;">🎮</div>
-            <h2 style="margin-bottom: 1rem;">Ready to Start!</h2>
-            <p id="ready-message" style="font-size: 1.1rem; opacity: 0.9; margin-bottom: 1.5rem;">
-                Both players are connected. Click start when you\'re ready!
-            </p>
-            <button id="start-quiz-btn" onclick="window.signalReady()" class="btn" style="background: rgba(255,255,255,0.2); border: 2px solid white; color: white; font-size: 1.2rem; padding: 1rem 2rem;">
-                <i class="fas fa-play"></i> Start Quiz
-            </button>
-        </div>
-    </div>
-    
-    <!-- Quiz Playing Elements: Card Stack and Action Buttons -->
-    <!-- Initially hidden; JS (showQuizInterface) will make them visible -->
-    <div class="card-stack" id="card-stack" style="display: none;">
-        <!-- Current Card: Content dynamically populated by JS or pre-filled if quiz in progress -->
-        {% set initial_question_index = [0, session.current_question if session.current_question is defined else 0]|min %}
-        {% if session.questions and session.questions|length > 0 and initial_question_index < session.questions|length %}
-            {% set question = session.questions[initial_question_index] %}
-            <div id="current-card" class="tinder-card current-card">
-                <div class="choice-overlay left" id="left-overlay">NOPE</div>
-                <div class="choice-overlay right" id="right-overlay">LIKE</div>
-                <div class="card-content">
-                    <div class="question-prompt" id="question-prompt">
-                        {{ question.prompt or question.option1 + " or " + question.option2 + "?" }}
-                    </div>
-                    <div class="options-container">
-                        <div class="option option-left" id="left-option">
-                            <i class="option-icon" id="left-icon"></i>
-                            <div class="option-text" id="left-text">{{ question.option1 }}</div>
-                        </div>
-                        <div class="vs-indicator">VS</div>
-                        <div class="option option-right" id="right-option">
-                            <i class="option-icon" id="right-icon"></i>
-                            <div class="option-text" id="right-text">{{ question.option2 }}</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<div id="game-container"
+     style="display:flex;flex-direction:column;align-items:center;min-height:60vh;justify-content:center;">
 
-            <!-- Next Card (if exists and relevant for initial load) -->
-            {% if initial_question_index + 1 < session.questions|length %}
-                {% set next_question = session.questions[initial_question_index + 1] %}
-                <div id="next-card" class="tinder-card next-card">
-                    <div class="card-content">
-                        <div class="question-prompt">
-                            {{ next_question.prompt or next_question.option1 + " or " + next_question.option2 + "?" }}
-                        </div>
-                        <div class="options-container">
-                            <div class="option option-left">
-                                <i class="option-icon next-left-icon"></i>
-                                <div class="option-text">{{ next_question.option1 }}</div>
-                            </div>
-                            <div class="vs-indicator">VS</div>
-                            <div class="option option-right">
-                                <i class="option-icon next-right-icon"></i>
-                                <div class="option-text">{{ next_question.option2 }}</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            {% endif %}
-        {% else %}
-            <!-- Fallback or placeholder if no questions / initial_question_index is out of bounds. -->
-            <!-- JS will populate this dynamically. Render a shell for current-card. -->
-            <div id="current-card" class="tinder-card current-card" style="display:none;"> <!-- Hide shell if no content -->
-                 <div class="choice-overlay left" id="left-overlay">NOPE</div>
-                 <div class="choice-overlay right" id="right-overlay">LIKE</div>
-                 <div class="card-content"><div class="question-prompt" id="question-prompt">Loading...</div></div>
+  <!-- Waiting -->
+  <div id="waiting-container" style="display:block;text-align:center;max-width:500px;">
+    <div class="card" style="padding: 3rem; background: linear-gradient(45deg, #667eea, #764ba2); color: white; margin-bottom: 2rem;">
+        <div style="font-size: 4rem; margin-bottom: 1rem;">⏳</div>
+        <h2 style="margin-bottom: 1rem;">Waiting for Friend</h2>
+        <p id="waiting-message" style="font-size: 1.1rem; opacity: 0.9; margin-bottom: 1.5rem;">
+            Share your game link and wait for your friend to join before starting!
+        </p>
+        <div id="waiting-session-details" style="background: rgba(255,255,255,0.2); padding: 1rem; border-radius: 10px; margin-bottom: 1rem;">
+            <div style="font-family: monospace; font-size: 1.1rem; font-weight: bold; letter-spacing: 1px; margin-bottom: 0.5rem;">
+                {{ session.session_id }}
             </div>
-        {% endif %}
+            <button onclick="window.shareSession()" class="btn" style="background: rgba(255,255,255,0.2); border: 2px solid white; color: white;">
+                <i class="fas fa-share-alt"></i> Share Game Link
+            </button>
+        </div>
+        <div style="opacity: 0.8;">
+            <i class="fas fa-info-circle"></i> Both players must be ready before the quiz can begin
+        </div>
+    </div>
+  </div>
+
+  <!-- Ready -->
+  <div id="ready-container" style="display:none;text-align:center;max-width:500px;">
+    <div class="card" style="padding: 3rem; background: linear-gradient(45deg, #4caf50, #8bc34a); color: white; margin-bottom: 2rem;">
+        <div style="font-size: 4rem; margin-bottom: 1rem;">🎮</div>
+        <h2 style="margin-bottom: 1rem;">Ready to Start!</h2>
+        <p id="ready-message" style="font-size: 1.1rem; opacity: 0.9; margin-bottom: 1.5rem;">
+            Both players are connected. Click start when you\'re ready!
+        </p>
+        <button id="start-quiz-btn" onclick="window.signalReady()" class="btn" style="background: rgba(255,255,255,0.2); border: 2px solid white; color: white; font-size: 1.2rem; padding: 1rem 2rem;">
+            <i class="fas fa-play"></i> Start Quiz
+        </button>
+    </div>
+  </div>
+
+  <!-- Card stack (hidden until showQuizInterface) -->
+  <div id="card-stack" class="card-stack" style="display:none;">
+    {% for q in session.questions|reverse %}
+      <div class="tinder-card" data-question-index="{{ loop.revindex0 }}">
+        <div class="choice-overlay left">NOPE</div>
+        <div class="choice-overlay right">LIKE</div>
+
+        <div class="card-content">
+          <div class="question-prompt">
+            {{ q.prompt or q.option1 ~ ' or ' ~ q.option2 ~ '?' }}
+          </div>
+
+          <div class="options-container">
+            <div class="option option-left"><div class="option-text">{{ q.option1 }}</div></div>
+            <div class="vs-indicator">VS</div>
+            <div class="option option-right"><div class="option-text">{{ q.option2 }}</div></div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  <!-- Action buttons -->
+  <div id="action-buttons-container" class="action-buttons" style="display:none;">
+      <button id="reject-btn" class="action-btn reject"><i class="fas fa-star"></i></button>
+      <button id="like-btn"   class="action-btn like"><i class="fas fa-star"></i></button>
+  </div>
+
+  <!-- Quiz-complete screen -->
+  <div id="quiz-complete-container" class="card" style="display:none;text-align:center;max-width:600px;">
+    <div style="background: linear-gradient(45deg, #4caf50, #8bc34a); padding: 2rem; border-radius: 20px; margin-bottom: 2rem;">
+        <i class="fas fa-trophy" style="font-size: 3rem; color: white; margin-bottom: 1rem;"></i>
+        <h2 style="color: white; margin-bottom: 0.5rem;">Quiz Complete!</h2>
+        <p style="color: rgba(255,255,255,0.9); margin: 0;">{{ session.quiz_title }}</p>
     </div>
     
-    <div class="action-buttons" id="action-buttons-container" style="display: none;"> <!-- ID added, initially hidden -->
-        <button id="reject-btn" class="action-btn reject">
-            <i id="left-action-icon" class="fas fa-star"></i>
-        </button>
-        <button id="like-btn" class="action-btn like">
-            <i id="right-action-icon" class="fas fa-star"></i>
-        </button>
+    <div id="completion-results">
+        <div class="loading" style="margin: 2rem 0;">
+            <div class="spinner"></div>
+            <p>Loading results...</p> <!-- Updated message -->
+        </div>
     </div>
+    <button id="share-results-btn" class="btn" style="display:none; margin: 1.5rem auto 0 auto; background: linear-gradient(45deg, #42a5f5, #4caf50); color: white;" onclick="window.shareResultsImage()">
+        <i class="fas fa-share-alt"></i> Share Results
+    </button>
     
-    <!-- Quiz Complete Container -->
-    <!-- Initially hidden; JS will show it when quiz ends -->
-    <div id="quiz-complete-container" class="card" style="text-align: center; max-width: 600px; display: none;">
-        <div style="background: linear-gradient(45deg, #4caf50, #8bc34a); padding: 2rem; border-radius: 20px; margin-bottom: 2rem;">
-            <i class="fas fa-trophy" style="font-size: 3rem; color: white; margin-bottom: 1rem;"></i>
-            <h2 style="color: white; margin-bottom: 0.5rem;">Quiz Complete!</h2>
-            <p style="color: rgba(255,255,255,0.9); margin: 0;">{{ session.quiz_title }}</p>
-        </div>
-        
-        <div id="completion-results">
-            <div class="loading" style="margin: 2rem 0;">
-                <div class="spinner"></div>
-                <p>Loading results...</p> <!-- Updated message -->
-            </div>
-        </div>
-        <button id="share-results-btn" class="btn" style="display:none; margin: 1.5rem auto 0 auto; background: linear-gradient(45deg, #42a5f5, #4caf50); color: white;" onclick="window.shareResultsImage()">
-            <i class="fas fa-share-alt"></i> Share Results
+    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 2rem;">
+        <button onclick="window.playAnotherQuiz()" class="btn" style="background: var(--primary-color); font-size: 1.1rem; padding: 0.8rem 1.5rem;">
+            <i class="fas fa-dice"></i> Play Another Quiz
         </button>
-        
-        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 2rem;">
-            <button onclick="window.playAnotherQuiz()" class="btn" style="background: var(--primary-color); font-size: 1.1rem; padding: 0.8rem 1.5rem;">
-                <i class="fas fa-dice"></i> Play Another Quiz
-            </button>
-            <button onclick="window.refreshResults()" class="btn btn-secondary">
-                <i class="fas fa-sync-alt"></i> Refresh Results
-            </button>
-            <a href="/" class="btn btn-secondary">
-                <i class="fas fa-home"></i> Home
-            </a>
-        </div>
+        <button onclick="window.refreshResults()" class="btn btn-secondary">
+            <i class="fas fa-sync-alt"></i> Refresh Results
+        </button>
+        <a href="/" class="btn btn-secondary">
+            <i class="fas fa-home"></i> Home
+        </a>
     </div>
+  </div>
 </div>
 
-<!-- Multiplayer Play Another Quiz Invitation Modal -->
+<!-- Play-again invite modal -->
 <div id="playAgainInviteModal" class="modal" style="display:none; position:fixed; z-index:10000; left:0; top:0; width:100vw; height:100vh; background:rgba(0,0,0,0.5); align-items:center; justify-content:center;">
   <div style="background:#fff; border-radius:12px; max-width:350px; margin:auto; padding:32px 24px; text-align:center; box-shadow:0 2px 16px rgba(0,0,0,0.2);">
     <div id="playAgainInviteText" style="font-size:1.2em; margin-bottom:20px;"></div>
@@ -509,1209 +471,35 @@
 {% endblock %}
 
 {% block extra_js %}
+<!-- put session JSON on the page for play.js -->
+<script>window.__PLAY_SESSION__ = {{ session|tojson|safe }};</script>
+
+<!-- 2️⃣ Other libraries -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.1/socket.io.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
-<!-- Add global functions that need to be accessible from HTML elements -->
+
+<!-- 3️⃣ Your client logic (ES-module) -->
+<script type="module" src="/static/play.js"></script>
+
+<!-- In-app player name editing logic -->
 <script>
-// Define these globally to be accessible from HTML onclick attributes
-window.toggleSessionInfo = function() {
-    console.log('toggleSessionInfo called');
-    const details = document.getElementById('session-details');
-    const icon = document.getElementById('toggle-icon');
-    if (details && icon) {
-        if (details.style.display === 'none') {
-            details.style.display = 'block';
-            icon.classList.remove('fa-chevron-down');
-            icon.classList.add('fa-chevron-up');
-        } else {
-            details.style.display = 'none';
-            icon.classList.remove('fa-chevron-up');
-            icon.classList.add('fa-chevron-down');
-        }
-    }
-};
-
-window.shareSession = function() {
-    const shareUrl = `${window.location.origin}/join/${sessionId}`;
-    const shareText = `🎮 Join me for "${quizTitle}" quiz!`;
-    if (navigator.share) {
-        navigator.share({
-            title: `Join This or That: ${quizTitle}`,
-            text: shareText,
-            url: shareUrl
-        }).then(() => {
-            window.showNotification('Game link shared!');
-        }).catch(err => {
-            if (err.name !== 'AbortError' && err.name !== 'NotAllowedError') {
-                window.copyToClipboard(shareUrl, 'Sharing failed, link copied!');
-            }
-        });
-    } else {
-        window.copyToClipboard(shareUrl, 'Game link copied to clipboard!');
-    }
-};
-
-// Define empty implementations that will be properly set once the module loads
-window.playAnotherQuiz = function() { console.log('playAnotherQuiz called but not yet implemented'); };
-window.refreshResults = function() { console.log('refreshResults called but not yet implemented'); };
-window.cancelNewQuizWaiting = function() { console.log('cancelNewQuizWaiting called but not yet implemented'); };
-
-// Utility function for notifications
-window.showNotification = function(message, type = 'success', duration = 4000) {
-    // Check if a notification container exists, create one if not
-    let notificationContainer = document.getElementById('notification-container');
-    if (!notificationContainer) {
-        notificationContainer = document.createElement('div');
-        notificationContainer.id = 'notification-container';
-        notificationContainer.style.cssText = 'position:fixed; top:20px; right:20px; z-index:10000;';
-        document.body.appendChild(notificationContainer);
-    }
-    
-    // Create notification element
-    const notification = document.createElement('div');
-    notification.className = 'notification ' + type;
-    notification.style.cssText = `
-        background: ${type === 'error' ? '#f44336' : type === 'info' ? '#2196F3' : '#4caf50'};
-        color: white;
-        padding: 12px 20px;
-        margin-bottom: 10px;
-        border-radius: 5px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-        transition: all 0.3s ease;
-        cursor: pointer;
-    `;
-    notification.innerHTML = message;
-    
-    // Add to container
-    notificationContainer.appendChild(notification);
-    
-    // Auto-remove after specified duration
-    setTimeout(() => {
-        notification.style.opacity = '0';
-        notification.style.transform = 'translateX(100%)';
-        setTimeout(() => {
-            if (notification.parentNode) {
-                notification.parentNode.removeChild(notification);
-            }
-        }, 300);
-    }, duration);
-    
-    // Click to dismiss
-    notification.addEventListener('click', () => {
-        notification.style.opacity = '0';
-        notification.style.transform = 'translateX(100%)';
-        setTimeout(() => {
-            if (notification.parentNode) {
-                notification.parentNode.removeChild(notification);
-            }
-        }, 300);
+(function(){
+  const input = document.getElementById('player-name-widget');
+  if (input) {
+    input.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        input.blur();
+      }
     });
-};
-
-// Helper function to copy text to clipboard
-window.copyToClipboard = function(text, message) {
-    navigator.clipboard.writeText(text).then(
-        () => {
-            window.showNotification(message || 'Copied to clipboard!');
-        },
-        () => {
-            window.showNotification('Failed to copy to clipboard', 'error');
-        }
-    );
-};
-
-// Global variables to be set by the module
-let sessionId, quizId, quizTitle;
-
-// Global state for play again flow
-let newPlayAgainSessionIdForRequester = null;
-let newPlayAgainSessionIdToJoinForInvitee = null; 
-let originalSessionGroupForPlayAgain = null;
-
-// Client-side state flag for inter-game period
-let isInterGamePeriod = false;
-</script>
-
-<script type="module">
-// Set the global variables from template context
-sessionId = '{{ session.session_id }}';
-quizId = '{{ session.quiz_id }}';
-quizTitle = '{{ session.quiz_title }}';
-// Correctly determine originalSessionGroupForPlayAgain using session data
-originalSessionGroupForPlayAgain = '{{ session.shared_session_group or session.session_id }}';
-
-const allQuestions = JSON.parse('{{ session.questions | default([]) | tojson | safe }}');
-const socket = io();
-const playerName = '{{ session.this_player_name or session.player_name or "Player 1" }}';
-
-// Initialize game state variables
-let currentQuestionIndex = 0;
-let isAnimating = false;
-let myAnswers = [];
-let otherPlayerAnswers = [];
-// let nextCardPreloaded = false; // Seems unused, consider removing if not planned
-let cardInteractionsInitialized = false;
-
-// Determine quiz type for display purposes (player name substitution)
-let quizTypeForDisplay = '{{ session.quiz_type or "thisorthat" }}';
-if (quizTypeForDisplay === 'thisorthat' && allQuestions.length > 0) {
-    // If it's labelled 'thisorthat' but options look like a player quiz, treat as player for display
-    const firstQuestion = allQuestions[0];
-    if ((firstQuestion.option1 === 'Player 1' && firstQuestion.option2 === 'Player 2') || 
-        (firstQuestion.option1 === 'Player 2' && firstQuestion.option2 === 'Player 1')) {
-        quizTypeForDisplay = 'player';
-        console.log('Overriding quizTypeForDisplay to "player" based on question content.');
-    }
-}
-
-import { submitAnswer, isQuizComplete, calculateResults, getCompatibility } from "{{ url_for('static', filename='quiz_logic.js') }}";
-
-// Additional debugging - log the initial state
-console.log('Initial state variables:', {
-    sessionId,
-    quizId,
-    quizTitle,
-    playerName,
-    questionsCount: allQuestions ? allQuestions.length : 0
-});
-
-// Card swipe functionality
-// Track touch/mouse positions
-let startX = 0;
-let currentX = 0;
-let isDragging = false;
-let currentCard = null;
-let cardOverlay = { left: null, right: null };
-
-// Initialize card interaction functionality
-function initCardInteractions() {
-    console.log('initCardInteractions called');
-    currentCard = document.getElementById('current-card');
-    if (!currentCard) {
-        console.error('Current card element not found');
-        return false;
-    }
-
-    // Get overlay elements for visual feedback
-    cardOverlay.left = document.getElementById('left-overlay');
-    cardOverlay.right = document.getElementById('right-overlay');
-
-    // Setup touch/mouse events for dragging
-    currentCard.addEventListener('mousedown', handleDragStart);
-    currentCard.addEventListener('touchstart', handleDragStart);
-    document.addEventListener('mousemove', handleDragMove);
-    document.addEventListener('touchmove', handleDragMove);
-    document.addEventListener('mouseup', handleDragEnd);
-    document.addEventListener('touchend', handleDragEnd);
-
-    // Setup button click events
-    const rejectBtn = document.getElementById('reject-btn');
-    const likeBtn = document.getElementById('like-btn');
-
-    if (rejectBtn) {
-        rejectBtn.addEventListener('click', () => handleSwipe('left'));
-    }
-    if (likeBtn) {
-        likeBtn.addEventListener('click', () => handleSwipe('right'));
-    }
-
-    console.log('Card interactions initialized');
-    return true;
-}
-
-// Handle start of drag
-function handleDragStart(e) {
-    if (isAnimating || !currentCard) return;
-    
-    isDragging = true;
-    startX = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
-    currentCard.style.transition = 'none';
-    console.log('Drag started');
-}
-
-// Handle drag movement
-function handleDragMove(e) {
-    if (!isDragging || isAnimating || !currentCard) return;
-    
-    // Calculate how far we've dragged
-    currentX = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
-    const moveDistance = currentX - startX;
-    
-    // Apply transform to the card
-    currentCard.style.transform = `translateX(${moveDistance}px) rotate(${moveDistance * 0.05}deg)`;
-    
-    // Show appropriate overlay based on direction
-    const overlayOpacity = Math.min(Math.abs(moveDistance) / 100, 0.8);
-    if (moveDistance > 0) {
-        // Dragging right
-        if (cardOverlay.right) cardOverlay.right.style.opacity = overlayOpacity;
-        if (cardOverlay.left) cardOverlay.left.style.opacity = 0;
-    } else {
-        // Dragging left
-        if (cardOverlay.left) cardOverlay.left.style.opacity = overlayOpacity;
-        if (cardOverlay.right) cardOverlay.right.style.opacity = 0;
-    }
-}
-
-// Handle end of drag
-function handleDragEnd() {
-    if (!isDragging || !currentCard) return;
-    
-    isDragging = false;
-    currentCard.style.transition = 'transform 0.3s ease';
-    
-    // Calculate if the swipe was far enough to count
-    const moveDistance = currentX - startX;
-    const threshold = window.innerWidth * 0.3; // 30% of screen width
-    
-    if (Math.abs(moveDistance) >= threshold) {
-        // Swipe was far enough - complete the swipe
-        const direction = moveDistance > 0 ? 'right' : 'left';
-        handleSwipe(direction);
-    } else {
-        // Reset card position
-        currentCard.style.transform = '';
-        // Reset overlays
-        if (cardOverlay.left) cardOverlay.left.style.opacity = 0;
-        if (cardOverlay.right) cardOverlay.right.style.opacity = 0;
-    }
-}
-
-// Handle a swipe action (either from drag or button)
-function handleSwipe(direction) {
-    if (isAnimating || !currentCard) return;
-    isAnimating = true;
-    
-    // Get the question data
-    const question = allQuestions[currentQuestionIndex];
-    if (!question) {
-        console.error('No question data found for index:', currentQuestionIndex);
-        isAnimating = false;
-        return;
-    }
-    
-    // Animate the card off screen
-    const moveOffDistance = window.innerWidth * 1.5;
-    currentCard.style.transform = `translateX(${direction === 'right' ? moveOffDistance : -moveOffDistance}px) rotate(${direction === 'right' ? 30 : -30}deg)`;
-    
-    // Show appropriate overlay
-    if (direction === 'right') {
-        if (cardOverlay.right) cardOverlay.right.style.opacity = 1;
-        if (cardOverlay.left) cardOverlay.left.style.opacity = 0;
-    } else {
-        if (cardOverlay.left) cardOverlay.left.style.opacity = 1;
-        if (cardOverlay.right) cardOverlay.right.style.opacity = 0;
-    }
-    
-    // Record the answer
-    const playerChoice = (quizTypeForDisplay === 'player' && direction === 'left') ? question.option1 :
-                        (quizTypeForDisplay === 'player' && direction === 'right') ? question.option2 : undefined;
-    submitAnswer(myAnswers, currentQuestionIndex, direction, playerChoice);
-    console.log(`[DEBUG] handleSwipe: Submitted answer for Q${currentQuestionIndex}:`, myAnswers[currentQuestionIndex], 'myAnswers:', myAnswers);
-    
-    // Update progress bar
-    updateProgress();
-    
-    // Send answer to server for multiplayer
-    socket.emit('player_answer', {
-        session_id: sessionId,
-        player_name: playerName,
-        question_index: currentQuestionIndex,
-        answer: { choice: direction, playerChoice: playerChoice },
-        player_choice: playerChoice
+    input.addEventListener('blur', function() {
+      const newName = input.value.trim() || 'Player';
+      input.value = newName;
+      try {
+        const expires = Date.now() + 1000*60*60*24*30;
+        localStorage.setItem('playerData', JSON.stringify({name: newName, expires}));
+      } catch {}
     });
-    console.log(`[DEBUG] handleSwipe: Emitted player_answer for Q${currentQuestionIndex}`);
-    
-    // Move to next question after animation completes
-    setTimeout(() => {
-        moveToNextQuestion();
-    }, 300);
-}
-
-// Move to next question
-function moveToNextQuestion() {
-    currentQuestionIndex++;
-    console.log(`[DEBUG] moveToNextQuestion: currentQuestionIndex is now ${currentQuestionIndex}, total questions: ${allQuestions.length}`);
-    
-    // Update question counter
-    const currentQuestionElem = document.getElementById('current-question');
-    if (currentQuestionElem) {
-        currentQuestionElem.textContent = currentQuestionIndex + 1;
-    }
-    
-    // Check if quiz is complete
-    if (currentQuestionIndex >= allQuestions.length) {
-        console.log('[DEBUG] moveToNextQuestion: Quiz complete, emitting player_all_answers. myAnswers:', myAnswers, 'otherPlayerAnswers:', otherPlayerAnswers);
-        // Emit all answers to the server for multiplayer sync
-        socket.emit('player_all_answers', {
-            session_id: sessionId,
-            player_name: playerName,
-            answers: myAnswers
-        });
-        // If both players have completed, show results immediately
-        if (isQuizComplete(otherPlayerAnswers, allQuestions.length)) {
-            console.log('[DEBUG] moveToNextQuestion: Both players complete, showing results.');
-            showResults();
-        } else {
-            // Otherwise show the completed state while waiting for other player
-            document.getElementById('card-stack').style.display = 'none';
-            document.getElementById('action-buttons-container').style.display = 'none';
-            document.getElementById('quiz-complete-container').style.display = 'block';
-            console.log('[DEBUG] moveToNextQuestion: Waiting for other player to finish.');
-        }
-        return;
-    }
-    
-    // Reset card position and prepare next question
-    if (currentCard) {
-        // Load next question content
-        const question = allQuestions[currentQuestionIndex];
-        // const quizType = '{{ session.quiz_type or "thisorthat" }}'; // Use quizTypeForDisplay now
-
-        if (question) {
-            const promptElem = document.getElementById('question-prompt');
-            const leftTextElem = document.getElementById('left-text');
-            const rightTextElem = document.getElementById('right-text');
-            
-            let option1Text = question.option1;
-            let option2Text = question.option2;
-
-            // Dynamically set player names if it's a player quiz type FOR DISPLAY
-            if (quizTypeForDisplay === 'player' && window.playerMapping) {
-                if (question.option1 === 'Player 1' && window.playerMapping['Player 1']) {
-                    option1Text = window.playerMapping['Player 1'];
-                } else if (question.option1 === 'Player 2' && window.playerMapping['Player 2']) { // Check P2 for option1 too
-                    option1Text = window.playerMapping['Player 2'];
-                }
-                
-                if (question.option2 === 'Player 2' && window.playerMapping['Player 2']) {
-                    option2Text = window.playerMapping['Player 2'];
-                } else if (question.option2 === 'Player 1' && window.playerMapping['Player 1']) { // Check P1 for option2 too
-                    option2Text = window.playerMapping['Player 1'];
-                }
-            }
-            
-            if (promptElem) {
-                promptElem.textContent = question.prompt || `${option1Text} or ${option2Text}?`;
-            }
-            if (leftTextElem) {
-                leftTextElem.textContent = option1Text;
-            }
-            if (rightTextElem) {
-                rightTextElem.textContent = option2Text;
-            }
-        }
-        
-        // Reset card transform and overlays
-        currentCard.style.transform = '';
-        if (cardOverlay.left) cardOverlay.left.style.opacity = 0;
-        if (cardOverlay.right) cardOverlay.right.style.opacity = 0;
-    }
-    
-    // Reset animation flag
-    isAnimating = false;
-}
-
-// Update progress bar
-function updateProgress() {
-    const progressFill = document.getElementById('progress-fill');
-    if (progressFill) {
-        const percentage = ((currentQuestionIndex + 1) / allQuestions.length) * 100;
-        progressFill.style.width = `${percentage}%`;
-    }
-}
-
-// Define all the functions needed by socket handlers
-function updateOpponentStatus(playerNames) {
-    console.log('updateOpponentStatus called with:', playerNames);
-    const statusDiv = document.getElementById('session-status');
-    if (!statusDiv) return;
-    
-    if (playerNames && playerNames.length >= 2) {
-        // Find the opponent (not me)
-        const opponent = playerNames.find(name => name !== playerName);
-        statusDiv.innerHTML = `<span style='color: #4caf50;'>${opponent} is connected!</span>`;
-    } else {
-        statusDiv.innerHTML = 'Waiting for your friend to join...';
-    }
-}
-
-// Add explicit socket event handlers at the top level
-socket.on('connect', () => {
-    console.log('Socket connected with ID:', socket.id);
-    
-    // Join the session room as soon as connected
-    socket.emit('join_session_room', {
-        session_id: sessionId,
-        player_name: playerName
-    });
-    console.log('Emitted join_session_room event with:', {
-        session_id: sessionId,
-        player_name: playerName
-    });
-});
-
-socket.on('game_state_updated', (data) => {
-    console.log('Received game_state_updated:', data);
-    if (!data) return;
-    
-    window.hasMultiplayerFriend = data.has_friend;
-    updateOpponentStatus(data.player_names);
-    
-    // IMPORTANT: Log the UI state decision factors
-    console.log('UI state decision factors:', {
-        has_friend: data.has_friend, 
-        both_ready: data.both_ready,
-        player_names: data.player_names,
-        players_ready_status: data.players_ready_status
-    });
-    
-    // Very explicitly decide which UI state to show
-    if (data.both_ready) {
-        console.log('Both players ready, showing quiz interface');
-        showQuizInterface();
-    } else if (data.has_friend) {
-        console.log('Friend connected but not both ready, showing ready interface');
-        showReadyInterface(data.player_names, data.players_ready_status);
-    } else {
-        console.log('Still waiting for friend, showing waiting interface');
-        showWaitingInterface();
-    }
-    
-    // If both players are present and both have completed, show results
-    if (data.player_names && data.player_names.length >= 2 && 
-        isQuizComplete(myAnswers, allQuestions.length) && 
-        isQuizComplete(otherPlayerAnswers, allQuestions.length)) {
-        showResults();
-    }
-});
-
-// Make sure the UI state functions are defined before they're used
-function showWaitingInterface() {
-    if (isInterGamePeriod) { console.log('Inter-game period, suppressing UI: showWaitingInterface'); return; }
-    console.log('showWaitingInterface called');
-    document.getElementById('waiting-container').style.display = 'block';
-    document.getElementById('ready-container').style.display = 'none';
-    document.getElementById('card-stack').style.display = 'none';
-    document.getElementById('action-buttons-container').style.display = 'none';
-    document.getElementById('quiz-complete-container').style.display = 'none';
-}
-
-function showReadyInterface(playerNames, playersReadyStatus) {
-    if (isInterGamePeriod) { console.log('Inter-game period, suppressing UI: showReadyInterface'); return; }
-    console.log('showReadyInterface called with:', { playerNames, playersReadyStatus });
-    document.getElementById('waiting-container').style.display = 'none';
-    document.getElementById('ready-container').style.display = 'block';
-    document.getElementById('card-stack').style.display = 'none';
-    document.getElementById('action-buttons-container').style.display = 'none';
-    document.getElementById('quiz-complete-container').style.display = 'none';
-    
-    // Update ready message with player names
-    const readyMessage = document.getElementById('ready-message');
-    if (readyMessage && playerNames && playerNames.length >= 2) {
-        const otherPlayer = playerNames.find(p => p !== playerName) || 'your friend';
-        readyMessage.innerHTML = `You and ${otherPlayer} are connected! Click start when you're ready.`;
-    }
-}
-
-function showQuizInterface() {
-    if (isInterGamePeriod) { console.log('Inter-game period, suppressing UI: showQuizInterface'); return; }
-    console.log('showQuizInterface called');
-    document.getElementById('waiting-container').style.display = 'none';
-    document.getElementById('ready-container').style.display = 'none';
-    document.getElementById('card-stack').style.display = 'block';
-    document.getElementById('action-buttons-container').style.display = 'flex';
-    document.getElementById('quiz-complete-container').style.display = 'none';
-
-    // Robustly initialize card interactions after showing the quiz interface
-    function robustInitCardInteractions() {
-        if (!cardInteractionsInitialized) {
-            const result = initCardInteractions();
-            if (result) {
-                cardInteractionsInitialized = true;
-                updateProgress();
-                renderCurrentCardWithMapping(); // Call here after card interactions are set up
-            } else {
-                setTimeout(robustInitCardInteractions, 200); // Retry if init failed
-            }
-        }
-    }
-    setTimeout(robustInitCardInteractions, 100); // Initial call slightly delayed to ensure DOM ready
-}
-
-// Expose these functions to the global window
-window.showWaitingInterface = showWaitingInterface;
-window.showReadyInterface = showReadyInterface;
-window.showQuizInterface = showQuizInterface;
-window.showResults = showResults;
-
-// Function to show results when quiz is complete
-function showResults() {
-    if (isInterGamePeriod) { console.log('Inter-game period, suppressing UI: showResults'); return; }
-    console.log('showResults called');
-
-    // Ensure other top-level containers are hidden first
-    const waitingContainer = document.getElementById('waiting-container');
-    const readyContainer = document.getElementById('ready-container');
-    const cardStack = document.getElementById('card-stack');
-    const actionButtons = document.getElementById('action-buttons-container');
-
-    if (waitingContainer) waitingContainer.style.display = 'none';
-    if (readyContainer) readyContainer.style.display = 'none';
-    if (cardStack) cardStack.style.display = 'none';
-    if (actionButtons) actionButtons.style.display = 'none';
-
-    // Ensure the quiz complete container is visible
-    const quizCompleteMainContainer = document.getElementById('quiz-complete-container');
-    if (quizCompleteMainContainer) {
-        quizCompleteMainContainer.style.display = 'block';
-    } else {
-        console.error('CRITICAL: quiz-complete-container not found in showResults!');
-        return; // Cannot proceed
-    }
-
-    const resultsContainer = document.getElementById('completion-results');
-    if (!resultsContainer) {
-        console.error('CRITICAL: completion-results container not found in showResults!');
-        // Still try to make the main container visible if possible
-        if(quizCompleteMainContainer) quizCompleteMainContainer.style.display = 'block';
-        return; // Cannot proceed with populating results
-    }
-    
-    console.log('[DEBUG] showResults: myAnswers:', myAnswers, 'otherPlayerAnswers:', otherPlayerAnswers);
-    
-    const serverQuizType = '{{ session.quiz_type or "thisorthat" }}';
-    
-    // Check quiz questions for correct_answer property to verify competition mode FIRST
-    const isCompetitionMode = serverQuizType === 'competition' || 
-                            (allQuestions.length > 0 && allQuestions[0].hasOwnProperty('correct_answer'));
-
-    // Use quizTypeForDisplay for logic that decides if it *looks* like a player/competition quiz for results presentation
-    // but use serverQuizType for the actual calculation mode if they differ.
-    const calculationMode = isCompetitionMode ? 'competition' : serverQuizType; 
-
-    console.log('Showing results. Server quiz type:', serverQuizType, 'Display type for names:', quizTypeForDisplay, 'Calculation mode:', calculationMode);
-    
-    // If we detect correct_answer but serverQuizType isn't competition, log a warning
-    if (allQuestions.length > 0 && allQuestions[0].hasOwnProperty('correct_answer') && serverQuizType !== 'competition' && !isCompetitionMode) {
-        console.warn('Quiz has correct_answer properties but type is not set to competition. Treating as competition.');
-    }
-    
-    const playerMapping = window.playerMapping || {};
-    const results = calculateResults(allQuestions, myAnswers, otherPlayerAnswers, 
-                                   calculationMode, // Use the determined calculationMode
-                                   playerMapping);
-    let headerHTML = '';
-    if (isCompetitionMode) {
-        let winnerMsg = '';
-        let headerColor = '';
-        const myName = (playerMapping && playerMapping['Player 1']) ? playerMapping['Player 1'] : (playerName === 'Player 1' ? 'You' : playerName);
-        const otherName = (playerMapping && playerMapping['Player 2']) ? playerMapping['Player 2'] : 'Friend';
-
-        if (results.myScore > results.otherScore) { 
-            winnerMsg = `�� ${myName} Won!`; 
-            headerColor = '#4caf50'; 
-        } else if (results.otherScore > results.myScore) { 
-            winnerMsg = `🏆 ${otherName} Won!`; 
-            headerColor = '#f44336'; 
-        } else { 
-            winnerMsg = "🤝 It's a Tie!"; 
-            headerColor = '#ff9800'; 
-        }
-        
-        headerHTML = `
-            <div style="background: linear-gradient(45deg, ${headerColor}, ${headerColor}dd); color: white; padding: 2rem; border-radius: 15px; margin-bottom: 1.5rem; text-align: center;">
-                <div style="font-size: 2.5rem; margin-bottom: 1rem;">${winnerMsg}</div>
-                <div style="display: flex; justify-content: space-around; margin-bottom: 1rem;">
-                    <div><div style="font-size: 2rem; font-weight: bold;">${results.myScore}</div><div style="opacity: 0.9;">${myName}</div></div>
-                    <div style="font-size: 2rem; opacity: 0.7;">VS</div>
-                    <div><div style="font-size: 2rem; font-weight: bold;">${results.otherScore}</div><div style="opacity: 0.9;">${otherName}</div></div>
-                </div>
-                <div style="opacity: 0.8; font-size: 0.9rem;">out of ${allQuestions.length} questions</div>
-            </div>`;
-    } else {
-        const compatibility = getCompatibility(results.matches, allQuestions.length);
-        let compMsg = '';
-        let compColor = '';
-        if (compatibility >= 80) { compMsg = "Wow! You sure you're not just playing against yourself! 👯"; compColor = '#4caf50'; }
-        else if (compatibility >= 60) { compMsg = "Great compatibility! 😊"; compColor = '#8bc34a'; }
-        else if (compatibility >= 40) { compMsg = "You're almost there... 🤷"; compColor = '#ff9800'; }
-        else { compMsg = "Do you even know each other? 🤔"; compColor = '#f44336'; }
-        
-        headerHTML = `
-            <div style="background: linear-gradient(45deg, ${compColor}, ${compColor}dd); color: white; padding: 2rem; border-radius: 15px; margin-bottom: 1.5rem; text-align: center;">
-                <div style="font-size: 3rem; margin-bottom: 0.5rem;">${results.matches}/${allQuestions.length}</div>
-                <div style="font-size: 1.2rem; margin-bottom: 0.5rem;">Compatibility</div>
-                <div style="opacity: 0.9;">${compMsg}</div>
-            </div>`;
-    }
-    
-    // Render per-question breakdown
-    let comparisonHTML = '';
-    results.comparison.forEach(res => {
-        if (res.status === 'unanswered') {
-            comparisonHTML += `<div class="result-item status-unanswered">
-                                 <div class="prompt">${res.question.prompt || `${res.question.option1} or ${res.question.option2}?`}</div>
-                                 <div class="status-text">Question not fully answered.</div>
-                               </div>`;
-            return;
-        }
-        
-        let statusMsg = '';
-        let myDisplayedChoice = res.myDisplayedChoice;
-        let otherDisplayedChoice = res.otherDisplayedChoice;
-
-        // Ensure mapped names are used if playerMapping was available during calculateResults
-        // calculateResults in quiz_logic.js should handle this, but we can double check here if needed.
-        // For instance, if res.myDisplayedChoice is "Player 1", we re-map.
-        // This is more for display consistency if quiz_logic.js didn't get an updated mapping in time.
-        if (playerMapping && quizTypeForDisplay === 'player') {
-            if (res.myDisplayedChoice === 'Player 1' && playerMapping['Player 1']) myDisplayedChoice = playerMapping['Player 1'];
-            if (res.myDisplayedChoice === 'Player 2' && playerMapping['Player 2']) myDisplayedChoice = playerMapping['Player 2'];
-            if (res.otherDisplayedChoice === 'Player 1' && playerMapping['Player 1']) otherDisplayedChoice = playerMapping['Player 1'];
-            if (res.otherDisplayedChoice === 'Player 2' && playerMapping['Player 2']) otherDisplayedChoice = playerMapping['Player 2'];
-        }
-
-
-        if (isCompetitionMode) {
-            if (res.status === 'both_correct') statusMsg = '✅ Both correct!';
-            else if (res.status === 'my_correct') statusMsg = `🎯 You correct! Friend chose ${otherDisplayedChoice}.`;
-            else if (res.status === 'other_correct') statusMsg = `👍 Friend correct! You chose ${myDisplayedChoice}.`;
-            else statusMsg = `😅 Both wrong! You: ${myDisplayedChoice}, Friend: ${otherDisplayedChoice}.`;
-        } else { // thisorthat or player
-            statusMsg = res.status === 'match' ? `🤝 Both chose: ${myDisplayedChoice}` : 
-                                                 `🤔 Choices differed! You: ${myDisplayedChoice}, Friend: ${otherDisplayedChoice}`;
-        }
-        
-        comparisonHTML += `<div class="result-item status-${res.status}">
-                             <div class="prompt">${res.question.prompt || `${res.question.option1} or ${res.question.option2}?`}</div>
-                             <div class="status-text">${statusMsg}</div>
-                           </div>`;
-    });
-    
-    resultsContainer.innerHTML = `<div style="margin: 1rem 0;">${headerHTML}<div style="text-align: left;"><h4 style="margin-bottom: 1rem; text-align: center; font-size:1.4em; color: #333;">${isCompetitionMode ? '🎯 Answer Breakdown' : '📊 Choice Comparison'}</h4><div class="results-comparison-list">${comparisonHTML}</div></div></div>`;
-    
-    // Show share results button
-    const shareResultsBtn = document.getElementById('share-results-btn');
-    if (shareResultsBtn) {
-        shareResultsBtn.style.display = 'block';
-    }
-    console.log('[DEBUG] showResults: UI updated, resultsContainer.innerHTML length:', resultsContainer.innerHTML.length);
-}
-
-// Listen for player_all_answers from the server to sync results
-socket.on('player_all_answers', (data) => {
-    console.log('[DEBUG] Received player_all_answers from', data.player_name, 'answers:', data.answers);
-    if (data.player_name !== playerName) {
-        otherPlayerAnswers = data.answers;
-        console.log('[DEBUG] Updated otherPlayerAnswers:', otherPlayerAnswers);
-        // If you are already done, show results now
-        if (isQuizComplete(myAnswers, allQuestions.length)) {
-            console.log('[DEBUG] Both players complete (on receive), showing results.');
-            showResults();
-        }
-    } else {
-        console.log('[DEBUG] Ignored player_all_answers from self');
-    }
-});
-
-// Implement global functions with proper functionality now that we have context
-window.signalReady = function() {
-    const btn = document.getElementById('start-quiz-btn');
-    if (btn) {
-        btn.disabled = true;
-        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Starting...';
-    }
-
-    fetch('/api/player-ready', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            session_id: sessionId,
-            player_name: playerName
-        })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            console.log('Player ready signal sent successfully:', data);
-            // No need to handle UI updates here, socketio events will do that
-        } else {
-            window.showNotification('Error signaling readiness: ' + (data.error || 'Unknown error'), 'error');
-            if (btn) {
-                btn.disabled = false;
-                btn.innerHTML = '<i class="fas fa-play"></i> Start Quiz';
-            }
-        }
-    })
-    .catch(error => {
-        console.error('Error signaling readiness:', error);
-        window.showNotification('Error signaling readiness. Please try again.', 'error');
-        if (btn) {
-            btn.disabled = false;
-            btn.innerHTML = '<i class="fas fa-play"></i> Start Quiz';
-        }
-    });
-};
-
-socket.on('player_mapping_updated', (data) => {
-    console.log('Received player_mapping_updated:', data);
-    if (data && data.player_mapping) {
-        window.playerMapping = data.player_mapping;
-        console.log('window.playerMapping set to:', window.playerMapping);
-        // If the quiz interface is visible and we have a current card, re-render it with new mapping
-        if (document.getElementById('card-stack').style.display === 'block' && document.getElementById('current-card')) {
-            console.log('[DEBUG] player_mapping_updated: Quiz interface is active, re-rendering current card.');
-            renderCurrentCardWithMapping();
-        }
-    }
-});
-
-// --- Refresh Results Implementation ---
-window.refreshResults = async function() {
-    console.log('refreshResults called');
-    if (!sessionId) {
-        console.error('Session ID not available for refreshing results.');
-        window.showNotification('Cannot refresh results: session details missing.', 'error');
-        return;
-    }
-
-    const resultsContainer = document.getElementById('completion-results');
-    if (resultsContainer) {
-        resultsContainer.innerHTML = '<div class="loading" style="margin: 2rem 0;"><div class="spinner"></div><p>Refreshing results...</p></div>';
-    }
-
-    try {
-        const response = await fetch(`/api/multiplayer-results/${sessionId}`);
-        if (!response.ok) {
-            throw new Error(`Failed to fetch results: ${response.statusText}`);
-        }
-        const data = await response.json();
-        console.log('Fetched data for refreshResults:', data);
-
-        if (data.questions && data.player_answers) {
-            // It's generally safer to update allQuestions if the server is the source of truth,
-            // but for a simple refresh within the *same* session, questions are unlikely to change.
-            // If questions could change, `allQuestions = data.questions;` would be here.
-            
-            const playerNamesInResults = Object.keys(data.player_answers);
-            const currentPlayerName = playerName; // Global 'playerName' for this client
-
-            if (playerNamesInResults.includes(currentPlayerName)) {
-                myAnswers = data.player_answers[currentPlayerName];
-            } else {
-                console.warn(`Current player ${currentPlayerName} not found in fetched player_answers for refresh.`);
-            }
-
-            const otherPlayerName = playerNamesInResults.find(name => name !== currentPlayerName);
-            if (otherPlayerName && data.player_answers[otherPlayerName]) {
-                otherPlayerAnswers = data.player_answers[otherPlayerName];
-            } else {
-                console.warn('Other player not found or no answers for them in fetched results for refresh.');
-            }
-            
-            console.log('Updated myAnswers for refresh:', myAnswers, 'Updated otherPlayerAnswers for refresh:', otherPlayerAnswers);
-            showResults(); 
-            window.showNotification('Results refreshed!', 'success');
-        } else {
-            // If data.questions or data.player_answers is missing, it implies an issue with the API response or data structure.
-             console.error('Fetched results data is incomplete or malformed:', data);
-            throw new Error('Fetched results data is incomplete.');
-        }
-    } catch (error) {
-        console.error('Error refreshing results:', error);
-        window.showNotification(`Error refreshing results: ${error.message}`, 'error');
-        if (resultsContainer) {
-            resultsContainer.innerHTML = '<p style="color:red; text-align:center;">Failed to refresh results. Please try again.</p>';
-        }
-    }
-};
-
-// --- Play Another Quiz Implementation ---
-window.playAnotherQuiz = async function() {
-    console.log('playAnotherQuiz called');
-    isInterGamePeriod = true; // Set flag at the start of the flow
-    const playAnotherBtn = Array.from(document.querySelectorAll('button')).find(btn => btn.textContent.includes('Play Another Quiz'));
-    if (playAnotherBtn) {
-        playAnotherBtn.disabled = true;
-        playAnotherBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Requesting...';
-    }
-
-    const currentQuizIdForNewGame = quizId; 
-    const currentPlayerNameForNewGame = playerName;
-    // Use the globally set originalSessionGroupForPlayAgain
-    const group = originalSessionGroupForPlayAgain || sessionId;
-
-
-    try {
-        const response = await fetch('/api/request-new-quiz', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                quiz_id: currentQuizIdForNewGame,
-                player_name: currentPlayerNameForNewGame,
-                shared_session_group: group
-            })
-        });
-        const data = await response.json();
-
-        if (data.success && data.session_id) {
-            newPlayAgainSessionIdForRequester = data.session_id; // Store the new session ID where requester is now effectively waiting
-            console.log(`New quiz requested. Requester is now in new session: ${newPlayAgainSessionIdForRequester}. Waiting for friend.`);
-            
-            // Explicitly hide all other main game state containers
-            document.getElementById('quiz-complete-container').style.display = 'none'; 
-            document.getElementById('waiting-container').style.display = 'none';
-            document.getElementById('ready-container').style.display = 'none';
-            document.getElementById('card-stack').style.display = 'none';
-            document.getElementById('action-buttons-container').style.display = 'none';
-
-            let waitingDiv = document.getElementById('play-again-waiting-requester');
-            if (!waitingDiv) {
-                waitingDiv = document.createElement('div');
-                waitingDiv.id = 'play-again-waiting-requester';
-                waitingDiv.className = 'card';
-                waitingDiv.style.cssText = 'text-align:center; padding: 2rem; margin-top:2rem; max-width: 500px; margin-left:auto; margin-right:auto; background: linear-gradient(45deg, #6c5ce7, #a084e8); color:white; border-radius:15px;';
-                document.getElementById('game-container').appendChild(waitingDiv);
-            }
-            waitingDiv.innerHTML = `
-                <div style="font-size: 2.5rem; margin-bottom: 1rem;">📨</div>
-                <h3 style="margin-bottom: 1rem;">Invite Sent!</h3>
-                <p style="opacity:0.9; margin-bottom:1.5rem;">Waiting for your friend to accept the invitation for a new quiz.</p>
-                <button id="cancelNewQuizWaitingBtn" class="btn btn-secondary" style="background: rgba(255,255,255,0.2); border: 1px solid white; color:white;">Cancel Invite</button>
-            `;
-            waitingDiv.style.display = 'block';
-            document.getElementById('cancelNewQuizWaitingBtn').onclick = window.cancelNewQuizWaiting; // Assign cancel function
-
-            // Requester joins their new session room to listen for acceptance/declines.
-            socket.emit('join_session_room', { session_id: newPlayAgainSessionIdForRequester, player_name: currentPlayerNameForNewGame });
-        } else {
-            throw new Error(data.error || 'Failed to request new quiz.');
-        }
-    } catch (error) {
-        console.error('Error requesting new quiz:', error);
-        window.showNotification(`Error requesting new quiz: ${error.message}`, 'error');
-        if (playAnotherBtn) {
-            playAnotherBtn.disabled = false;
-            playAnotherBtn.innerHTML = '<i class="fas fa-dice"></i> Play Another Quiz';
-        }
-        isInterGamePeriod = false; // Reset flag on error
-    }
-};
-
-// Invitee: Handles 'play_again_invite'
-socket.on('play_again_invite', (data) => {
-    console.log('Received play_again_invite:', data);
-    // Ensure this client is not the one who sent the invite
-    if (data.requester_name === playerName) {
-        console.log("This client sent the play_again_invite, not showing modal to self.");
-        return;
-    }
-    const { requester_name, new_session_id_to_join, quiz_title } = data;
-    newPlayAgainSessionIdToJoinForInvitee = new_session_id_to_join; 
-    isInterGamePeriod = true; // Set flag when invite modal is shown to invitee
-
-    const modal = document.getElementById('playAgainInviteModal');
-    const textElement = document.getElementById('playAgainInviteText');
-    
-    if (modal && textElement) {
-        textElement.innerHTML = `<strong style="font-weight:bold; color:var(--primary-color);">${requester_name}</strong> invites you to play a new quiz: <br/><strong style="font-weight:bold;">"${quiz_title}"</strong>.<br/>Do you want to play?`;
-        modal.style.display = 'flex';
-        
-        // Ensure buttons are enabled
-        document.getElementById('acceptPlayAgainBtn').disabled = false;
-        document.getElementById('declinePlayAgainBtn').disabled = false;
-        document.getElementById('acceptPlayAgainBtn').innerText = 'Yes, play again';
-    }
-});
-
-// Invitee: Accept button logic
-document.getElementById('acceptPlayAgainBtn').addEventListener('click', async () => {
-    console.log('Accept play again clicked.');
-    const acceptBtn = document.getElementById('acceptPlayAgainBtn');
-    acceptBtn.disabled = true;
-    acceptBtn.innerText = 'Joining...';
-
-    if (!newPlayAgainSessionIdToJoinForInvitee) {
-        console.error('No new_session_id_to_join stored for invitee.');
-        window.showNotification('Error: Invitation details missing.', 'error');
-        acceptBtn.disabled = false;
-        acceptBtn.innerText = 'Yes, play again';
-        return;
-    }
-    
-    try {
-        const response = await fetch('/api/accept-quiz-request', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                new_session_id: newPlayAgainSessionIdToJoinForInvitee,
-                player_name: playerName, 
-                shared_session_group: originalSessionGroupForPlayAgain || sessionId
-            })
-        });
-        const data = await response.json();
-        if (data.success && data.join_url) {
-            window.location.href = data.join_url; 
-        } else {
-            throw new Error(data.error || 'Failed to accept new quiz.');
-        }
-    } catch (error) {
-        console.error('Error accepting new quiz:', error);
-        window.showNotification(`Error accepting quiz: ${error.message}`, 'error');
-        acceptBtn.disabled = false;
-        acceptBtn.innerText = 'Yes, play again';
-        document.getElementById('playAgainInviteModal').style.display = 'none';
-        isInterGamePeriod = false; // Reset flag on error/failure to accept
-    }
-});
-
-// Invitee: Decline button logic
-document.getElementById('declinePlayAgainBtn').addEventListener('click', async () => {
-    console.log('Decline play again clicked.');
-    document.getElementById('playAgainInviteModal').style.display = 'none';
-    
-    if (!newPlayAgainSessionIdToJoinForInvitee) {
-        console.warn('No new_session_id_to_join stored for declining, invite might have been stale.');
-        return;
-    }
-
-    try {
-        await fetch('/api/decline-play-again', { 
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                declined_session_id: newPlayAgainSessionIdToJoinForInvitee, 
-                original_session_group: originalSessionGroupForPlayAgain || sessionId
-            })
-        });
-        window.showNotification('Invite declined.', 'info');
-    } catch (error) {
-        console.error('Error declining quiz:', error);
-        window.showNotification('Error sending decline.', 'error');
-    }
-    newPlayAgainSessionIdToJoinForInvitee = null; 
-    isInterGamePeriod = false; // Reset flag after declining
-});
-
-// Requester: Handles server confirmation that the other player accepted and joined.
-socket.on('new_game_accepted_and_joined', (data) => {
-    console.log('Socket event: new_game_accepted_and_joined', data);
-    if (newPlayAgainSessionIdForRequester && data.new_session_id === newPlayAgainSessionIdForRequester) {
-        window.showNotification('Your friend accepted! Starting new quiz...', 'success');
-        // The server response for player B accepting already gives them the join_url.
-        // Player A (requester) also needs to navigate to their new session URL.
-        window.location.href = `/session/${newPlayAgainSessionIdForRequester}?pn=${playerName}`;
-    }
-});
-
-// Requester: Handles server notification that the other player declined.
-socket.on('play_again_declined', (data) => {
-    console.log('Socket event: play_again_declined', data);
-    if (newPlayAgainSessionIdForRequester && data.declined_session_id === newPlayAgainSessionIdForRequester) {
-        const waitingDiv = document.getElementById('play-again-waiting-requester');
-        if (waitingDiv) {
-            waitingDiv.innerHTML = `
-                <div style="font-size: 2.5rem; margin-bottom: 1rem;">🙁</div>
-                <h3 style="margin-bottom: 1rem;">Invite Declined</h3>
-                <p style="opacity:0.9; margin-bottom:1.5rem;">Your friend chose not to play another quiz right now.</p>
-                <button onclick="document.getElementById('play-again-waiting-requester').style.display='none'; document.getElementById('quiz-complete-container').style.display='block'; const pab = Array.from(document.querySelectorAll('button')).find(btn => btn.textContent.includes('Requesting') || btn.textContent.includes('Play Another Quiz')); if(pab) {pab.innerHTML='<i class=\\"fas fa-dice\\"></i> Play Another Quiz'; pab.disabled=false;}" class="btn btn-primary">Back to Results</button>
-            `;
-        } else {
-            window.showNotification('Your friend declined the new quiz invite.', 'info');
-            // Try to re-show results container if waitingDiv was not found
-            document.getElementById('quiz-complete-container').style.display = 'block';
-        }
-        const playAnotherBtn = Array.from(document.querySelectorAll('button')).find(btn => btn.textContent.includes('Requesting...'));
-        if (playAnotherBtn) {
-            playAnotherBtn.disabled = false;
-            playAnotherBtn.innerHTML = '<i class="fas fa-dice"></i> Play Another Quiz';
-        }
-        newPlayAgainSessionIdForRequester = null;
-        isInterGamePeriod = false; // Reset flag when invite is declined
-    }
-});
-
-// Requester: Cancels their own "play again" request.
-window.cancelNewQuizWaiting = async function() {
-    console.log('cancelNewQuizWaiting called');
-    const waitingDiv = document.getElementById('play-again-waiting-requester');
-    if (waitingDiv) waitingDiv.style.display = 'none';
-    
-    // Re-enable the "Play Another Quiz" button
-    const playAnotherBtn = Array.from(document.querySelectorAll('button')).find(btn => btn.textContent.includes('Requesting...') || btn.textContent.includes('Play Another Quiz'));
-    if (playAnotherBtn) {
-        playAnotherBtn.disabled = false;
-        playAnotherBtn.innerHTML = '<i class="fas fa-dice"></i> Play Another Quiz';
-    }
-    document.getElementById('quiz-complete-container').style.display = 'block';
-
-    if (newPlayAgainSessionIdForRequester) {
-        try {
-            await fetch('/api/cancel-play-again-request', { 
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ 
-                    cancelling_session_id: newPlayAgainSessionIdForRequester,
-                    original_session_group: originalSessionGroupForPlayAgain || sessionId
-                })
-            });
-            window.showNotification('New quiz request cancelled.', 'info');
-        } catch (error) {
-            console.error('Error cancelling quiz request:', error);
-            window.showNotification('Error cancelling request.', 'error');
-        }
-        newPlayAgainSessionIdForRequester = null;
-        isInterGamePeriod = false; // Reset flag after cancelling
-    }
-};
-
-// Handles the case where an invite is closed by server (e.g. accepted by someone else, or timed out/cancelled)
-socket.on('play_again_invite_closed', (data) => {
-    console.log('Received play_again_invite_closed', data);
-    const modal = document.getElementById('playAgainInviteModal');
-    if (modal && modal.style.display === 'flex') {
-        // If the invite was for the session this client was considering
-        if (newPlayAgainSessionIdToJoinForInvitee === data.closed_session_id_for_invitee || !data.closed_session_id_for_invitee) {
-            modal.style.display = 'none';
-            window.showNotification(data.message || 'The quiz invitation is no longer available.', 'info');
-            newPlayAgainSessionIdToJoinForInvitee = null;
-            isInterGamePeriod = false; // Reset flag when invite is closed
-        }
-    }
-});
-
-// --- Share Results as Image ---
-window.shareResultsImage = async function() {
-    console.log('shareResultsImage called');
-    const resultsElement = document.getElementById('completion-results');
-    const shareButton = document.getElementById('share-results-btn');
-
-    if (!resultsElement) {
-        window.showNotification('Could not find results to share.', 'error');
-        return;
-    }
-
-    if (shareButton) {
-        shareButton.disabled = true;
-        shareButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating...';
-    }
-
-    try {
-        // Temporarily ensure the element is fully visible for capture if it was scrolled
-        // and has specific overflow properties. For most cases, this might not be strictly needed.
-        // const originalOverflow = resultsElement.style.overflow;
-        // resultsElement.style.overflow = 'visible'; 
-
-        const canvas = await html2canvas(resultsElement, {
-            useCORS: true, // If there are any external images/fonts (though unlikely here)
-            backgroundColor: '#ffffff', // Ensure a background for transparency issues
-            scale: 2 // Increase scale for better resolution
-        });
-        
-        // resultsElement.style.overflow = originalOverflow; // Restore original style
-
-        canvas.toBlob(async function(blob) {
-            if (!blob) {
-                window.showNotification('Failed to generate image blob.', 'error');
-                if (shareButton) { shareButton.disabled = false; shareButton.innerHTML = '<i class="fas fa-share-alt"></i> Share Results'; }
-                return;
-            }
-
-            const filename = `thisorthat_results_${sessionId.substring(0,4)}.png`;
-            const filesArray = [new File([blob], filename, { type: 'image/png' })];
-            const shareTitle = `Quiz Results: ${quizTitle}`;
-            const shareText = `Check out my results for the "${quizTitle}" quiz!`;
-
-            if (navigator.share && navigator.canShare && navigator.canShare({ files: filesArray })) {
-                try {
-                    await navigator.share({
-                        title: shareTitle,
-                        text: shareText,
-                        files: filesArray
-                    });
-                    window.showNotification('Results shared!', 'success');
-                } catch (err) {
-                    console.error('Navigator.share error:', err);
-                    if (err.name !== 'AbortError' && err.name !== 'NotAllowedError') {
-                        // Fallback for errors other than user aborting
-                        window.showNotification('Sharing failed. Try downloading.', 'info');
-                        downloadCanvasImage(canvas, filename);
-                    }
-                }
-            } else {
-                 // Fallback if navigator.share for files is not supported or if canShare is false
-                console.log('Web Share API for files not supported, falling back to download.');
-                window.showNotification('Sharing not directly supported, downloading image instead.', 'info');
-                downloadCanvasImage(canvas, filename);
-            }
-             if (shareButton) { shareButton.disabled = false; shareButton.innerHTML = '<i class="fas fa-share-alt"></i> Share Results'; }
-        }, 'image/png');
-
-    } catch (error) {
-        console.error('Error generating results image:', error);
-        window.showNotification('Could not generate results image.', 'error');
-        if (shareButton) { shareButton.disabled = false; shareButton.innerHTML = '<i class="fas fa-share-alt"></i> Share Results'; }
-    }
-};
-
-function downloadCanvasImage(canvas, filename) {
-    const imageURL = canvas.toDataURL('image/png');
-    const link = document.createElement('a');
-    link.href = imageURL;
-    link.download = filename;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-}
-
-// Function to render/update the current card content with player name mapping
-function renderCurrentCardWithMapping() {
-    console.log('[DEBUG] renderCurrentCardWithMapping called');
-    if (currentQuestionIndex < 0 || currentQuestionIndex >= allQuestions.length) {
-        console.warn('[DEBUG] renderCurrentCardWithMapping: invalid currentQuestionIndex', currentQuestionIndex);
-        return;
-    }
-    const question = allQuestions[currentQuestionIndex];
-    if (!question) {
-        console.warn('[DEBUG] renderCurrentCardWithMapping: no question data for index', currentQuestionIndex);
-        return;
-    }
-
-    const promptElem = document.getElementById('question-prompt');
-    const leftTextElem = document.getElementById('left-text');
-    const rightTextElem = document.getElementById('right-text');
-
-    if (!promptElem || !leftTextElem || !rightTextElem) {
-        console.warn('[DEBUG] renderCurrentCardWithMapping: One or more card elements not found.');
-        return;
-    }
-
-    let option1Text = question.option1;
-    let option2Text = question.option2;
-
-    if (quizTypeForDisplay === 'player' && window.playerMapping) {
-        console.log('[DEBUG] renderCurrentCardWithMapping: Applying player names. Mapping:', window.playerMapping);
-        if (question.option1 === 'Player 1' && window.playerMapping['Player 1']) {
-            option1Text = window.playerMapping['Player 1'];
-        } else if (question.option1 === 'Player 2' && window.playerMapping['Player 2']) {
-            option1Text = window.playerMapping['Player 2'];
-        }
-        
-        if (question.option2 === 'Player 2' && window.playerMapping['Player 2']) {
-            option2Text = window.playerMapping['Player 2'];
-        } else if (question.option2 === 'Player 1' && window.playerMapping['Player 1']) {
-            option2Text = window.playerMapping['Player 1'];
-        }
-        console.log('[DEBUG] renderCurrentCardWithMapping: Mapped O1:', option1Text, 'Mapped O2:', option2Text);
-    } else {
-        console.log('[DEBUG] renderCurrentCardWithMapping: Not applying player names. quizTypeForDisplay:', quizTypeForDisplay, 'Has Mapping:', !!window.playerMapping);
-    }
-            
-    promptElem.textContent = question.prompt || `${option1Text} or ${option2Text}?`;
-    leftTextElem.textContent = option1Text;
-    rightTextElem.textContent = option2Text;
-    console.log('[DEBUG] renderCurrentCardWithMapping: Card updated.');
-}
+  }
+})();
 </script>
 {% endblock %}

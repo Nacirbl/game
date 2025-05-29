@@ -1,9 +1,13 @@
 import os
 from datetime import timedelta
+import secrets
 
 class Config:
     """Base configuration"""
     SECRET_KEY = os.environ.get('SECRET_KEY', 'dev-secret-key-change-in-production')
+    
+    # Admin token for quiz creation (fixed for now)
+    ADMIN_TOKEN = 'malenanacir'
     
     # Flask settings
     MAX_CONTENT_LENGTH = 16 * 1024 * 1024  # 16MB max file size

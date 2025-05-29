@@ -1035,7 +1035,8 @@ def api_request_new_quiz():
     }, room=original_session_group_id) 
     logger.info(f"Emitted 'play_again_invite' to room '{original_session_group_id}' for new session {new_session_id_for_requester}")
     
-    return jsonify({'success': True, 'session_id': new_session_id_for_requester})
+    join_url = url_for('play_session', session_id=new_session_id_for_requester, pn=requester_player_name, _external=True)
+    return jsonify({'success': True, 'session_id': new_session_id_for_requester, 'join_url': join_url})
 
 @app.route('/api/pending-quiz-request/<session_id>') # This might be deprecated by direct socket emits
 def api_pending_quiz_request(session_id):
@@ -1110,6 +1111,14 @@ def api_accept_quiz_request():
     }, room=new_session_id_to_join)
     logger.info(f"Emitted 'new_game_accepted_and_joined' to room '{new_session_id_to_join}'")
 
+    # Also notify the original group (so the inviter gets the event and can redirect)
+    socketio.emit('new_game_accepted_and_joined', {
+        'message': f'{player_name_accepting} accepted and joined!',
+        'new_session_id': new_session_id_to_join,
+        'joined_player_name': player_name_accepting
+    }, room=original_session_group_id)
+    logger.info(f"Emitted 'new_game_accepted_and_joined' to original group '{original_session_group_id}'")
+
     # Also update game state for the new session (now that two players might be there)
     updated_game_state_new_session = get_game_state_data(new_session_id_to_join)
     if updated_game_state_new_session:
@@ -1138,6 +1147,12 @@ def api_decline_play_again():
             'declined_session_id': declined_session_id
         }, room=declined_session_id)
         logger.info(f"Emitted 'play_again_declined' to room '{declined_session_id}'")
+        # Also notify the original group (so the inviter gets the event and can redirect)
+        socketio.emit('play_again_declined', {
+            'message': 'The other player declined the new quiz invitation.',
+            'declined_session_id': declined_session_id
+        }, room=original_session_group_id)
+        logger.info(f"Emitted 'play_again_declined' to original group '{original_session_group_id}'")
         
         # Clear the pending request as it's been actioned (declined)
         del pending_play_again_requests[original_session_group_id]
@@ -1263,6 +1278,14 @@ def api_get_multiplayer_results(session_id):
         logger.error(f"Multiplayer results error: {e}")
         return jsonify({'error': str(e)}), 500
 
+@app.route('/api/validate-admin-token', methods=['POST'])
+def api_validate_admin_token():
+    data = request.get_json()
+    token = data.get('token')
+    if token and token == app.config['ADMIN_TOKEN']:
+        return jsonify({'success': True})
+    return jsonify({'success': False})
+
 # --- SocketIO Event Handlers ---
 @socketio.on('connect')
 def handle_connect():
@@ -1331,48 +1354,6 @@ def handle_leave_session_room(data):
         logger.info(f"Client {request.sid} (Player: {player_name}) left room {session_id}")
         # Optionally, notify other players
         socketio.emit('user_activity', {'message': f"{player_name} left the session."}, room=session_id, include_self=False)
-
-# SocketIO event for receiving player answers
-@socketio.on('player_answer')
-def handle_player_answer(data):
-    session_id = data.get('session_id')
-    player_name = data.get('player_name')
-    question_index = data.get('question_index')
-    answer = data.get('answer')
-    player_choice = data.get('player_choice')
-    
-    logger.info(f"Received answer from {player_name} for session {session_id}, question {question_index}")
-    
-    # Update session data with the answer
-    session_data = session_manager.get_session(session_id)
-    if session_data:
-        if 'player_answers' not in session_data:
-            session_data['player_answers'] = {}
-        if player_name not in session_data['player_answers']:
-            session_data['player_answers'][player_name] = []
-        
-        # Ensure the answers list is long enough
-        while len(session_data['player_answers'][player_name]) <= question_index:
-            session_data['player_answers'][player_name].append(None)
-        
-        session_data['player_answers'][player_name][question_index] = {
-            'answer': answer,
-            'player_choice': player_choice
-        }
-        
-        session_manager.update_session(session_id, session_data)
-        cache.delete_memoized(api_get_session, session_id=session_id)
-        
-        logger.info(f"Broadcasting answer from {player_name} to session {session_id}")
-        # Broadcast the answer to all clients in the session
-        socketio.emit('player_answer', {
-            'player_name': player_name,
-            'question_index': question_index,
-            'answer': answer,
-            'player_choice': player_choice
-        }, room=session_id)
-    else:
-        logger.error(f"Session {session_id} not found for player answer")
 
 # SocketIO event for receiving all answers at once (more efficient)
 @socketio.on('player_all_answers')
