@@ -363,13 +363,6 @@
         }, 3000);
     }
     
-    // Allow Enter key to join game
-    document.getElementById('session-id-input').addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-            joinGame();
-        }
-    });
-
     function showAdminTokenModal() {
         document.getElementById('admin-token-modal').style.display = 'flex';
         document.getElementById('admin-token-input').value = '';

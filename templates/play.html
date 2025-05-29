@@ -472,7 +472,10 @@
 
 {% block extra_js %}
 <!-- put session JSON on the page for play.js -->
-<script>window.__PLAY_SESSION__ = {{ session|tojson|safe }};</script>
+<script>
+// Always output a valid JS object for session
+window.__PLAY_SESSION__ = JSON.parse('{{ (session or {})|tojson|safe }}');
+</script>
 
 <!-- 2️⃣ Other libraries -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.1/socket.io.min.js"></script>
