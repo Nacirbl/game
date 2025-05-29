@@ -1,0 +1,377 @@
+/* --- Add at the top for best scaling --- */
+/* In your HTML <head>, add: <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"> */
+
+/* Base improvements */
+html, body {
+    background-color: #f0f0f0;
+    overscroll-behavior: none;
+    touch-action: manipulation;
+    font-size: 15px; /* slightly smaller base */
+    /* Zoom out the whole app to 75% */
+}
+
+body > .container {
+    transform: scale(0.75);
+    transform-origin: top center;
+}
+
+@media (max-width: 480px) {
+    body > .container {
+        transform: scale(1);
+    }
+}
+
+/* Card stack container */
+.card-stack {
+    position: relative;
+    width: 340px;
+    height: 480px;
+    margin: 0 auto;
+    perspective: 1000px;
+    max-width: 98vw;
+    max-height: 80vh;
+}
+
+/* Card styles */
+.tinder-card {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: var(--border-radius);
+    background: white;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.12);
+    cursor: grab;
+    user-select: none;
+    transform-origin: center;
+    transition: transform 0.15s ease, opacity 0.15s ease;
+    overflow: hidden;
+    will-change: transform, opacity;
+    display: flex;
+    flex-direction: column;
+
+    /* GPU & paint optimization */
+    contain: layout style paint;
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+.tinder-card:active {
+    cursor: grabbing;
+}
+
+.tinder-card.dragging {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.tinder-card.next-card {
+    transform: scale(0.95) translateY(10px);
+    opacity: 0.8;
+    z-index: 1;
+}
+
+.tinder-card.current-card {
+    z-index: 10;
+    transform: scale(1);
+    opacity: 1;
+}
+
+/* Prompt */
+.question-prompt {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    right: 20px;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 0.7rem;
+    border-radius: 15px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 1.05rem;
+    color: var(--text-dark);
+    z-index: 5;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+/* Answer options */
+.options-container {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    margin-top: 80px;
+}
+
+.option-left,
+.option-right {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-align: center;
+    color: white;
+}
+
+.option-left {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+}
+
+.option-right {
+    background: linear-gradient(135deg, #f093fb, #f5576c);
+}
+
+/* Overlays */
+.choice-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.2rem;
+    opacity: 0;
+    transition: opacity 0.1s ease;
+    pointer-events: none;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    border-radius: var(--border-radius);
+}
+
+.choice-overlay.left {
+    background: linear-gradient(45deg, rgba(255, 68, 88, 0.1), rgba(255, 68, 88, 0.3));
+    color: #ff4458;
+    border: 4px solid #ff4458;
+}
+
+.choice-overlay.right {
+    background: linear-gradient(45deg, rgba(66, 165, 245, 0.1), rgba(66, 165, 245, 0.3));
+    color: #42a5f5;
+    border: 4px solid #42a5f5;
+}
+
+/* Action buttons */
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    margin-top: 2rem;
+}
+
+.action-btn {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    position: relative;
+    overflow: hidden;
+}
+
+.action-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+}
+
+.action-btn:active {
+    transform: scale(0.95);
+}
+
+.action-btn.reject {
+    background: linear-gradient(45deg, #667eea, #764ba2);
+    color: white;
+}
+
+.action-btn.like {
+    background: linear-gradient(45deg, #f093fb, #f5576c);
+    color: white;
+}
+
+/* Progress bar */
+.progress-bar {
+    width: 100%;
+    height: 12px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    margin: 0.5rem 0 1.5rem 0;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #667eea, #764ba2);
+    border-radius: 8px;
+    transition: width 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Results */
+.result-item {
+    padding: 1rem;
+    background: #fff;
+    border-radius: 10px;
+    margin: 0.5rem 0;
+    border-left-width: 5px;
+    border-left-style: solid;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    max-width: 700px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.result-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.result-item .prompt {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #333;
+}
+
+.result-item .status-text {
+    font-size: 0.95rem;
+}
+
+.result-item.status-both_correct { border-left-color: #4caf50; background-color: #e8f5e9; }
+.result-item.status-my_correct { border-left-color: #2196f3; background-color: #e3f2fd; }
+.result-item.status-other_correct { border-left-color: #ff9800; background-color: #fff3e0; }
+.result-item.status-both_wrong { border-left-color: #f44336; background-color: #ffebee; }
+.result-item.status-match { border-left-color: #4caf50; background-color: #e8f5e9; }
+.result-item.status-mismatch { border-left-color: #ffc107; background-color: #fff9c4; }
+.result-item.status-unanswered { border-left-color: #9e9e9e; background-color: #f5f5f5; }
+
+.result-item.status-both_correct .status-text { color: #2e7d32; }
+.result-item.status-my_correct .status-text { color: #1565c0; }
+.result-item.status-other_correct .status-text { color: #ef6c00; }
+.result-item.status-both_wrong .status-text { color: #c62828; }
+.result-item.status-match .status-text { color: #2e7d32; }
+.result-item.status-mismatch .status-text { color: #b58500; }
+.result-item.status-unanswered .status-text { color: #616161; }
+
+/* Animations */
+@keyframes slideInFromTop {
+    from { opacity: 0; transform: translateY(-100px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideOutToTop {
+    from { opacity: 1; transform: translateY(0); }
+    to   { opacity: 0; transform: translateY(-100px); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    html, body {
+        font-size: 14px;
+    }
+    .card-stack {
+        width: 98vw;
+        max-width: 98vw;
+        height: 70vh;
+        max-height: 500px;
+    }
+}
+
+@media (max-width: 600px) {
+    html, body {
+        font-size: 13px;
+    }
+    .card-stack {
+        width: 99vw;
+        max-width: 99vw;
+        height: 60vh;
+        max-height: 420px;
+    }
+    .result-item {
+        padding: 0.7rem 0.5rem;
+        font-size: 0.98rem;
+    }
+}
+
+@media (max-width: 480px) {
+    html, body {
+        font-size: 12px;
+    }
+    .card-stack {
+        width: 100vw;
+        max-width: 100vw;
+        height: 56vw;
+        min-height: 260px;
+        max-height: 350px;
+    }
+    .result-item {
+        padding: 0.5rem 0.2rem;
+        font-size: 0.93rem;
+    }
+    .action-btn {
+        width: 44px;
+        height: 44px;
+        font-size: 1.1rem;
+    }
+    .action-buttons {
+        gap: 1.2rem;
+        margin-top: 1rem;
+    }
+}
+
+/* Make result items use more width on mobile */
+@media (max-width: 600px) {
+    .result-item {
+        max-width: 99vw;
+        width: 99vw;
+    }
+}
+
+@media (max-width: 480px) {
+    .result-item {
+        max-width: 100vw;
+        width: 100vw;
+    }
+}
+
+/* Slightly reduce .question-prompt and .option-text font size on mobile */
+@media (max-width: 600px) {
+    .question-prompt {
+        font-size: 0.98rem;
+        padding: 0.5rem;
+    }
+}
+@media (max-width: 480px) {
+    .question-prompt {
+        font-size: 0.93rem;
+        padding: 0.3rem;
+    }
+}
+.option-text {
+    font-size: 1.1rem;
+}
+@media (max-width: 600px) {
+    .option-text {
+        font-size: 0.98rem;
+    }
+}
+@media (max-width: 480px) {
+    .option-text {
+        font-size: 0.93rem;
+    }
+}
+/* --- End mobile scaling improvements --- */
