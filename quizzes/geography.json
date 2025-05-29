@@ -1,0 +1,69 @@
+{
+  "title": "Geography",
+  "description": "",
+  "type": "competition",
+  "questions": [
+    {
+      "prompt": "What is the capital of France?",
+      "option1": "Paris",
+      "option2": "Rome",
+      "correct_answer": "option1"
+    },
+    {
+      "prompt": "Which ocean is the largest?",
+      "option1": "Atlantic",
+      "option2": "Pacific",
+      "correct_answer": "option2"
+    },
+    {
+      "prompt": "Mount Everest is in which mountain range?",
+      "option1": "Alps",
+      "option2": "Himalayas",
+      "correct_answer": "option2"
+    },
+    {
+      "prompt": "What is the longest river in the world?",
+      "option1": "Nile",
+      "option2": "Amazon",
+      "correct_answer": "option1"
+    },
+    {
+      "prompt": "Which country has the most islands?",
+      "option1": "Indonesia",
+      "option2": "Sweden",
+      "correct_answer": "option2"
+    },
+    {
+      "prompt": "Which continent is the Sahara Desert in?",
+      "option1": "Africa",
+      "option2": "Asia",
+      "correct_answer": "option1"
+    },
+    {
+      "prompt": "What is the capital of Canada?",
+      "option1": "Toronto",
+      "option2": "Ottawa",
+      "correct_answer": "option2"
+    },
+    {
+      "prompt": "Which US state is the Grand Canyon in?",
+      "option1": "Arizona",
+      "option2": "Nevada",
+      "correct_answer": "option1"
+    },
+    {
+      "prompt": "Which country has the city of Kyoto?",
+      "option1": "China",
+      "option2": "Japan",
+      "correct_answer": "option2"
+    },
+    {
+      "prompt": "What is the capital of Australia?",
+      "option1": "Sydney",
+      "option2": "Canberra",
+      "correct_answer": "option2"
+    }
+  ],
+  "id": "797eef35-7eb3-4afd-8001-9811d1939615",
+  "created_at": "2025-05-29T17:48:56.311883"
+}

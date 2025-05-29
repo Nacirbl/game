@@ -1,0 +1,69 @@
+{
+  "title": "History",
+  "description": "",
+  "type": "competition",
+  "questions": [
+    {
+      "prompt": "Who was the first US president?",
+      "option1": "George Washington",
+      "option2": "Abraham Lincoln",
+      "correct_answer": "option1"
+    },
+    {
+      "prompt": "Which year did WW2 end?",
+      "option1": "1945",
+      "option2": "1939",
+      "correct_answer": "option1"
+    },
+    {
+      "prompt": "Who discovered America?",
+      "option1": "Columbus",
+      "option2": "Magellan",
+      "correct_answer": "option1"
+    },
+    {
+      "prompt": "Where was Napoleon born?",
+      "option1": "Corsica",
+      "option2": "Paris",
+      "correct_answer": "option1"
+    },
+    {
+      "prompt": "The Berlin Wall fell in which year?",
+      "option1": "1989",
+      "option2": "1991",
+      "correct_answer": "option1"
+    },
+    {
+      "prompt": "Who was Cleopatra?",
+      "option1": "Greek queen",
+      "option2": "Egyptian queen",
+      "correct_answer": "option2"
+    },
+    {
+      "prompt": "What empire did Genghis Khan found?",
+      "option1": "Ottoman",
+      "option2": "Mongol",
+      "correct_answer": "option2"
+    },
+    {
+      "prompt": "Which country built the Great Wall?",
+      "option1": "India",
+      "option2": "China",
+      "correct_answer": "option2"
+    },
+    {
+      "prompt": "Who wrote the Iliad?",
+      "option1": "Plato",
+      "option2": "Homer",
+      "correct_answer": "option2"
+    },
+    {
+      "prompt": "Which ship sank in 1912?",
+      "option1": "Titanic",
+      "option2": "Lusitania",
+      "correct_answer": "option1"
+    }
+  ],
+  "id": "24c14b0d-c065-410e-8849-ef70f2d42366",
+  "created_at": "2025-05-29T17:48:56.313118"
+}
