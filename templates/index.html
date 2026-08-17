@@ -1,404 +1,84 @@
 {% extends "base.html" %}
 
+{% block title %}This or That{% endblock %}
+
+{% block header %}
+<h1><i class="fas fa-balance-scale"></i> This or That</h1>
+{% endblock %}
+
 {% block content %}
-<div class="card" style="text-align: center; max-width: 500px; margin: 0 auto;">
-    <h1 style="margin-bottom: 3rem; color: var(--text-dark); font-size: 3rem;">
-        <i class="fas fa-gamepad"></i><br>
-        This or That
-    </h1>
-    
-    <!-- Game Mode Selection -->
-    <div style="display: flex; flex-direction: column; gap: 1.5rem; margin: 2rem 0;">
-        <h2 style="text-align: center; color: var(--text-dark); margin-bottom: 1rem;">Choose Game Mode</h2>
-        
-        <!-- This or That Mode -->
-        <div style="background: linear-gradient(45deg, #667eea, #764ba2); padding: 2.5rem 2rem; border-radius: 20px; color: white; cursor: pointer; transition: transform 0.3s ease;" onclick="selectGameMode('thisorthat')" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
-            <i class="fas fa-balance-scale" style="font-size: 3rem; margin-bottom: 1rem;"></i>
-            <h3 style="margin-bottom: 1rem;">This or That</h3>
-            <p style="opacity: 0.9; margin: 0;">Personal preferences and opinions. No right or wrong answers!</p>
-        </div>
-        
-        <!-- Competition Mode -->
-        <div style="background: linear-gradient(45deg, #f093fb, #f5576c); padding: 2.5rem 2rem; border-radius: 20px; color: white; cursor: pointer; transition: transform 0.3s ease;" onclick="selectGameMode('competition')" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
-            <i class="fas fa-trophy" style="font-size: 3rem; margin-bottom: 1rem;"></i>
-            <h3 style="margin-bottom: 1rem;">Competition</h3>
-            <p style="opacity: 0.9; margin: 0;">Knowledge-based questions with correct answers. Test your skills and compete!</p>
-        </div>
-    </div>
-    
-    <!-- Player Setup (Initially Hidden) -->
-    <div id="player-setup" style="display: none; margin-top: 2rem;">
-        <div style="background: linear-gradient(45deg, #4caf50, #8bc34a); padding: 3rem 2rem; border-radius: 20px; color: white;">
-            <i class="fas fa-user" style="font-size: 4rem; margin-bottom: 1rem;"></i>
-            <h2 id="game-mode-title" style="margin-bottom: 1rem;">Ready to Play</h2>
-            <div style="margin-top: 1.5rem;">
-                <div style="padding: 1rem; background: rgba(255,255,255,0.1); border-radius: 10px; margin-bottom: 1rem;">
-                    <i class="fas fa-user"></i> Playing as: <input id="start-player-name" type="text" maxlength="20" style="border:none;background:rgba(255,255,255,0.2);color:white;font-weight:bold;padding:0.2em 0.5em;border-radius:6px;width:140px;text-align:center;" value="Anonymous" autocomplete="off">
-                </div>
-                <button onclick="startNewGame()" class="btn" style="background: rgba(255,255,255,0.2); border: 2px solid white; color: white; font-size: 1.1rem; padding: 1rem 2rem;">
-                    <i class="fas fa-rocket"></i> Start Game
-                </button>
-                <button onclick="goBack()" class="btn" style="background: transparent; border: 2px solid rgba(255,255,255,0.5); color: white; font-size: 1rem; padding: 0.8rem 1.5rem; margin-left: 1rem;">
-                    <i class="fas fa-arrow-left"></i> Back
-                </button>
-            </div>
-        </div>
-    </div>
-    
-    <div style="display: flex; flex-direction: column; gap: 2rem; margin: 2rem 0;">
-        
-    </div>
-    
-    <!-- Admin Link -->
-    <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid #eee;">
-        <a href="#" onclick="showAdminTokenModal()" style="color: var(--text-light); text-decoration: none; font-size: 0.9rem;">
-            <i class="fas fa-cog"></i> Create Quiz (Admin)
-        </a>
-    </div>
-    
-</div>
+<div id="home-root">
 
-<!-- Quiz Selection Modal -->
-<div id="quiz-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000;" onclick="closeModal()">
-    <div class="card" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); max-width: 600px; width: 90%; max-height: 80%; overflow-y: auto;" onclick="event.stopPropagation()">
-        <h3 style="text-align: center; margin-bottom: 2rem;">
-            <i class="fas fa-list"></i> Choose a Quiz
-        </h3>
-        
-        <div id="quiz-list" class="quiz-grid">
-            <div class="loading">
-                <div class="spinner"></div>
-            </div>
-        </div>
-        
-        <div style="text-align: center; margin-top: 2rem;">
-            <button onclick="closeModal()" class="btn btn-secondary">
-                <i class="fas fa-times"></i> Cancel
-            </button>
-        </div>
-    </div>
-</div>
-
-<!-- Admin Token Modal -->
-<div id="admin-token-modal" style="display:none;position:fixed;z-index:10000;left:0;top:0;width:100vw;height:100vh;background:rgba(0,0,0,0.5);align-items:center;justify-content:center;">
-  <div style="background:#fff;border-radius:12px;max-width:350px;margin:auto;padding:32px 24px;text-align:center;box-shadow:0 2px 16px rgba(0,0,0,0.2);">
-    <h3 style="margin-bottom:1.2em;">Enter Admin Token</h3>
-    <input id="admin-token-input" type="password" maxlength="64" style="width:90%;padding:0.7em 1em;border-radius:8px;border:1px solid #ccc;font-size:1.1em;margin-bottom:1em;" autocomplete="off">
-    <div id="admin-token-error" style="color:#e53935;font-size:0.98em;margin-bottom:1em;display:none;"></div>
-    <button onclick="submitAdminToken()" class="btn btn-primary" style="width:100%;margin-bottom:0.5em;">Submit</button>
-    <button onclick="closeAdminTokenModal()" class="btn btn-secondary" style="width:100%;background:#eee;color:#333;">Cancel</button>
+  <!-- player identity -->
+  <div class="card" style="padding:1.1rem 1.3rem;margin-bottom:1.2rem;display:flex;align-items:center;gap:.8rem;flex-wrap:wrap">
+    <span style="font-size:1.6rem">🙋</span>
+    <input id="player-name" maxlength="50" placeholder="Your name"
+           style="flex:1;min-width:140px;padding:.55rem .9rem;border-radius:12px;border:2px solid #e0e0f5;font-size:1rem">
+    <span id="name-ok" style="display:none;color:#4caf50;font-weight:600"><i class="fas fa-check"></i></span>
   </div>
+
+  <!-- daily challenge -->
+  <div onclick="window.startDaily()" class="home-tile" style="background:linear-gradient(45deg,#ff9a9e,#fad0c4);cursor:pointer">
+    <div class="tile-emoji">🗓️</div>
+    <div class="tile-title">Daily Challenge</div>
+    <div class="tile-sub">Same 10 questions for everyone today</div>
+  </div>
+
+  <!-- categories -->
+  <h3 class="section-title"><i class="fas fa-shapes"></i> Pick a Category</h3>
+  <div id="category-grid" class="tile-grid">
+    <div class="loading"><div class="spinner"></div></div>
+  </div>
+
+  <!-- saved quizzes -->
+  <h3 class="section-title"><i class="fas fa-bookmark"></i> Saved Quizzes</h3>
+  <div id="quiz-list" class="quiz-list">
+    <div class="loading"><div class="spinner"></div></div>
+  </div>
+
+  <!-- join -->
+  <h3 class="section-title"><i class="fas fa-link"></i> Join a Friend</h3>
+  <div class="card" style="padding:1rem;display:flex;gap:.6rem;flex-wrap:wrap">
+    <input id="join-input" placeholder="Paste the game link or code"
+           style="flex:1;min-width:160px;padding:.6rem .9rem;border-radius:12px;border:2px solid #e0e0f5">
+    <button class="btn" style="background:var(--primary-color);color:#fff" onclick="window.joinGame()">
+      <i class="fas fa-sign-in-alt"></i> Join
+    </button>
+  </div>
+
+  <p style="text-align:center;margin-top:2rem;font-size:.85rem;color:#999">
+    <a href="/admin" style="color:#999">Create your own quiz</a>
+  </p>
 </div>
+
+<style>
+  .home-tile {
+    border-radius: 18px; padding: 1.2rem; color: #fff; text-align: center;
+    box-shadow: 0 8px 24px rgba(0,0,0,.10); margin-bottom: 1rem;
+  }
+  .tile-emoji { font-size: 2.2rem; }
+  .tile-title { font-size: 1.25rem; font-weight: 700; margin-top: .2rem; }
+  .tile-sub   { font-size: .85rem; opacity: .9; margin-top: .15rem; }
+  .section-title { margin: 1.6rem 0 .8rem; color: var(--text-dark); font-size: 1.05rem; }
+  .tile-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: .8rem; }
+  .tile-grid .home-tile { margin-bottom: 0; cursor: pointer; transition: transform .15s; }
+  .tile-grid .home-tile:hover { transform: scale(1.03); }
+  .tile-grid .home-tile:active { transform: scale(.97); }
+  .quiz-list { display: flex; flex-direction: column; gap: .5rem; }
+  .quiz-item {
+    background: #fff; border-radius: 14px; padding: .85rem 1.1rem; cursor: pointer;
+    box-shadow: 0 3px 10px rgba(0,0,0,.06); display: flex; justify-content: space-between;
+    align-items: center; gap: .6rem; transition: transform .15s;
+  }
+  .quiz-item:hover { transform: translateY(-2px); }
+  .quiz-item .qi-title { font-weight: 600; }
+  .quiz-item .qi-meta { font-size: .8rem; color: #999; white-space: nowrap; }
+</style>
 {% endblock %}
 
 {% block extra_js %}
 <script>
-    let quizzes = [];
-    let selectedGameMode = '';
-    
-    function getStoredPlayerName() {
-        try {
-            const storedData = localStorage.getItem('playerData');
-            if (storedData) {
-                const playerData = JSON.parse(storedData);
-                if (playerData.expires > Date.now() && playerData.name) {
-                    return playerData.name;
-                }
-            }
-            // Fallback to old storage method
-            const oldName = localStorage.getItem('playerName');
-            if (oldName) {
-                return oldName;
-            }
-        } catch (e) {
-            console.log('Could not restore player name');
-        }
-        return 'Anonymous';
-    }
-    
-    function updateStartPlayerName() {
-        const playerName = getStoredPlayerName();
-        const input = document.getElementById('start-player-name');
-        if (input) {
-            input.value = playerName;
-        }
-    }
-    
-    function updateJoinPlayerName() {
-        const playerName = getStoredPlayerName();
-        const display = document.getElementById('join-player-name');
-        if (display) {
-            display.textContent = playerName;
-        }
-    }
-    
-    document.addEventListener('DOMContentLoaded', async function() {
-        updateStartPlayerName();
-        updateJoinPlayerName();
-
-        const preselectQuizIdFromUrl = '{{ preselect_quiz_id or "" }}';
-        if (preselectQuizIdFromUrl) {
-            console.log("Preselecting quiz from URL:", preselectQuizIdFromUrl);
-            // We need to determine the game mode of this quiz to correctly set `selectedGameMode`
-            // Then, we can directly call playQuiz, or a modified startNewGame that uses this info.
-            try {
-                // Fetch all quizzes to find the type of the preselected one
-                const response = await fetch('/api/quizzes');
-                const allQuizzesForPreselect = await response.json();
-                const quizToPreselect = allQuizzesForPreselect.find(q => q.id === preselectQuizIdFromUrl);
-
-                if (quizToPreselect) {
-                    // Set the game mode based on the preselected quiz
-                    selectedGameMode = quizToPreselect.type === 'competition' ? 'competition' : 'thisorthat';
-                    console.log(`Determined game mode for preselected quiz ${preselectQuizIdFromUrl} is ${selectedGameMode}`);
-                    
-                    // Now directly play this quiz (which uses selectedGameMode indirectly via its own session setup logic)
-                    // The player name is already handled by playQuiz using getStoredPlayerName
-                    // We bypass the player-setup screen and quiz modal directly.
-                    playQuiz(preselectQuizIdFromUrl);
-                } else {
-                    showNotification(`Quiz ID ${preselectQuizIdFromUrl} not found. Please select a quiz manually.`, 'error');
-                    // Fallback to normal page load if preselected quiz not found
-                }
-            } catch (error) {
-                console.error("Error during preselection:", error);
-                showNotification('Error finding preselected quiz. Please select manually.', 'error');
-            }
-        }
-    });
-    
-    function selectGameMode(mode) {
-        selectedGameMode = mode;
-        const modeSelectionDiv = document.querySelector('.card > div[style*="flex-direction: column"][style*="gap: 1.5rem"]'); // More specific selector for game mode buttons container
-        const playerSetupDiv = document.getElementById('player-setup');
-        
-        if(modeSelectionDiv) modeSelectionDiv.style.display = 'none';
-        if(playerSetupDiv) playerSetupDiv.style.display = 'block';
-        
-        const title = document.getElementById('game-mode-title');
-        if (title) {
-            if (mode === 'thisorthat') {
-                title.textContent = 'This or That - Ready to Play';
-            } else {
-                title.textContent = 'Competition - Ready to Compete';
-            }
-        }
-        updateStartPlayerName();
-    }
-    
-    function goBack() {
-        const modeSelectionDiv = document.querySelector('.card > div[style*="flex-direction: column"][style*="gap: 1.5rem"]');
-        const playerSetupDiv = document.getElementById('player-setup');
-        if(modeSelectionDiv) modeSelectionDiv.style.display = 'flex'; // Assuming it was flex
-        if(playerSetupDiv) playerSetupDiv.style.display = 'none';
-        selectedGameMode = '';
-    }
-    
-    async function startNewGame() { // This function is now primarily for when user clicks "Start Game" after selecting mode manually
-        const playerName = document.getElementById('start-player-name').value.trim() || 'Anonymous';
-        // Save to localStorage for future sessions
-        try {
-            const expires = Date.now() + 1000*60*60*24*30; // 30 days
-            localStorage.setItem('playerData', JSON.stringify({name: playerName, expires}));
-        } catch {}
-        
-        if (!selectedGameMode) {
-            showNotification('Error: Game mode not selected. Please go back and pick a mode.', 'error');
-            // Attempt to show mode selection if hidden
-            goBack(); 
-            return;
-        }
-        
-        const modal = document.getElementById('quiz-modal');
-        const quizList = document.getElementById('quiz-list');
-        quizList.innerHTML = '<div class="loading"><div class="spinner"></div></div>';
-        modal.style.display = 'block';
-        
-        try {
-            const response = await fetch('/api/quizzes');
-            const allQuizzes = await response.json();
-            
-            quizzes = allQuizzes.filter(quiz => {
-                if (selectedGameMode === 'competition') {
-                    return quiz.type === 'competition';
-                } else { 
-                    return quiz.type !== 'competition';
-                }
-            });
-            
-            if (quizzes.length === 0) {
-                const modeText = selectedGameMode === 'competition' ? 'Competition' : 'This or That';
-                quizList.innerHTML = `
-                    <div style="text-align: center; padding: 3rem; color: var(--text-light);">
-                        <i class="fas fa-inbox" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;"></i>
-                        <h3>No ${modeText} quizzes available yet</h3>
-                        <p>Create your first ${modeText.toLowerCase()} quiz!</p>
-                        <a href="/admin" class="btn" style="margin-top: 1rem;">
-                            <i class="fas fa-plus"></i> Create First Quiz
-                        </a>
-                    </div>
-                `;
-                return;
-            }
-            
-            quizList.innerHTML = quizzes.map(quiz => {
-                const isCompetition = quiz.type === 'competition';
-                const icon = isCompetition ? 'fas fa-trophy' : 'fas fa-balance-scale';
-                const typeLabel = isCompetition ? 'Competition' : 'This or That';
-                
-                return `
-                    <div class="quiz-item" onclick="playQuiz('${quiz.id}')">
-                        <div class="quiz-title">
-                            <i class="${icon}"></i> ${quiz.title}
-                        </div>
-                        <div class="quiz-description">${quiz.description || 'No description'}</div>
-                        <div class="quiz-meta">
-                            <span><i class="fas fa-question-circle"></i> ${quiz.question_count} questions</span>
-                            <span style="background: ${isCompetition ? '#f093fb' : '#667eea'}; color: white; padding: 0.2rem 0.5rem; border-radius: 10px; font-size: 0.8rem;">
-                                ${typeLabel}
-                            </span>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-            
-        } catch (error) {
-            console.error('Error loading quizzes for modal:', error);
-            quizList.innerHTML = `
-                <div style="text-align: center; padding: 3rem; color: var(--primary-color);">
-                    <i class="fas fa-exclamation-triangle" style="font-size: 3rem; margin-bottom: 1rem;"></i>
-                    <h3>Error loading quizzes</h3>
-                    <p>Please try again later.</p>
-                </div>
-            `;
-        }
-    }
-
-    function playQuiz(quizId) {
-        const playerName = getStoredPlayerName();
-        // selectedGameMode should be set if we reached here either via preselection or manual selection
-        if (!selectedGameMode) {
-            // This is a fallback, ideally selectedGameMode is always set before playQuiz is callable
-            console.warn("playQuiz called without selectedGameMode. This might lead to issues if quiz type matters for session start.");
-            // Attempt to infer from quizId if possible, or default
-        }
-        showNotification(`Starting "${selectedGameMode}" quiz...`);
-        window.location.href = `/play/${quizId}?player_name=${encodeURIComponent(playerName)}`;
-        closeModal(); 
-    }
-    
-    async function joinGame() {
-        const playerName = getStoredPlayerName();
-        const input = document.getElementById('session-id-input').value.trim();
-        
-        if (!input) {
-            showNotification('Please enter a session ID or game link', 'error');
-            return;
-        }
-        
-        // Extract session ID from URL if it's a full link
-        let sessionId = input;
-        if (input.includes('/session/')) {
-            sessionId = input.split('/session/')[1];
-        }
-        
-        showNotification(`Joining game...`);
-        
-        try {
-            // Get the original session info
-            const response = await fetch(`/api/session/${sessionId}`);
-            if (response.ok) {
-                const sessionData = await response.json();
-                
-                // Create a new session for the same quiz in the same group
-                const createResponse = await fetch('/api/create-session', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        quiz_id: sessionData.quiz_id,
-                        shared_session_group: sessionData.shared_session_group || sessionId,
-                        player_name: playerName
-                    })
-                });
-                
-                const createData = await createResponse.json();
-                if (createData.success) {
-                    window.location.href = `/session/${createData.session_id}`;
-                } else {
-                    // Fallback to original session
-                    window.location.href = `/session/${sessionId}`;
-                }
-            } else {
-                // Fallback to original session
-                window.location.href = `/session/${sessionId}`;
-            }
-        } catch (error) {
-            console.error('Error joining game:', error);
-            // Fallback to original session
-            window.location.href = `/session/${sessionId}`;
-        }
-    }
-    
-    function closeModal() {
-        document.getElementById('quiz-modal').style.display = 'none';
-    }
-    
-    function showNotification(message, type = 'success') {
-        // Create toast notification
-        const toast = document.createElement('div');
-        toast.style.cssText = `
-            position: fixed; top: 20px; right: 20px; z-index: 9999;
-            background: ${type === 'error' ? '#f44336' : '#4caf50'};
-            color: white; padding: 1rem 1.5rem; border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            transform: translateX(400px); transition: transform 0.3s ease;
-        `;
-        toast.textContent = message;
-        document.body.appendChild(toast);
-        
-        setTimeout(() => toast.style.transform = 'translateX(0)', 100);
-        setTimeout(() => {
-            toast.style.transform = 'translateX(400px)';
-            setTimeout(() => document.body.removeChild(toast), 300);
-        }, 3000);
-    }
-    
-    function showAdminTokenModal() {
-        document.getElementById('admin-token-modal').style.display = 'flex';
-        document.getElementById('admin-token-input').value = '';
-        document.getElementById('admin-token-error').style.display = 'none';
-    }
-    
-    function closeAdminTokenModal() {
-        document.getElementById('admin-token-modal').style.display = 'none';
-    }
-    
-    function submitAdminToken() {
-        const token = document.getElementById('admin-token-input').value.trim();
-        const errorDiv = document.getElementById('admin-token-error');
-        if (!token) {
-            errorDiv.textContent = 'Please enter the admin token.';
-            errorDiv.style.display = 'block';
-            return;
-        }
-        fetch('/api/validate-admin-token', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ token })
-        })
-        .then(r => r.json())
-        .then(j => {
-            if (j.success) {
-                window.location.href = '/admin?token=' + encodeURIComponent(token);
-            } else {
-                errorDiv.textContent = 'Invalid admin token.';
-                errorDiv.style.display = 'block';
-            }
-        })
-        .catch(() => {
-            errorDiv.textContent = 'Error validating token.';
-            errorDiv.style.display = 'block';
-        });
-    }
+  window.__PRESELECT_QUIZ__ = {{ preselect_quiz_id | tojson }};
 </script>
-{% endblock %} 
+<script type="module" src="/static/home.js?v=1"></script>
+{% endblock %}

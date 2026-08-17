@@ -1,0 +1,18 @@
+# Python
+__pycache__/
+*.pyc
+
+# Runtime data
+session_storage/
+cache/
+results/
+uploads/
+play_sessions/
+questions_db.backup-pre-expansion.json
+
+# Env
+.env
+
+# Node / build
+node_modules/
+target/

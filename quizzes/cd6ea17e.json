@@ -1,0 +1,44 @@
+{
+  "id": "cd6ea17e",
+  "title": "Solo Repro",
+  "description": "",
+  "type": "thisorthat",
+  "questions": [
+    {
+      "id": null,
+      "prompt": "Q0?",
+      "option1": "A",
+      "option2": "B",
+      "correct_answer": null
+    },
+    {
+      "id": null,
+      "prompt": "Q1?",
+      "option1": "A",
+      "option2": "B",
+      "correct_answer": null
+    },
+    {
+      "id": null,
+      "prompt": "Q2?",
+      "option1": "A",
+      "option2": "B",
+      "correct_answer": null
+    },
+    {
+      "id": null,
+      "prompt": "Q3?",
+      "option1": "A",
+      "option2": "B",
+      "correct_answer": null
+    },
+    {
+      "id": null,
+      "prompt": "Q4?",
+      "option1": "A",
+      "option2": "B",
+      "correct_answer": null
+    }
+  ],
+  "created_at": "2026-08-15 20:35:20.017835"
+}

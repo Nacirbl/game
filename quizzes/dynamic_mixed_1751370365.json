@@ -1,0 +1,69 @@
+{
+  "id": "dynamic_mixed_1751370365",
+  "title": "Mixed Bag Quiz",
+  "description": "",
+  "type": "thisorthat",
+  "questions": [
+    {
+      "prompt": "Accessories or Minimal?",
+      "option1": "Accessories",
+      "option2": "Minimal",
+      "correct_answer": null
+    },
+    {
+      "prompt": "Binge watch or Weekly episodes?",
+      "option1": "Binge watch",
+      "option2": "Weekly episodes",
+      "correct_answer": null
+    },
+    {
+      "prompt": "Breakfast or Dinner?",
+      "option1": "Breakfast",
+      "option2": "Dinner",
+      "correct_answer": null
+    },
+    {
+      "prompt": "Food truck or Fine dining?",
+      "option1": "Food truck",
+      "option2": "Fine dining",
+      "correct_answer": null
+    },
+    {
+      "prompt": "Wildlife safari or Aquarium?",
+      "option1": "Wildlife safari",
+      "option2": "Aquarium",
+      "correct_answer": null
+    },
+    {
+      "prompt": "Bluetooth or Wired headphones?",
+      "option1": "Bluetooth",
+      "option2": "Wired headphones",
+      "correct_answer": null
+    },
+    {
+      "prompt": "Online shopping or Store shopping?",
+      "option1": "Online shopping",
+      "option2": "Store shopping",
+      "correct_answer": null
+    },
+    {
+      "prompt": "Football or Basketball?",
+      "option1": "Football",
+      "option2": "Basketball",
+      "correct_answer": null
+    },
+    {
+      "prompt": "Credits or Skip credits?",
+      "option1": "Credits",
+      "option2": "Skip credits",
+      "correct_answer": null
+    },
+    {
+      "prompt": "Pack light or Pack everything?",
+      "option1": "Pack light",
+      "option2": "Pack everything",
+      "correct_answer": null
+    }
+  ],
+  "created_at": "2025-07-01 13:46:05.319224"
+}

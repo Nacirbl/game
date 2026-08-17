@@ -1,0 +1,12 @@
+{
+  "title": "Test Quiz",
+  "description": "Simple test quiz",
+  "type": "thisorthat",
+  "questions": [
+    {
+      "prompt": "Coffee or tea?",
+      "option1": "Coffee",
+      "option2": "Tea"
+    }
+  ]
+}

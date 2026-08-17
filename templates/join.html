@@ -1,125 +1,72 @@
 {% extends "base.html" %}
 
-{% block title %}Join Quiz - {{ quiz_title }}{% endblock %}
+{% block title %}Join Game – This or That{% endblock %}
 
-{% block header %}
-<h1><i class="fas fa-users"></i> Join Quiz</h1>
-<p>Your friend invited you to play: <strong>{{ quiz_title }}</strong></p>
-{% endblock %}
+{% block header %}<h1><i class="fas fa-users"></i> Join Game</h1>{% endblock %}
 
 {% block content %}
-<div class="card" style="max-width: 500px; margin: 0 auto; text-align: center;">
-    <div style="background: linear-gradient(45deg, #667eea, #764ba2); padding: 2rem; border-radius: 20px; margin-bottom: 2rem;">
-        <i class="fas fa-user-friends" style="font-size: 3rem; color: white; margin-bottom: 1rem;"></i>
-        <h2 style="color: white; margin-bottom: 0.5rem;">Join Your Friend!</h2>
-        <p style="color: rgba(255,255,255,0.9); margin: 0;">Ready to start playing together</p>
-    </div>
-    
-    <div style="margin-bottom: 2rem;">
-        <div style="padding: 1.5rem; background: rgba(102, 126, 234, 0.1); border-radius: 15px; border: 2px solid rgba(102, 126, 234, 0.2);">
-            <i class="fas fa-user" style="color: var(--primary-color); margin-right: 0.5rem;"></i>
-            <strong>Playing as:</strong> <span id="join-player-name-display">Anonymous</span>
-        </div>
-    </div>
-    
-    <div style="margin-top: 2rem;">
-        <button onclick="joinQuiz()" class="btn" style="font-size: 1.2rem; padding: 1rem 2rem; width: 100%;">
-            <i class="fas fa-play"></i> Join Quiz
-        </button>
-    </div>
-    
-    <div style="margin-top: 1.5rem; padding: 1rem; background: #f8f9fa; border-radius: 15px; font-size: 0.9rem; color: var(--text-light);">
-        <i class="fas fa-info-circle"></i> 
-        You'll be connected to the same quiz as your friend. Have fun!
-    </div>
+<div style="max-width:420px;margin:2rem auto;">
+  {% if not exists %}
+  <div class="card" style="padding:2rem;text-align:center">
+    <div style="font-size:3rem">😕</div>
+    <h2 style="margin:.5rem 0">Game not found</h2>
+    <p style="color:#666">This game doesn't exist or has already expired.</p>
+    <a href="/" class="btn" style="background:var(--primary-color);color:#fff">Start a new game</a>
+  </div>
+  {% else %}
+  <div class="card" style="padding:2rem;text-align:center">
+    <div style="font-size:3rem">🎮</div>
+    <h2 style="margin:.5rem 0">{{ quiz_title }}</h2>
+    <p style="color:#666">Enter your name to join the game.</p>
+    <input id="player-name" maxlength="50" placeholder="Your name"
+           style="width:100%;padding:.8rem 1rem;border-radius:12px;border:2px solid #e0e0f5;font-size:1.05rem;text-align:center;margin:1rem 0">
+    <button id="join-btn" class="btn" style="background:linear-gradient(45deg,#667eea,#764ba2);color:#fff;width:100%;font-size:1.1rem;padding:.8rem">
+      <i class="fas fa-sign-in-alt"></i> Join
+    </button>
+    <p id="join-error" style="color:#f44336;min-height:1.2rem;margin-top:.8rem"></p>
+  </div>
+  {% endif %}
 </div>
 
-<div id="join-status" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; align-items: center; justify-content: center;">
-    <div class="card" style="max-width: 400px; margin: 2rem; text-align: center;">
-        <div class="loading">
-            <div class="spinner"></div>
-        </div>
-        <h3>Joining Quiz...</h3>
-        <p style="color: var(--text-light);">Please wait while we connect you</p>
-    </div>
-</div>
-{% endblock %}
-
-{% block extra_js %}
+{% if exists %}
 <script>
-    const sessionId = '{{ session_id }}';
-    
-    function getStoredPlayerName() {
-        try {
-            const storedData = localStorage.getItem('playerData');
-            if (storedData) {
-                const playerData = JSON.parse(storedData);
-                if (playerData.expires > Date.now() && playerData.name) {
-                    return playerData.name;
-                }
-            }
-            // Fallback to old storage method
-            const oldName = localStorage.getItem('playerName');
-            if (oldName) {
-                return oldName;
-            }
-        } catch (e) {
-            console.log('Could not restore player name');
-        }
-        return 'Anonymous';
+(function () {
+  const sid = {{ session_id | tojson }};
+  const input = document.getElementById('player-name');
+  const btn = document.getElementById('join-btn');
+  const err = document.getElementById('join-error');
+
+  // remember the name between visits
+  try { input.value = JSON.parse(localStorage.getItem('playerData') || '{}').name || ''; } catch {}
+  input.focus();
+
+  async function join() {
+    const name = input.value.trim();
+    if (!name) { err.textContent = 'Please enter a name'; return; }
+    btn.disabled = true;
+    btn.innerHTML = 'Joining…';
+    try {
+      const r = await fetch(`/api/game/${sid}/join`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ player_name: name }),
+      });
+      const data = await r.json();
+      if (!r.ok) throw new Error(data.detail || 'Could not join');
+      try {
+        localStorage.setItem('playerData', JSON.stringify(
+          { name, expires: Date.now() + 86400000 * 30 }));
+      } catch {}
+      location.href = `/game/${sid}?player=${encodeURIComponent(name)}`;
+    } catch (e) {
+      err.textContent = e.message;
+      btn.disabled = false;
+      btn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Join';
     }
-    
-    function updateJoinPlayerNameDisplay() {
-        const playerName = getStoredPlayerName();
-        const display = document.getElementById('join-player-name-display');
-        if (display) {
-            display.textContent = playerName;
-        }
-    }
-    
-    async function joinQuiz() {
-        const playerName = getStoredPlayerName();
-        
-        // Show loading status
-        document.getElementById('join-status').style.display = 'flex';
-        
-        try {
-            // The sessionId is the ID of the session the player wants to join.
-            // We directly use this to call /api/join-session.
-            const response = await fetch('/api/join-session', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    session_id: sessionId, // This is the session_id from the join URL
-                    player_name: playerName
-                })
-            });
-            
-            if (!response.ok) {
-                const errorText = await response.text();
-                throw new Error(`Failed to join session: ${response.status} ${errorText}`);
-            }
-            
-            const result = await response.json();
-            
-            if (result.success && result.join_url) {
-                // Redirect to the play page for the session they joined
-                window.location.href = result.join_url;
-            } else {
-                throw new Error(result.error || 'Failed to join session. Invalid response from server.');
-            }
-        } catch (error) {
-            console.error('Error joining session:', error);
-            document.getElementById('join-status').style.display = 'none';
-            showNotification(error.message || 'Failed to join quiz. Please try again.', 'error');
-        }
-    }
-    
-    // Update name display when page loads
-    document.addEventListener('DOMContentLoaded', function() {
-        updateJoinPlayerNameDisplay();
-    });
+  }
+  btn.onclick = join;
+  input.addEventListener('keydown', e => { if (e.key === 'Enter') join(); });
+})();
 </script>
-{% endblock %} 
+{% endif %}
+{% endblock %}

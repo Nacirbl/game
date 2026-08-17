@@ -1,0 +1,21 @@
+services:
+  app:
+    build: .
+    ports:
+      - "2000:2000"
+    environment:
+      # override any of these in .env or the shell
+      DEEPINFRA_API_KEY: ${DEEPINFRA_API_KEY:-}
+      ADMIN_TOKEN: ${ADMIN_TOKEN:-malenanacir}
+      SESSION_TTL: ${SESSION_TTL:-21600}
+      SESSION_STORAGE_DIR: /data/sessions
+    volumes:
+      - app-quizzes:/app/quizzes
+      - app-results:/app/results
+      - app-data:/data
+    restart: unless-stopped
+
+volumes:
+  app-quizzes:
+  app-results:
+  app-data:

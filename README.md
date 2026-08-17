@@ -1,171 +1,68 @@
-# This or That Quiz App 🎮
+# This or That 💑
 
-A fast, modern web application for creating and playing "This or That" style quizzes with real-time multiplayer support, AI-powered question generation, and optimized performance.
+A swipe-based quiz game for couples and friends. Solo play or two-player
+match-up with live progress, results comparison, reactions and chat.
 
-## ✨ Key Features
+## Run it
 
-### 🚀 Performance Optimizations (v2.0)
-- **High-Performance Session Management**: DiskCache + in-memory caching for 10x faster session handling
-- **Async Operations**: ThreadPoolExecutor for non-blocking AI generation and image processing
-- **Smart Caching**: LRU cache for quiz data and Flask-Caching for API responses
-- **Connection Pooling**: Optimized LLM API connections for faster question generation
-
-### 🎯 Core Features
-- **Create Custom Quizzes**: Manual creation, AI generation, or image upload
-- **AI Question Generator**: Powered by Google Gemma-3-27b-it model
-- **Test Mode**: Quiz creators can test their quizzes in solo mode before sharing
-- **Real-time Multiplayer**: Play with friends using session sharing
-- **Image-to-Quiz**: Upload images and AI extracts relevant questions
-- **Multiple Quiz Types**: 
-  - This or That (preferences)
-  - Player vs Player (personality comparisons)
-  - Competition mode (knowledge-based with scoring)
-
-### 🔧 Technical Improvements
-- **Python-Only Dependencies**: No Redis required - uses DiskCache for persistence
-- **Optimized Storage**: Dual-layer caching (memory + disk) with automatic cleanup
-- **Background Processing**: Non-blocking operations for better UX
-- **Error Handling**: Comprehensive error handling and user feedback
-- **Mobile Responsive**: Works seamlessly on all devices
-
-## 🚀 Quick Start
-
-### Prerequisites
-- Python 3.8+
-- pip
-
-### Installation
-
-1. **Clone the repository**:
-```bash
-git clone <repository-url>
-cd thisorthat
-```
-
-2. **Install dependencies**:
 ```bash
 pip install -r requirements.txt
+python run.py            # http://localhost:2000
 ```
 
-3. **Run the application**:
-```bash
-python run.py
-```
+Or with Docker: `docker compose up --build`
 
-4. **Open your browser**:
-   - 📝 Create Quiz: http://localhost:5000/admin
-   - 🎮 Home Page: http://localhost:5000/
-   - 📊 View Results: http://localhost:5000/results
+## Architecture (v3, clean rebuild)
 
-## 📖 How to Use
-
-### Creating a Quiz
-
-1. **Go to Admin Panel**: Visit `/admin`
-2. **Choose Creation Method**:
-   - 📷 **Upload Image**: AI extracts questions from any image
-   - 🤖 **AI Generation**: Enter a topic and let AI create questions
-   - ✍️ **Manual Creation**: Write your own questions
-3. **Configure Quiz**:
-   - Set title and description
-   - Choose quiz type (This or That, Competition, Player vs Player)
-   - Add/edit questions
-4. **Test & Share**:
-   - Use "Test Quiz" to try it yourself first
-   - Copy share link or Quiz ID for friends
-
-### Playing a Quiz
-
-1. **Join via Link**: Click a shared quiz link
-2. **Enter Player Name**: Choose your display name
-3. **Answer Questions**: Pick your preferences by clicking left/right
-4. **View Results**: See your choices and compare with friends
-
-### Multiplayer Features
-
-- **Real-time Sync**: See when friends complete their quiz
-- **Result Comparison**: Compare choices question by question
-- **Player Tracking**: Track active and completed players
-- **Session Groups**: All players in the same session can compare results
-
-## 🔧 Configuration
-
-### Environment Variables
-```bash
-# Optional - defaults provided
-SECRET_KEY=your-secret-key
-DEEPINFRA_API_KEY=your-api-key
-SESSION_TIMEOUT=3600
-CACHE_DEFAULT_TIMEOUT=300
-```
-
-### Performance Tuning
-The app automatically optimizes for your environment:
-- **Development**: Fast reload, detailed logging
-- **Production**: Gevent server, optimized caching, larger memory limits
-
-## 📁 Project Structure
+The server owns the truth; the client renders state.
 
 ```
-thisorthat/
-├── app.py                 # Main Flask application with optimizations
-├── config.py              # Configuration management
-├── session_manager.py     # High-performance session handling
-├── run.py                 # Development startup script
-├── requirements.txt       # Python dependencies (Redis-free)
-├── templates/             # HTML templates
-│   ├── admin.html        # Quiz creation interface
-│   ├── play.html         # Quiz playing interface
-│   ├── results.html      # Results viewing
-│   └── ...
-├── cache/                # Flask cache storage
-├── session_storage/      # DiskCache session data
-├── quizzes/              # Quiz definitions
-├── results/              # Completed quiz results
-└── uploads/              # Temporary image uploads
+app.py            FastAPI assembly: pages, routers, static, lifespan
+store.py          Session storage (diskcache, sliding TTL, deep copies)
+game.py           The game: phase machine (lobby → playing → results),
+                  answer maps, server-computed results, public_state()
+routes_game.py    /api/game/* endpoints + WebSocket notification bus
+routes_quiz.py    Question bank, dynamic quizzes, admin/LLM authoring
+llm.py            AI question generation, name suggestions, image import
+quizlib.py        Quiz file loading/saving (quizzes/*.json)
+question_database.py + question_seed_*.py + populate_question_db.py
+                  The 1,669-question bank (16 categories, couples-heavy)
+
+static/game.js    The play page: fetch state → render(state). One render
+                  function, four screens. WS messages just trigger refetch.
+static/home.js    Landing page: daily / categories / saved quizzes / join
+static/admin.js   Quiz builder: manual editing, AI generation, image import
+static/card_stack_system.js
+                  Swipe engine: pointer events, relative thresholds,
+                  flick detection, tap-to-answer, undo support
 ```
 
-## 🆕 What's New in v2.0
+### Key design rules
 
-### Performance Improvements
-- ⚡ **90% faster session operations** with DiskCache + memory caching
-- 🚀 **Non-blocking AI generation** with ThreadPoolExecutor
-- 💾 **Smart memory management** with automatic cache eviction
-- 🔄 **Background cleanup** for expired sessions and cache
+- **One state contract.** `GET /api/game/{sid}?player=NAME` returns
+  everything the client renders. The WebSocket is a *notification bus*
+  (`{"type": "state"}`) — no business logic in WS handlers.
+- **One answer format.** `players[name].answers = {question_index: entry}`
+  — a map, not an array. No holes, no dual formats, dedup for free.
+- **Results are computed server-side** (solo list / match % / competition
+  scores) — the client never re-derives game outcomes.
+- **Sessions survive** refreshes, reconnects and server restarts (disk
+  persistence + sliding TTL + 20s disconnect grace).
 
-### New Features
-- 🧪 **Test Mode**: Quiz creators can test before sharing
-- 📱 **Better Mobile UX**: Improved responsive design
-- 🔗 **Enhanced Sharing**: Direct links, better copy/paste
-- 📊 **Improved Analytics**: Better session tracking and results
-- 🎨 **Modern UI**: Updated icons, animations, and notifications
+## Configuration (environment)
 
-### Developer Experience
-- 🛠️ **Simplified Setup**: No Redis installation required
-- 📝 **Better Logging**: Comprehensive error tracking
-- 🔧 **Easy Configuration**: Environment-based settings
-- 🚀 **Quick Start**: `python run.py` and you're running
+| Variable | Default | Purpose |
+|---|---|---|
+| `DEEPINFRA_API_KEY` | – | AI question generation (admin page) |
+| `DEEPINFRA_BASE_URL` | DeepInfra | OpenAI-compatible endpoint |
+| `LLM_MODEL` | `google/gemma-3-27b-it` | Model for generation |
+| `ADMIN_TOKEN` | `malenanacir` | Unlocks the quiz builder |
+| `SESSION_TTL` | `21600` | Session lifetime (seconds, sliding) |
+| `SESSION_STORAGE_DIR` | `session_storage` | Where sessions live |
 
-## 🤝 Contributing
+## Question bank
 
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Test thoroughly
-5. Submit a pull request
-
-## 📄 License
-
-This project is open source and available under the [MIT License](LICENSE).
-
-## 🆘 Support
-
-If you encounter any issues:
-1. Check the console logs for error messages
-2. Ensure all dependencies are installed correctly
-3. Verify Python version compatibility (3.8+)
-4. Create an issue with detailed reproduction steps
-
----
-
-**Built with ❤️ using Flask, DiskCache, and modern web technologies** 
+`python3 populate_question_db.py` rebuilds/extends `questions_db.json`
+from the seed files. Questions carry ids; the browser remembers recently
+played ones and the server avoids repeating them (with graceful overlap
+when a category runs low).

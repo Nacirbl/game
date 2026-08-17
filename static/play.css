@@ -10,47 +10,64 @@ html, body {
     /* Zoom out the whole app to 75% */
 }
 
+/* Remove global scale for .container */
 body > .container {
-    transform: scale(0.75);
-    transform-origin: top center;
+    /* No transform here */
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+@media (max-width: 600px) {
+    body > .container {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
 }
 
 @media (max-width: 480px) {
     body > .container {
-        transform: scale(1);
+        padding-left: 10px;
+        padding-right: 10px;
     }
 }
 
-/* Card stack container */
+/* Card stack container.
+   Sized fluidly so it fits every phone:
+   - width driven by viewport but capped, and never taller than the visible
+     viewport (dvh accounts for mobile browser URL bars; vh is the fallback)
+   - touch-action: none stops the page from scrolling while a card is
+     dragged (replaces the old body-overflow hack, which iOS ignored) */
 .card-stack {
     position: relative;
-    width: 340px;
-    height: 480px;
+    width: min(94vw, 400px, calc(72vh * 0.75));
+    width: min(94vw, 400px, calc(72dvh * 0.75));
+    aspect-ratio: 3 / 4;
     margin: 0 auto;
-    perspective: 1000px;
-    max-width: 98vw;
-    max-height: 80vh;
+    touch-action: none;
 }
 
 /* Card styles */
 .tinder-card {
     position: absolute;
-    width: 100%;
-    height: 100%;
+    inset: 0;
     border-radius: var(--border-radius);
     background: white;
-    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     cursor: grab;
     user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none; /* no iOS long-press magnifier while swiping */
     transform-origin: center;
     transition: transform 0.15s ease, opacity 0.15s ease;
     overflow: hidden;
-    will-change: transform, opacity;
+    will-change: auto; /* Only set during drag */
     display: flex;
     flex-direction: column;
 
     /* GPU & paint optimization */
-    contain: layout style paint;
+    contain: layout style;
     transform: translate3d(0, 0, 0);
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
@@ -62,6 +79,7 @@ body > .container {
 
 .tinder-card.dragging {
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    will-change: transform;
 }
 
 .tinder-card.next-card {
@@ -90,8 +108,8 @@ body > .container {
     font-size: 1.05rem;
     color: var(--text-dark);
     z-index: 5;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    /* Remove backdrop-filter for better mobile performance */
 }
 
 /* Answer options */
@@ -134,7 +152,7 @@ body > .container {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 4rem;
+    font-size: clamp(2rem, 12vw, 4rem);
     font-weight: bold;
     text-transform: uppercase;
     letter-spacing: 0.2rem;
@@ -161,8 +179,9 @@ body > .container {
 .action-buttons {
     display: flex;
     justify-content: center;
-    gap: 3rem;
-    margin-top: 2rem;
+    align-items: center;
+    gap: 2.5rem;
+    margin-top: 1.5rem;
 }
 
 .action-btn {
@@ -176,14 +195,30 @@ body > .container {
     justify-content: center;
     font-size: 1.8rem;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
     position: relative;
     overflow: hidden;
+    touch-action: manipulation; /* no double-tap zoom delay */
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Undo button - neutral, slightly smaller than the swipe buttons */
+.action-btn.undo {
+    width: 54px;
+    height: 54px;
+    font-size: 1.3rem;
+    background: linear-gradient(45deg, #95a5a6, #7f8c8d);
+    color: white;
+}
+
+.action-btn.undo:disabled {
+    opacity: 0.45;
+    cursor: default;
 }
 
 .action-btn:hover {
     transform: scale(1.1);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
 }
 
 .action-btn:active {
@@ -278,28 +313,18 @@ body > .container {
     to   { opacity: 1; }
 }
 
-/* Responsive */
+/* Responsive.
+   Card-stack sizing is fluid now (see .card-stack above) - no per-breakpoint
+   width/height juggling needed. Only typography and results adjust. */
 @media (max-width: 900px) {
     html, body {
         font-size: 14px;
-    }
-    .card-stack {
-        width: 98vw;
-        max-width: 98vw;
-        height: 70vh;
-        max-height: 500px;
     }
 }
 
 @media (max-width: 600px) {
     html, body {
         font-size: 13px;
-    }
-    .card-stack {
-        width: 99vw;
-        max-width: 99vw;
-        height: 60vh;
-        max-height: 420px;
     }
     .result-item {
         padding: 0.7rem 0.5rem;
@@ -311,21 +336,19 @@ body > .container {
     html, body {
         font-size: 12px;
     }
-    .card-stack {
-        width: 100vw;
-        max-width: 100vw;
-        height: 56vw;
-        min-height: 260px;
-        max-height: 350px;
-    }
     .result-item {
         padding: 0.5rem 0.2rem;
         font-size: 0.93rem;
     }
     .action-btn {
-        width: 44px;
-        height: 44px;
+        width: 48px;
+        height: 48px;
         font-size: 1.1rem;
+    }
+    .action-btn.undo {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
     }
     .action-buttons {
         gap: 1.2rem;
@@ -363,15 +386,159 @@ body > .container {
 }
 .option-text {
     font-size: 1.1rem;
+    /* Long option labels must wrap, never clip or blow out the card */
+    overflow-wrap: break-word;
+    word-break: break-word;
+    hyphens: auto;
+    -webkit-hyphens: auto;
+    max-width: 100%;
+}
+/* JS tags long labels with .long / .very-long to step the font down */
+.option-text.long {
+    font-size: 0.95rem;
+}
+.option-text.very-long {
+    font-size: 0.82rem;
 }
 @media (max-width: 600px) {
     .option-text {
         font-size: 0.98rem;
+    }
+    .option-text.long {
+        font-size: 0.85rem;
+    }
+    .option-text.very-long {
+        font-size: 0.75rem;
     }
 }
 @media (max-width: 480px) {
     .option-text {
         font-size: 0.93rem;
     }
+    .option-text.long {
+        font-size: 0.82rem;
+    }
+    .option-text.very-long {
+        font-size: 0.72rem;
+    }
 }
+
+/* --- First-time swipe hint --- */
+.swipe-hint {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 6%;
+    pointer-events: none;
+    z-index: 20;
+}
+.swipe-hint .hint-arrow {
+    font-size: clamp(2rem, 9vw, 3.2rem);
+    color: rgba(255, 255, 255, 0.92);
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
+    animation: hintNudge 1.6s ease-in-out infinite;
+}
+.swipe-hint .hint-arrow.right {
+    animation-name: hintNudgeRight;
+}
+.swipe-hint .hint-label {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 8%;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.95);
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+@keyframes hintNudge {
+    0%, 100% { transform: translateX(0); opacity: 0.55; }
+    50%      { transform: translateX(-14px); opacity: 1; }
+}
+@keyframes hintNudgeRight {
+    0%, 100% { transform: translateX(0); opacity: 0.55; }
+    50%      { transform: translateX(14px); opacity: 1; }
+}
+
+/* --- Notch / home-indicator safety --- */
+@supports (padding: max(0px)) {
+    body {
+        padding-left: env(safe-area-inset-left, 0px);
+        padding-right: env(safe-area-inset-right, 0px);
+        padding-bottom: env(safe-area-inset-bottom, 0px);
+    }
+}
+
+/* --- Respect reduced-motion preferences --- */
+@media (prefers-reduced-motion: reduce) {
+    .tinder-card,
+    .choice-overlay,
+    .action-btn,
+    .progress-fill,
+    .swipe-hint .hint-arrow {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+    }
+}
+/* Mobile-specific optimizations for better performance */
+@media (max-width: 768px) {
+    .tinder-card {
+        /* Disable heavy shadows on mobile */
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+    }
+    
+    .tinder-card.dragging {
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    }
+    
+    .choice-overlay {
+        /* Simpler overlay rendering on mobile */
+        background: none !important;
+        backdrop-filter: none;
+    }
+    
+    .choice-overlay.left {
+        background-color: rgba(255, 68, 88, 0.15) !important;
+    }
+    
+    .choice-overlay.right {
+        background-color: rgba(66, 165, 245, 0.15) !important;
+    }
+    
+    /* Reduce action button shadows */
+    .action-btn {
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .action-btn:hover {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+    
+    /* Simplify gradients on mobile */
+    .option-left {
+        background: #667eea;
+    }
+    
+    .option-right {
+        background: #f093fb;
+    }
+}
+
+/* Disable hover effects on touch devices */
+@media (hover: none) {
+    .action-btn:hover {
+        transform: none;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .result-item:hover {
+        transform: none;
+        box-shadow: none;
+    }
+}
+
 /* --- End mobile scaling improvements --- */

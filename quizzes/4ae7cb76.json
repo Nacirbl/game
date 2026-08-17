@@ -1,0 +1,69 @@
+{
+  "id": "4ae7cb76",
+  "title": "Deep Talks Quiz",
+  "description": "",
+  "type": "thisorthat",
+  "questions": [
+    {
+      "id": "q_7ccb6e5c",
+      "prompt": "Courage or caution?",
+      "option1": "Courage",
+      "option2": "Caution"
+    },
+    {
+      "id": "q_ef62d436",
+      "prompt": "Give or receive?",
+      "option1": "Give",
+      "option2": "Receive"
+    },
+    {
+      "id": "q_18308337",
+      "prompt": "Peace or excitement?",
+      "option1": "Peace",
+      "option2": "Excitement"
+    },
+    {
+      "id": "q_607adc84",
+      "prompt": "Ask questions or give answers?",
+      "option1": "Ask",
+      "option2": "Answer"
+    },
+    {
+      "id": "q_db9ec7df",
+      "prompt": "Loyalty or honesty?",
+      "option1": "Loyalty",
+      "option2": "Honesty"
+    },
+    {
+      "id": "q_3b0da633",
+      "prompt": "Faith or science?",
+      "option1": "Faith",
+      "option2": "Science"
+    },
+    {
+      "id": "q_ebf9fd71",
+      "prompt": "Grow old or stay young at heart?",
+      "option1": "Grow old",
+      "option2": "Young at heart"
+    },
+    {
+      "id": "q_1d574f31",
+      "prompt": "Rich in money or rich in time?",
+      "option1": "Money",
+      "option2": "Time"
+    },
+    {
+      "id": "q_ce9c16ed",
+      "prompt": "Adventure or security?",
+      "option1": "Adventure",
+      "option2": "Security"
+    },
+    {
+      "id": "q_734f3e7c",
+      "prompt": "First impression or last impression?",
+      "option1": "First",
+      "option2": "Last"
+    }
+  ],
+  "created_at": "2026-08-16T13:38:35"
+}

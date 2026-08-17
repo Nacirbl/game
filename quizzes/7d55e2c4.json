@@ -1,0 +1,69 @@
+{
+  "id": "7d55e2c4",
+  "title": "Couples & Romance Quiz",
+  "description": "",
+  "type": "thisorthat",
+  "questions": [
+    {
+      "id": "q_316ab801",
+      "prompt": "Take each other's last name or keep yours?",
+      "option1": "Take theirs",
+      "option2": "Keep mine"
+    },
+    {
+      "id": "q_afa9d3d3",
+      "prompt": "Their hoodies are yours now or ask first?",
+      "option1": "Mine now",
+      "option2": "Ask first"
+    },
+    {
+      "id": "q_c52b9b5f",
+      "prompt": "Trivia teammates or trivia rivals?",
+      "option1": "Teammates",
+      "option2": "Rivals"
+    },
+    {
+      "id": "q_521ee2e0",
+      "prompt": "Voice notes or long texts?",
+      "option1": "Voice notes",
+      "option2": "Long texts"
+    },
+    {
+      "id": "q_6a97fd58",
+      "prompt": "Couple photos everywhere or keep it private?",
+      "option1": "Photos everywhere",
+      "option2": "Keep it private"
+    },
+    {
+      "id": "q_e5bbe784",
+      "prompt": "Flirty banter with others: harmless or not?",
+      "option1": "Harmless",
+      "option2": "Not okay"
+    },
+    {
+      "id": "q_baa2e0a8",
+      "prompt": "Slow dance in the kitchen or dance-off in the living room?",
+      "option1": "Slow dance",
+      "option2": "Dance-off"
+    },
+    {
+      "id": "q_d1a82524",
+      "prompt": "Grow old in the city or the countryside?",
+      "option1": "City",
+      "option2": "Countryside"
+    },
+    {
+      "id": "q_4e41d8d4",
+      "prompt": "Goodnight call or goodnight text?",
+      "option1": "Call",
+      "option2": "Text"
+    },
+    {
+      "id": "q_62648994",
+      "prompt": "Distance makes the heart grow fonder or out of sight out of mind?",
+      "option1": "Fonder",
+      "option2": "Out of mind"
+    }
+  ],
+  "created_at": "2026-08-16T13:20:18"
+}

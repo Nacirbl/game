@@ -1,0 +1,39 @@
+{
+  "id": "c7c44422",
+  "title": "E2E Test Quiz",
+  "description": "",
+  "type": "thisorthat",
+  "questions": [
+    {
+      "prompt": "Q0?",
+      "option1": "A",
+      "option2": "B",
+      "correct_answer": null
+    },
+    {
+      "prompt": "Q1?",
+      "option1": "A",
+      "option2": "B",
+      "correct_answer": null
+    },
+    {
+      "prompt": "Q2?",
+      "option1": "A",
+      "option2": "B",
+      "correct_answer": null
+    },
+    {
+      "prompt": "Q3?",
+      "option1": "A",
+      "option2": "B",
+      "correct_answer": null
+    },
+    {
+      "prompt": "Q4?",
+      "option1": "A",
+      "option2": "B",
+      "correct_answer": null
+    }
+  ],
+  "created_at": "2026-08-15 14:49:39.645273"
+}
