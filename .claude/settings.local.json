@@ -37,7 +37,9 @@
       "Bash(docker start:*)",
       "Bash(RUST_LOG=info docker exec -e RUST_LOG=info thisorthat-app-rust-1 sh -c 'curl -L http://localhost:8000/play/32d05d26?player_name=TestPlayer')",
       "Bash(docker rm:*)",
-      "Bash(md5sum:*)"
+      "Bash(md5sum:*)",
+      "Bash(python3 -c ' *)",
+      "Bash(python3 *)"
     ],
     "deny": []
   }
